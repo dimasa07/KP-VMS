@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Tamu extends Model
 {
     use HasFactory;
-
-    protected $table = "user";
+    
+    protected $table = "tamu";
     public $timestamps = false;
 
     /**
@@ -23,12 +23,11 @@ class User extends Model
         'nama',
         'no_telepon',
         'email',
+        'id_akun'
     ];
 
     public function akun()
     {
-        return $this->hasOne(Akun::class, 'id_user');
+        return $this->belongsTo(Akun::class, 'id_akun');
     }
-
-
 }

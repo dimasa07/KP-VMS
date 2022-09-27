@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\BukuTamuService;
 use App\Services\PegawaiService;
 use App\Services\PermintaanBertamuService;
+use App\Services\TamuService;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -13,8 +14,27 @@ class AdminController extends Controller
     public function __construct(
         public PegawaiService $pegawaiService,
         public BukuTamuService $bukuTamuService,
-        public PermintaanBertamuService $permintaanBertamuService
+        public PermintaanBertamuService $permintaanBertamuService,
+        public TamuService $tamuService
     ) {
+    }
+
+    public function allTamu()
+    {
+        $semuaTamu = $this->tamuService->getAll();
+        $jumlah = count($semuaTamu);
+        if ($jumlah == 0) {
+            $resp['message'][] = 'Tidak ada data Tamu';
+        } else {
+            foreach($semuaTamu as $tamu){
+                $tamu->akun;
+            }
+            $resp = [
+                'message' => 'Data Tamu ditemukan, jumlah ' . $jumlah . ' data',
+                'tamu' => $semuaTamu
+            ];
+        }
+        return response()->json($resp);
     }
 
     public function allPegawai()
@@ -24,6 +44,9 @@ class AdminController extends Controller
         if ($jumlah == 0) {
             $resp['message'][] = 'Tidak ada data Pegawai';
         } else {
+            foreach($semuaPegawai as $pegawai){
+                $pegawai->akun;
+            }
             $resp = [
                 'message' => 'Data Pegawai ditemukan, jumlah ' . $jumlah . ' data',
                 'pegawai' => $semuaPegawai

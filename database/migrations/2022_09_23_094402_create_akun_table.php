@@ -15,10 +15,7 @@ return new class extends Migration
     {
         Schema::create('akun', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_user')->unsigned();
-            $table->foreign('id_user')->references('id')->on('user');
             $table->enum('role', ['TAMU', 'ADMIN', 'FRONT OFFICE']);
-            //$table->enum('status', ['AKTIF', 'BELUM AKTIF']);
             $table->string('username')->unique();
             $table->string('password');
         });

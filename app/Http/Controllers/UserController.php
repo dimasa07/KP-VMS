@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Akun;
-use App\Models\User;
+use App\Models\Tamu;
+use App\Services\AdminService;
 use App\Services\AkunService;
-use App\Services\UserService;
+use App\Services\FrontOfficeService;
+use App\Services\PegawaiService;
+use App\Services\TamuService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
 
     public function __construct(
-        public UserService $userService,
-        public AkunService $akunService
+        public AkunService $akunService,
+        public TamuService $tamuService,
+        public PegawaiService $pegawaiService
     ) {
     }
 
@@ -52,24 +56,24 @@ class UserController extends Controller
 
     public function daftar(Request $request)
     {
-        $user = new User();
-        $user->fill($request->input());
+        $tamu = new Tamu();
+        $tamu->fill($request->input());
 
-        if (!is_null($this->userService->getByNIK($user->nik))) {
+        if (!is_null($this->tamuService->getByNIK($tamu->nik))) {
             $resp['message'][] = 'Gagal daftar, NIK sudah terdaftar';
         } else {
-            $user = $this->userService->save($user);
             $akun = new Akun();
             $akun->fill($request->input());
-            $akun->id_user = $user->id;
 
             $akun = $this->akunService->save($akun);
             if (is_null($akun)) {
                 $resp['message'][] = 'Gagal daftar, Username sudah terdaftar';
             } else {
+                $tamu->id_akun = $akun->id;
+                $tamu = $this->tamuService->save($tamu);
                 $resp = [
                     'message' => 'Sukses daftar',
-                    'user' => $user,
+                    'tamu' => $tamu,
                     'akun' => $akun
                 ];
             }
@@ -80,9 +84,10 @@ class UserController extends Controller
 
     public function allUser()
     {
-        $users = $this->userService->getAll();
+        $users = $this->akunService->getAll();
         foreach ($users as $user) {
-            $user->akun;
+            $user->tamu;
+            $user->pegawai;
         }
 
         $jumlah = count($users);
@@ -130,50 +135,62 @@ class UserController extends Controller
         return response()->json($resp);
     }
 
-    public function updateUser(Request $request)
+    public function updateAdmin(Request $request)
     {
-        $idUser = $request->input('id');
-        $update = $this->userService->update($idUser, $request->input());
-
-        if (is_null($update)) {
-            $resp['message'][] = 'Gagal update User';
-            $resp['attributes'] = $request->input();
-        } else {
-            $resp = [
-                'message' => 'Sukses update User',
-                'user' => $update
-            ];
-        }
-        return response()->json($resp);
     }
 
     public function updateAkun(Request $request)
     {
         $idAkun = $request->input('id');
-        $update = $this->akunService->update($idAkun, $request->input());
-
-        if (is_null($update)) {
-            $resp['message'][] = 'Gagal update Akun';
-            $resp['attributes'] = $request->input();
+        if (is_null($this->akunService->getByUsername($request->input('username')))) {
+            $update = $this->akunService->update($idAkun, $request->input());
+            if (is_null($update)) {
+                $resp['message'][] = 'Gagal update Akun';
+                $resp['attributes'] = $request->input();
+            } else {
+                $resp = [
+                    'message' => 'Sukses update Akun',
+                    'akun' => $update
+                ];
+            }
         } else {
-            $resp = [
-                'message' => 'Sukses update Akun',
-                'akun' => $update
-            ];
+            $resp['message'][] = 'Gagal update Akun, Username telah tersedia';
         }
+
         return response()->json($resp);
     }
 
-    public function deleteUser($id)
+    public function updateTamu(Request $request)
     {
-        $delete = $this->userService->delete($id);
-        if ($delete) {
-            $resp['message'][] = 'Sukses delete User';
-        } else {
-            $resp['message'][] = 'Gagal delete User';
-        }
+        // $idUser = $request->input('id');
 
-        return response()->json($resp);
+        // if (is_null($this->akunService->getByUsername($request->input('username')))) {
+        //     $update = $this->userService->update($idUser, $request->input());
+        // }
+
+
+        // if (is_null($update)) {
+        //     $resp['message'][] = 'Gagal update User';
+        //     $resp['attributes'] = $request->input();
+        // } else {
+        //     $resp = [
+        //         'message' => 'Sukses update User',
+        //         'user' => $update
+        //     ];
+        // }
+        // return response()->json($resp);
+    }
+
+    public function updateFrontOffice(Request $request)
+    {
+    }
+
+    public function updatePegawai(Request $request)
+    {
+    }
+
+    public function deleteAdmin($id)
+    {
     }
 
     public function deleteAkun($id)
@@ -186,5 +203,25 @@ class UserController extends Controller
         }
 
         return response()->json($resp);
+    }
+
+    public function deleteTamu($id)
+    {
+        $delete = $this->tamuService->delete($id);
+        if ($delete) {
+            $resp['message'][] = 'Sukses delete Tamu';
+        } else {
+            $resp['message'][] = 'Gagal delete Tamu';
+        }
+
+        return response()->json($resp);
+    }
+
+    public function deleteFrontOffice($id)
+    {
+    }
+
+    public function deletePegawai($id)
+    {
     }
 }

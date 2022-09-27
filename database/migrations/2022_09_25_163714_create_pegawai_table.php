@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('jabatan')->nullable();
             $table->string('alamat')->nullable();
+            $table->integer('id_akun')->unsigned()->nullable();
+            $table->foreign('id_akun')->references('id')->on('akun')->onUpdate('CASCADE')->onDelete('SET NULL');
         });
     }
 

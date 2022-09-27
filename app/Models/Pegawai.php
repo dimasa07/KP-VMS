@@ -12,5 +12,23 @@ class Pegawai extends Model
     protected $table = "pegawai";
     public $timestamps = false;
 
-   
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+
+    protected $fillable = [
+        'nik',
+        'nama',
+        'no_telepon',
+        'email',
+        'jabatan',
+        'id_akun'
+    ];
+
+    public function akun()
+    {
+        return $this->belongsTo(Akun::class, 'id_akun');
+    }
 }

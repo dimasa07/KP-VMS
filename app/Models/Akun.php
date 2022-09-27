@@ -18,17 +18,18 @@ class Akun extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id_user',
         'role',
-        'status',
         'username',
         'password',
     ];
 
-    public function user()
+    public function pegawai()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->hasMany(Pegawai::class, 'id');
     }
 
-    
+    public function tamu()
+    {
+        return $this->hasMany(Tamu::class, 'id');
+    }
 }

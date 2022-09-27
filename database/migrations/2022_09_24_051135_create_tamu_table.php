@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('tamu', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nik')->unique();
             $table->string('nama');
             $table->string('no_telepon')->nullable();
             $table->string('email')->nullable();
             $table->string('alamat')->nullable();
+            $table->integer('id_akun')->unsigned()->nullable();
+            $table->foreign('id_akun')->references('id')->on('akun')->onUpdate('CASCADE')->onDelete('SET NULL');
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user');
+        Schema::dropIfExists('tamu');
     }
 };

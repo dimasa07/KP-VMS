@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('id_front_office')->unsigned();
             $table->integer('id_permintaan')->unsigned()->unique();
-            $table->foreign('id_front_office')->references('id')->on('user');
+            $table->foreign('id_front_office')->references('id')->on('pegawai');
             $table->foreign('id_permintaan')->references('id')->on('permintaan_bertamu');
             $table->dateTime('check_in')->nullable();
             $table->dateTime('check_out')->nullable();

@@ -6,18 +6,18 @@ use App\Services\AkunService;
 use App\Services\BukuTamuService;
 use App\Services\PegawaiService;
 use App\Services\PermintaanBertamuService;
-use App\Services\UserService;
+use App\Services\TamuService;
 use Illuminate\Support\ServiceProvider;
 
 class DependencyInjectionProvider extends ServiceProvider
 {
     public array $singletons = [
-        UserService::class,
         AkunService::class,
+        TamuService::class,
         PegawaiService::class,
         PermintaanBertamuService::class,
-        BukuTamuService::class
-    ];
+        BukuTamuService::class 
+    ]; 
 
     /**
      * Register services.

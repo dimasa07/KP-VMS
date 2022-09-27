@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class TamuController extends Controller
 {
     public function __construct(
-        public PermintaanBertamuService $permintaanBertamuService
+        public PermintaanBertamuService $permintaanBertamuService,
     ) {
     }
 
