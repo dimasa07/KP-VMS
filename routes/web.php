@@ -34,6 +34,8 @@ Route::prefix('/user')->controller(UserController::class)->group(function () {
     Route::get('/logout', 'logout')->name('user.logout');
     Route::get('/get/nik/{nik}', 'getByNIK')->name('user.get.nik');
     Route::get('/get/role/{role}', 'getByRole')->name('user.get.role');
+    Route::post('/akun/update', 'updateAkun')->name('user.akun.update');
+    Route::get('/akun/delete/{id}', 'deleteAkun')->name('user.akun.delete');
 });
 
 // ADMIN ROUTES

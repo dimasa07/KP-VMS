@@ -20,6 +20,11 @@ class AkunService
         return Akun::all();
     }
 
+    public function getById($id)
+    {
+        return Akun::where('id', '=', $id)->first();
+    }
+
     public function getByUsername($username)
     {
         return Akun::where('username', '=', $username)->first();
@@ -41,5 +46,21 @@ class AkunService
     public function getByStatus($status)
     {
         return Akun::where('status', '=', $status)->get();
+    }
+
+    public function update($id, $attributes = [])
+    {
+        $akun = $this->getById($id);
+
+        if (!is_null($akun)) {
+            $akun->update($attributes);
+        }
+
+        return $akun;
+    }
+
+    public function delete($id)
+    {
+        return Akun::where('id', '=', $id)->delete();
     }
 }

@@ -32,4 +32,9 @@ class PermintaanBertamuService
 
         return $permintaan;
     }
+
+    public function delete($id)
+    {
+        return PermintaanBertamu::where('id', '=', $id)->delete();
+    }
 }

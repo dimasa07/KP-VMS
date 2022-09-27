@@ -21,6 +21,11 @@ class UserService
         return User::all();
     }
 
+    public function getById($id)
+    {
+        return User::where('id', '=', $id)->first();
+    }
+
     public function getByUsername($username)
     {
         return User::where('username', '=', $username)->first();
@@ -44,4 +49,19 @@ class UserService
         return User::where('nip', '=', $nip)->first();
     }
 
+    public function update($id, $attributes = [])
+    {
+        $user = $this->getById($id);
+
+        if (!is_null($user)) {
+            $user->update($attributes);
+        }
+
+        return $user;
+    }
+
+    public function delete($id)
+    {
+        return User::where('id', '=', $id)->delete();
+    }
 }

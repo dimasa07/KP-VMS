@@ -129,4 +129,62 @@ class UserController extends Controller
         }
         return response()->json($resp);
     }
+
+    public function updateUser(Request $request)
+    {
+        $idUser = $request->input('id');
+        $update = $this->userService->update($idUser, $request->input());
+
+        if (is_null($update)) {
+            $resp['message'][] = 'Gagal update User';
+            $resp['attributes'] = $request->input();
+        } else {
+            $resp = [
+                'message' => 'Sukses update User',
+                'user' => $update
+            ];
+        }
+        return response()->json($resp);
+    }
+
+    public function updateAkun(Request $request)
+    {
+        $idAkun = $request->input('id');
+        $update = $this->akunService->update($idAkun, $request->input());
+
+        if (is_null($update)) {
+            $resp['message'][] = 'Gagal update Akun';
+            $resp['attributes'] = $request->input();
+        } else {
+            $resp = [
+                'message' => 'Sukses update Akun',
+                'akun' => $update
+            ];
+        }
+        return response()->json($resp);
+    }
+
+    public function deleteUser($id)
+    {
+        $delete = $this->userService->delete($id);
+        if ($delete) {
+            $resp['message'][] = 'Sukses delete User';
+        } else {
+            $resp['message'][] = 'Gagal delete User';
+        }
+
+        return response()->json($resp);
+    }
+
+    public function deleteAkun($id)
+    {
+        $delete = $this->akunService->delete($id);
+        if ($delete) {
+            $resp['message'][] = 'Sukses delete Akun';
+        } else {
+            $resp['message'][] = 'Gagal delete Akun';
+        }
+
+        return response()->json($resp);
+    }
 }

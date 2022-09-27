@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\BukuTamuService;
 use App\Services\PegawaiService;
 use App\Services\PermintaanBertamuService;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ class AdminController extends Controller
 
     public function __construct(
         public PegawaiService $pegawaiService,
+        public BukuTamuService $bukuTamuService,
         public PermintaanBertamuService $permintaanBertamuService
     ) {
     }
@@ -60,12 +62,49 @@ class AdminController extends Controller
         if (is_null($permintaan)) {
             $resp['message'][] = 'Gagal menyetujui, id tidak ditemukan';
         } else {
+            $permintaan->update([
+                'id_admin' => 1
+            ]);
             $resp = [
                 'message' => 'Sukses menyetujui permintaan',
                 'permintaan' => $permintaan
             ];
         }
 
+        return response()->json($resp);
+    }
+
+    public function updatePermintaan(Request $request)
+    {
+        $idPermintaan = $request->input('id');
+        $update = $this->permintaanBertamuService->update($idPermintaan, $request->input());
+
+        if (is_null($update)) {
+            $resp['message'][] = 'Gagal update Permintaan Bertamu';
+            $resp['attributes'] = $request->input();
+        } else {
+            $resp = [
+                'message' => 'Sukses update Permintaan Bertamu',
+                'permintaan' => $update
+            ];
+        }
+        return response()->json($resp);
+    }
+
+    public function updateBukuTamu(Request $request)
+    {
+        $idBukuTamu = $request->input('id');
+        $update = $this->bukuTamuService->update($idBukuTamu, $request->input());
+
+        if (is_null($update)) {
+            $resp['message'][] = 'Gagal update Buku Tamu';
+            $resp['attributes'] = $request->input();
+        } else {
+            $resp = [
+                'message' => 'Sukses update Buku Tamu',
+                'permintaan' => $update
+            ];
+        }
         return response()->json($resp);
     }
 }
