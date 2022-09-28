@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Akun;
 use App\Models\Tamu;
-use App\Services\AdminService;
 use App\Services\AkunService;
-use App\Services\FrontOfficeService;
 use App\Services\PegawaiService;
 use App\Services\TamuService;
 use Illuminate\Http\Request;
@@ -102,21 +100,6 @@ class UserController extends Controller
         return response()->json($resp);
     }
 
-    public function getByNIK(string $nik)
-    {
-        $user = $this->userService->getByNIK($nik);
-        if (is_null($user)) {
-            $resp['message'][] = 'User dengan NIK tersebut tidak terdaftar';
-        } else {
-            $akun = $user->akun;
-            $resp = [
-                'message' => 'User ditemukan',
-                'user' => $user
-            ];
-        }
-        return response()->json($resp);
-    }
-
     public function getByRole(string $role)
     {
         $users = $this->akunService->getByRole($role);
@@ -135,26 +118,29 @@ class UserController extends Controller
         return response()->json($resp);
     }
 
-    public function updateAdmin(Request $request)
-    {
-    }
-
     public function updateAkun(Request $request)
     {
         $idAkun = $request->input('id');
-        if (is_null($this->akunService->getByUsername($request->input('username')))) {
-            $update = $this->akunService->update($idAkun, $request->input());
-            if (is_null($update)) {
-                $resp['message'][] = 'Gagal update Akun';
-                $resp['attributes'] = $request->input();
+        $akun = $this->akunService->getById($idAkun);
+        $newUsername = $request->input('username');
+        $cekAkun = $this->akunService->getByUsername($newUsername);
+        if (!is_null($akun)) {
+            if (is_null($cekAkun) || $akun->username == $newUsername) {
+                $update = $this->akunService->update($idAkun, $request->input());
+                if (is_null($update)) {
+                    $resp['message'][] = 'Gagal update Akun';
+                    $resp['attributes'] = $request->input();
+                } else {
+                    $resp = [
+                        'message' => 'Sukses update Akun',
+                        'akun' => $update
+                    ];
+                }
             } else {
-                $resp = [
-                    'message' => 'Sukses update Akun',
-                    'akun' => $update
-                ];
+                $resp['message'][] = 'Gagal update Akun, Username telah tersedia';
             }
         } else {
-            $resp['message'][] = 'Gagal update Akun, Username telah tersedia';
+            $resp['message'][] = 'Gagal update Akun, id tidak ditemukan';
         }
 
         return response()->json($resp);
@@ -162,44 +148,51 @@ class UserController extends Controller
 
     public function updateTamu(Request $request)
     {
-        // $idUser = $request->input('id');
+        $idTamu = $request->input('id');
+        $tamu = $this->tamuService->getById($idTamu);
+        $newNIK = $request->input('nik');
+        $cekTamu = $this->tamuService->getByNIK($newNIK);
+        if (!is_null($tamu)) {
+            if (is_null($cekTamu) || $tamu->nik == $newNIK) {
+                $update = $this->tamuService->update($idTamu, $request->input());
+                if (is_null($update)) {
+                    $resp['message'][] = 'Gagal update Tamu';
+                    $resp['attributes'] = $request->input();
+                } else {
+                    $resp = [
+                        'message' => 'Sukses update Tamu',
+                        'tamu' => $update
+                    ];
+                }
+            } else {
+                $resp['message'][] = 'Gagal update Tamu, NIK telah tersedia';
+            }
+        } else {
+            $resp['message'][] = 'Gagal update Tamu, id tidak ditemukan';
+        }
 
-        // if (is_null($this->akunService->getByUsername($request->input('username')))) {
-        //     $update = $this->userService->update($idUser, $request->input());
-        // }
-
-
-        // if (is_null($update)) {
-        //     $resp['message'][] = 'Gagal update User';
-        //     $resp['attributes'] = $request->input();
-        // } else {
-        //     $resp = [
-        //         'message' => 'Sukses update User',
-        //         'user' => $update
-        //     ];
-        // }
-        // return response()->json($resp);
-    }
-
-    public function updateFrontOffice(Request $request)
-    {
+        return response()->json($resp);
     }
 
     public function updatePegawai(Request $request)
     {
     }
 
-    public function deleteAdmin($id)
-    {
-    }
-
     public function deleteAkun($id)
     {
-        $delete = $this->akunService->delete($id);
-        if ($delete) {
-            $resp['message'][] = 'Sukses delete Akun';
+        $akun = $this->akunService->getById($id);
+        if (is_null($akun)) {
+            $resp['message'][] = 'Gagal delete Akun, id tidak ditemukan';
         } else {
-            $resp['message'][] = 'Gagal delete Akun';
+            $delete = $this->akunService->delete($id);
+            if ($delete) {
+                $resp = [
+                    'message' => 'Sukses delete Akun',
+                    'akun' => $akun
+                ];
+            } else {
+                $resp['message'][] = 'Gagal delete Akun';
+            }
         }
 
         return response()->json($resp);
@@ -207,21 +200,43 @@ class UserController extends Controller
 
     public function deleteTamu($id)
     {
-        $delete = $this->tamuService->delete($id);
-        if ($delete) {
-            $resp['message'][] = 'Sukses delete Tamu';
+        $tamu = $this->tamuService->getById($id);
+        if (is_null($tamu)) {
+            $resp['message'][] = 'Gagal delete Tamu, id tidak ditemukan';
         } else {
-            $resp['message'][] = 'Gagal delete Tamu';
+            $delete = $this->tamuService->delete($id);
+            $deleteAkun = $this->akunService->delete($tamu->id_akun);
+            if ($delete) {
+                $resp = [
+                    'message' => 'Sukses delete Tamu',
+                    'tamu' => $tamu
+                ];
+            } else {
+                $resp['message'][] = 'Gagal delete Tamu';
+            }
         }
 
         return response()->json($resp);
     }
 
-    public function deleteFrontOffice($id)
-    {
-    }
-
     public function deletePegawai($id)
     {
+        $pegawai = $this->pegawaiService->getById($id);
+        if (is_null($pegawai)) {
+            $resp['message'][] = 'Gagal delete Pegawai, id tidak ditemukan';
+        } else {
+            $delete = $this->pegawaiService->delete($id);
+            $deleteAkun = $this->akunService->delete($pegawai->id_akun);
+            if ($delete) {
+                $resp = [
+                    'message' => 'Sukses delete Pegawai',
+                    'pegawai' => $pegawai
+                ];
+            } else {
+                $resp['message'][] = 'Gagal delete Pegawai';
+            }
+        }
+
+        return response()->json($resp);
     }
 }

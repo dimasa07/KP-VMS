@@ -25,7 +25,7 @@ class PermintaanBertamu extends Model
     public function frontOffice()
     {
         return $this->belongsToMany(
-            User::class,
+            Pegawai::class,
             'buku_tamu',
             'id',
             'id_front_office'
@@ -35,7 +35,7 @@ class PermintaanBertamu extends Model
     public function admin()
     {
         return $this->belongsTo(
-            User::class,
+            Pegawai::class,
             'id_admin'
         );
     }
@@ -43,7 +43,7 @@ class PermintaanBertamu extends Model
     public function tamu()
     {
         return $this->belongsToMany(
-            User::class,
+            Tamu::class,
             'permintaan_bertamu',
             'id',
             'id_tamu'

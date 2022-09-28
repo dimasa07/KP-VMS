@@ -25,11 +25,11 @@ class Akun extends Model
 
     public function pegawai()
     {
-        return $this->hasMany(Pegawai::class, 'id');
+        return $this->hasOne(Pegawai::class, 'id_akun');
     }
 
     public function tamu()
     {
-        return $this->hasMany(Tamu::class, 'id');
+        return $this->hasOne(Tamu::class, 'id_akun');
     }
 }

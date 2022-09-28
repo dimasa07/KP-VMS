@@ -23,6 +23,7 @@ class Tamu extends Model
         'nama',
         'no_telepon',
         'email',
+        'alamat',
         'id_akun'
     ];
 

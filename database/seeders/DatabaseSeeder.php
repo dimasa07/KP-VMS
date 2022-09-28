@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             'password' => 'admin'
         ]);
         $admin = Pegawai::create([
-            'nik' => 1,
+            'nip' => 1,
             'nama' => 'Admin Diskominfo',
             'no_telepon' => '081234567891',
             'email' => 'admin@gmail.com',
@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
             'password' => 'frontoffice'
         ]);
         $fo = Pegawai::create([
-            'nik' => 101,
+            'nip' => 101,
             'nama' => 'FO Diskominfo',
             'no_telepon' => '081234567101',
             'email' => 'fo@gmail.com',
@@ -57,19 +57,19 @@ class DatabaseSeeder extends Seeder
 
         // SEED DATA Pegawai
         $pegawai = Pegawai::create([
-            'nik' => 1001,
+            'nip' => 1001,
             'nama' => 'Pegawai 1',
             'no_telepon' => '081234510001',
             'email' => 'pegawai@gmail.com'
         ]);
         $pegawai2 = Pegawai::create([
-            'nik' => 1002,
+            'nip' => 1002,
             'nama' => 'Pegawai 2',
             'no_telepon' => '081234510002',
             'email' => 'pegawai2@gmail.com'
         ]);
         $pegawai = Pegawai::create([
-            'nik' => 1003,
+            'nip' => 1003,
             'nama' => 'Pegawai 3',
             'no_telepon' => '081234510003',
             'email' => 'pegawai3@gmail.com'

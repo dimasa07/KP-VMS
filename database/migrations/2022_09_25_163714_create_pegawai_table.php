@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('pegawai', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nik')->unique();
+            $table->string('nip')->unique();
             $table->string('nama');
             $table->string('no_telepon')->nullable();
             $table->string('email')->nullable();

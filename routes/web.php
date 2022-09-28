@@ -50,11 +50,15 @@ Route::prefix('/user')->controller(UserController::class)->group(function () {
 Route::prefix('/admin')->controller(AdminController::class)->group(function () {
     Route::get('/permintaan/all', 'allPermintaanBertamu')->name('admin.permintaan.all');
     Route::get('/permintaan/setujui/{idPermintaan}', 'setujuiPermintaan')->name('admin.permintaan.setujui');
+    Route::get('/all', 'allAdmin')->name('admin.all');
     Route::get('/pegawai/all', 'allPegawai')->name('admin.pegawai.all');
-    Route::get('/tamu/all', 'allTamu')->name('admin.tamu.all');
+    Route::get('/fo/all', 'allFrontOffice')->name('admin.fo.all');
+    Route::get('/tamu/all', 'allTamu')->name('admin.tamu.all'); 
+    Route::get('/tamu/get/nik/{nik}', 'getTamuByNIK')->name('admin.tamu.get.nik');
+    Route::post('/pegawai/tambah', 'tambahPegawai')->name('admin.pegawai.tambah');
 });
 
-// TAMU ROUTES
+// TAMU ROUTES 
 Route::prefix('/tamu')->controller(TamuController::class)->group(function () {
     Route::post('/permintaan/tambah', 'tambahPermintaan')->name('tamu.permintaan.tambah');
 });
