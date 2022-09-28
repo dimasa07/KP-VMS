@@ -2,15 +2,14 @@
 
 namespace App\Services;
 
+use App\Models\Akun;
 use App\Models\Pegawai;
 
 class PegawaiService
 {
     public function __construct(
         public AkunService $akunService
-    )
-    {
-        
+    ) {
     }
 
     public function save(Pegawai $pegawai)
@@ -27,7 +26,7 @@ class PegawaiService
     {
         $admins = [];
         $akuns = $this->akunService->getByRole('ADMIN');
-        foreach($akuns as $akun){
+        foreach ($akuns as $akun) {
             $admins[] = $akun->pegawai;
         }
 
@@ -38,7 +37,7 @@ class PegawaiService
     {
         $frontOffices = [];
         $akuns = $this->akunService->getByRole('FRONT OFFICE');
-        foreach($akuns as $akun){
+        foreach ($akuns as $akun) {
             $frontOffices[] = $akun->pegawai;
         }
 
@@ -68,6 +67,29 @@ class PegawaiService
 
     public function delete($id)
     {
-        return Pegawai::where('id', '=', $id)->delete();
+        $pegawai = $this->getById($id);
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        $akun = null;
+        if (is_null($pegawai)) {
+            $rs->pesan[] = 'Gagal delete Pegawai, id tidak ditemukan';
+        } else {
+            $delete = Pegawai::where('id', '=', $id)->delete();
+            if ($delete) {
+                $akun = Akun::where('id', '=', $pegawai->id_akun)->first();
+                if (!is_null($akun)) {
+                    $akun->delete();
+                }
+                $rs->sukses = true;
+                $rs->pesan[] = 'Sukses delete Pegawai';
+                $rs->hasil->jumlah = 1;
+            } else {
+                $rs->pesan[] = 'Gagal delete Pegawai';
+            }
+        }
+        $data['pegawai'] = $pegawai;
+        $data['akun'] = $akun;
+        $rs->hasil->data = $data;
+        return $rs;
     }
 }
