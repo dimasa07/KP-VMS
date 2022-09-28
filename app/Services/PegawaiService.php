@@ -14,60 +14,158 @@ class PegawaiService
 
     public function save(Pegawai $pegawai)
     {
-        return $pegawai->save() ? $pegawai : null;
+        $cekPegawai = $this->getByNIP($pegawai->nip);
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (!$cekPegawai->sukses) {
+            $sukses = $pegawai->save();
+            $rs->sukses = $sukses;
+            if ($sukses) {
+                $rs->pesan[] = 'Sukses tambah Pegawai';
+                $rs->hasil->jumlah = 1;
+                $rs->hasil->data = $pegawai;
+            } else {
+                $rs->pesan[] = 'Gagal tambah Pegawai';
+            }
+        } else {
+            $rs->pesan[] = 'Gagal tambah Pegawai, NIP telah tersedia';
+        }
+
+        return $rs;
     }
 
     public function getAll()
     {
-        return Pegawai::all();
+        $pegawai = Pegawai::all();
+        $rs = new ResultSet();
+        $jumlah = count($pegawai);
+        $rs->hasil->jumlah = $jumlah;
+        $rs->hasil->tipe = 'Array';
+        if ($jumlah == 0) {
+            $rs->pesan[] = 'Tidak ada data Pegawai';
+        } else {
+            $rs->sukses = true;
+            foreach ($pegawai as $p) {
+                $p->akun;
+            }
+            $rs->pesan[] = 'Data Pegawai ditemukan';
+            $rs->hasil->data = $pegawai;
+        }
+
+        return $rs;
     }
 
     public function getAllAdmin()
     {
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Array';
         $admins = [];
-        $akuns = $this->akunService->getByRole('ADMIN');
+        $akuns = $this->akunService->getByRole('ADMIN')->hasil->data;
         foreach ($akuns as $akun) {
             $admins[] = $akun->pegawai;
         }
-
-        return $admins;
+        $jumlah = count($admins);
+        $rs->hasil->jumlah = $jumlah;
+        if ($jumlah == 0) {
+            $rs->pesan[] = 'Tidak ada data Admin';
+        } else {
+            foreach ($admins as $admin) {
+                $admin->akun;
+            }
+            $rs->sukses = true;
+            $rs->pesan[] = 'Data Admin ditemukan';
+            $rs->hasil->data = $admins;
+        }
+        return $rs;
     }
 
     public function getAllFrontOffice()
     {
-        $frontOffices = [];
-        $akuns = $this->akunService->getByRole('FRONT OFFICE');
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Array';
+        $fo = [];
+        $akuns = $this->akunService->getByRole('FRONT OFFICE')->hasil->data;
         foreach ($akuns as $akun) {
-            $frontOffices[] = $akun->pegawai;
+            $fo[] = $akun->pegawai;
         }
-
-        return $frontOffices;
+        $jumlah = count($fo);
+        $rs->hasil->jumlah = $jumlah;
+        if ($jumlah == 0) {
+            $rs->pesan[] = 'Tidak ada data Front Office';
+        } else {
+            foreach ($fo as $o) {
+                $o->akun;
+            }
+            $rs->sukses = true;
+            $rs->pesan[] = 'Data Front Office ditemukan';
+            $rs->hasil->data = $fo;
+        }
+        return $rs;
     }
 
     public function getById($id)
     {
-        return Pegawai::where('id', '=', $id)->first();
+        $pegawai = Pegawai::where('id', '=', $id)->first();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (is_null($pegawai)) {
+            $rs->pesan[] = 'Pegawai dengan id ' . $id . ' tidak terdaftar';
+        } else {
+            $rs->sukses = true;
+            $rs->hasil->jumlah = 1;
+            $pegawai->akun;
+            $rs->pesan[] = 'Pegawai ditemukan';
+            $rs->hasil->data = $pegawai;
+        }
+
+        return $rs;
     }
 
     public function getByNIP($nip)
     {
-        return Pegawai::where('nip', '=', $nip)->first();
+        $pegawai = Pegawai::where('nip', '=', $nip)->first();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (is_null($pegawai)) {
+            $rs->pesan[] = 'Pegawai dengan NIP ' . $nip . ' tidak terdaftar';
+        } else {
+            $rs->sukses = true;
+            $rs->hasil->jumlah = 1;
+            $pegawai->akun;
+            $rs->pesan[] = 'Pegawai ditemukan';
+            $rs->hasil->data = $pegawai;
+        }
+
+        return $rs;
     }
 
     public function update($id, $attributes = [])
     {
-        $pegawai = $this->getById($id);
-
+        $pegawai = Pegawai::where('id', '=', $id)->first();
+        $newNIP = $attributes['nip'];
+        $cekPegawai = $this->getByNIP($newNIP);
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
         if (!is_null($pegawai)) {
-            $pegawai->update($attributes);
+            if (!$cekPegawai->sukses || $pegawai->nip == $newNIP) {
+                $update = $pegawai->update($attributes);
+                $rs->sukses = true;
+                $rs->pesan[] = 'Sukses update Pegawai';
+                $rs->hasil->jumlah = 1;
+                $rs->hasil->data = $pegawai;
+            } else {
+                $rs->pesan[] = 'Gagal update Pegawai, NIP telah tersedia';
+            }
+        } else {
+            $rs->pesan[] = 'Gagal update Pegawai, id tidak ditemukan';
         }
 
-        return $pegawai;
+        return $rs;
     }
 
     public function delete($id)
     {
-        $pegawai = $this->getById($id);
+        $pegawai = Pegawai::where('id', '=', $id)->first();
         $rs = new ResultSet();
         $rs->hasil->tipe = 'Object';
         $akun = null;

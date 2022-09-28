@@ -8,11 +8,24 @@ class AkunService
 {
     public function save(Akun $akun)
     {
-        if (!is_null($this->getByUsername($akun->username))) {
-            return null;
+        $cekAkun = $this->getByUsername($akun->username);
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (!$cekAkun->sukses) {
+            $sukses = $akun->save();
+            $rs->sukses = $sukses;
+            if ($sukses) {
+                $rs->pesan[] = 'Sukses tambah Akun';
+                $rs->hasil->jumlah = 1;
+                $rs->hasil->data = $akun;
+            } else {
+                $rs->pesan[] = 'Gagal tambah Akun';
+            }
+        } else {
+            $rs->pesan[] = 'Gagal tambah Akun, Username telah tersedia';
         }
-        $akun->save();
-        return $akun;
+
+        return $rs;
     }
 
     public function getAll()
@@ -39,12 +52,34 @@ class AkunService
 
     public function getById($id)
     {
-        return Akun::where('id', '=', $id)->first();
+        $akun = Akun::where('id', '=', $id)->first();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (is_null($akun)) {
+            $rs->pesan[] = 'Akun dengan id ' . $id . ' tidak terdaftar';
+        } else {
+            $rs->sukses = true;
+            $rs->hasil->jumlah = 1;
+            $rs->pesan[] = 'Akun ditemukan';
+            $rs->hasil->data = $akun;
+        }
+        return $rs;
     }
 
     public function getByUsername($username)
     {
-        return Akun::where('username', '=', $username)->first();
+        $akun = Akun::where('username', '=', $username)->first();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (is_null($akun)) {
+            $rs->pesan[] = 'Akun dengan Username ' . $username . ' tidak terdaftar';
+        } else {
+            $rs->sukses = true;
+            $rs->hasil->jumlah = 1;
+            $rs->pesan[] = 'Akun ditemukan';
+            $rs->hasil->data = $akun;
+        }
+        return $rs;
     }
 
     public function getByUsernameAndPassword($username, $password)
@@ -80,13 +115,13 @@ class AkunService
 
     public function update($id, $attributes = [])
     {
-        $akun = $this->getById($id);
+        $akun = Akun::where('id', '=', $id)->first();
         $newUsername = $attributes['username'];
         $cekAkun = $this->getByUsername($newUsername);
         $rs = new ResultSet();
         $rs->hasil->tipe = 'Object';
         if (!is_null($akun)) {
-            if (is_null($cekAkun) || $akun->username == $newUsername) {
+            if (!$cekAkun->sukses || $akun->username == $newUsername) {
                 $update = $akun->update($attributes);
                 $rs->sukses = true;
                 $rs->pesan[] = 'Sukses update Akun';
@@ -104,19 +139,19 @@ class AkunService
 
     public function delete($id)
     {
-        $akun = $this->getById($id);
+        $akun = Akun::where('id', '=', $id)->first();
         $rs = new ResultSet();
         $rs->hasil->tipe = 'Object';
         if (is_null($akun)) {
             $rs->pesan[] = 'Gagal delete Akun, id tidak ditemukan';
         } else {
-            $delete = Akun::where('id', '=', $id)->delete();
+            $delete = $akun->delete();
             if ($delete) {
                 $rs->sukses = true;
                 $rs->pesan[] = 'Sukses delete Akun';
                 $rs->hasil->jumlah = 1;
             } else {
-                $rs->pesan = 'Gagal delete Akun';
+                $rs->pesan[] = 'Gagal delete Akun';
             }
         }
         $rs->hasil->data = $akun;

@@ -17,16 +17,7 @@ class TamuController extends Controller
     {
         $permintaan = new PermintaanBertamu();
         $permintaan->fill($request->input());
-        $permintaan = $this->permintaanBertamuService->save($permintaan);
-        if (is_null($permintaan)) {
-            $resp['message'][] = 'Gagal menambah permintaan';
-        } else {
-            $resp = [
-                'message' => 'Sukses menambah permintaan',
-                'permintaan' => $permintaan
-            ];
-        }
-
-        return response()->json($resp);
+        $rs = $this->permintaanBertamuService->save($permintaan);
+        return response()->json($rs);
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Akun;
 use App\Models\Tamu;
 use App\Services\AkunService;
 use App\Services\PegawaiService;
+use App\Services\ResultSet;
 use App\Services\TamuService;
 use Illuminate\Http\Request;
 
@@ -54,30 +55,31 @@ class UserController extends Controller
 
     public function daftar(Request $request)
     {
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
         $tamu = new Tamu();
         $tamu->fill($request->input());
-
-        if (!is_null($this->tamuService->getByNIK($tamu->nik))) {
-            $resp['message'][] = 'Gagal daftar, NIK sudah terdaftar';
+        $cekTamu = $this->tamuService->getByNIK($tamu->nik);
+        if ($cekTamu->sukses) {
+            $rs->pesan[] = 'Gagal daftar, NIK sudah terdaftar';
         } else {
             $akun = new Akun();
             $akun->fill($request->input());
-
-            $akun = $this->akunService->save($akun);
-            if (is_null($akun)) {
-                $resp['message'][] = 'Gagal daftar, Username sudah terdaftar';
+            $saveAkun = $this->akunService->save($akun);
+            if (!$saveAkun->sukses) {
+                $rs->pesan = $saveAkun->pesan;
             } else {
                 $tamu->id_akun = $akun->id;
-                $tamu = $this->tamuService->save($tamu);
-                $resp = [
-                    'message' => 'Sukses daftar',
-                    'tamu' => $tamu,
-                    'akun' => $akun
-                ];
+                $saveTamu = $this->tamuService->save($tamu);
+                $rs->sukses = $saveTamu->sukses;
+                $rs->hasil->jumlah = 1;
+                $rs->hasil->data['tamu'] = $tamu;
+                $rs->hasil->data['akun'] = $akun;
+                $rs->pesan[] = 'Sukses daftar';
             }
         }
 
-        return response()->json($resp);
+        return response()->json($rs);
     }
 
     public function allUser()
@@ -106,6 +108,8 @@ class UserController extends Controller
 
     public function updatePegawai(Request $request)
     {
+        $rs = $this->pegawaiService->update($request->input('id'), $request->input());
+        return response()->json($rs);
     }
 
     public function deleteAkun($id)

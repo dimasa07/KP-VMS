@@ -15,40 +15,23 @@ class FrontOfficeController extends Controller
 
     public function checkIn(Request $request)
     {
-        $idPermintaan = $request->input('id_permintaan');
         $bukuTamu = new BukuTamu();
         $bukuTamu->fill($request->input());
-        $bukuTamu = $this->bukuTamuService->save($bukuTamu);
-
-        if (is_null($bukuTamu)) {
-            $resp['message'][] = 'Gagal check-in';
-        } else {
-            $resp = [
-                'message' => 'Sukses check-in',
-                'buku_tamu' => $bukuTamu
-            ];
-        }
-
-        return response()->json($resp);
+        $rs = $this->bukuTamuService->save($bukuTamu);
+        return response()->json($rs);
     }
 
-    public function checkOut()
+    public function checkOut(Request $request)
     {
+        $bukuTamu = new BukuTamu();
+        $bukuTamu->fill($request->input());
+        $rs = $this->bukuTamuService->save($bukuTamu);
+        return response()->json($rs);
     }
 
     public function allBukuTamu()
     {
-        $semuaBukuTamu = $this->bukuTamuService->getAll();
-        $jumlah = count($semuaBukuTamu); 
-        if ($jumlah == 0) {
-            $resp['message'][] = 'Tidak ada data Buku Tamu';
-        } else {
-            $resp = [
-                'message' => 'Data Buku Tamu ditemukan, jumlah ' . $jumlah . ' data',
-                'buku_tamu' => $semuaBukuTamu
-            ];
-        }
-
-        return response()->json($resp);
+        $rs = $this->bukuTamuService->getAll();
+        return response()->json($rs);
     }
 }

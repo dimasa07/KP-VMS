@@ -10,37 +10,96 @@ class TamuService
 
     public function save(Tamu $tamu)
     {
-        return $tamu->save() ? $tamu : null;
+        $cekTamu = $this->getByNIK($tamu->nik);
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (!$cekTamu->sukses) {
+            $sukses = $tamu->save();
+            $rs->sukses = $sukses;
+            if ($sukses) {
+                $rs->pesan[] = 'Sukses tambah Tamu';
+                $rs->hasil->jumlah = 1;
+                $rs->hasil->data = $tamu;
+            } else {
+                $rs->pesan[] = 'Gagal tambah Tamu';
+            }
+        } else {
+            $rs->pesan[] = 'Gagal tambah Tamu, NIK telah tersedia';
+        }
+
+        return $rs;
     }
 
     public function getAll()
     {
-        return Tamu::all();
+        $tamu = Tamu::all();
+        $rs = new ResultSet();
+        $rs->sukses = true;
+        $jumlah = count($tamu);
+        $rs->hasil->jumlah = $jumlah;
+        $rs->hasil->tipe = 'Array';
+        if ($jumlah == 0) {
+            $rs->pesan[] = 'Tidak ada data Tamu';
+        } else {
+            foreach ($tamu as $t) {
+                $t->akun;
+            }
+            $rs->pesan[] = 'Data Tamu ditemukan';
+            $rs->hasil->data = $tamu;
+        }
+
+        return $rs;
     }
 
     public function getById($id)
     {
-        return Tamu::where('id', '=', $id)->first();
+        $tamu = Tamu::where('id', '=', $id)->first();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (is_null($tamu)) {
+            $rs->pesan[] = 'Tamu dengan id ' . $id . ' tidak terdaftar';
+        } else {
+            $rs->sukses = true;
+            $rs->hasil->jumlah = 1;
+            $tamu->akun;
+            $rs->pesan[] = 'Tamu ditemukan';
+            $rs->hasil->data = $tamu;
+        }
+
+        return $rs;
     }
 
     public function getByNIK($nik)
     {
-        return Tamu::where('nik', '=', $nik)->first();
+        $tamu = Tamu::where('nik', '=', $nik)->first();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (is_null($tamu)) {
+            $rs->pesan[] = 'Tamu dengan NIK ' . $nik . ' tidak terdaftar';
+        } else {
+            $rs->sukses = true;
+            $rs->hasil->jumlah = 1;
+            $tamu->akun;
+            $rs->pesan[] = 'Tamu ditemukan';
+            $rs->hasil->data = $tamu;
+        }
+
+        return $rs;
     }
 
     public function update($id, $attributes = [])
     {
-        $tamu = $this->getById($id);
+        $tamu = Tamu::where('id', '=', $id)->first();
         $newNIK = $attributes['nik'];
         $cekTamu = $this->getByNIK($newNIK);
         $rs = new ResultSet();
         $rs->hasil->tipe = 'Object';
         if (!is_null($tamu)) {
-            if (is_null($cekTamu) || $tamu->nik == $newNIK) {
+            if (!$cekTamu->sukses || $tamu->nik == $newNIK) {
                 $update = $tamu->update($attributes);
                 $rs->sukses = true;
                 $rs->pesan[] = 'Sukses update Tamu';
-                $rs->hasil->jumlah= 1;
+                $rs->hasil->jumlah = 1;
                 $rs->hasil->data = $tamu;
             } else {
                 $rs->pesan[] = 'Gagal update Tamu, NIK telah tersedia';
@@ -54,14 +113,14 @@ class TamuService
 
     public function delete($id)
     {
-        $tamu = $this->getById($id);
+        $tamu = Tamu::where('id', '=', $id)->first();
         $rs = new ResultSet();
         $rs->hasil->tipe = 'Object';
         $akun = null;
         if (is_null($tamu)) {
             $rs->pesan[] = 'Gagal delete Tamu, id tidak ditemukan';
         } else {
-            $delete = Tamu::where('id', '=', $id)->delete();
+            $delete = $tamu->delete();
             if ($delete) {
                 $akun = Akun::where('id', '=', $tamu->id_akun)->first();
                 if (!is_null($akun)) {

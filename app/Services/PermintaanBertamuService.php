@@ -9,32 +9,96 @@ class PermintaanBertamuService
 
     public function save(PermintaanBertamu $permintaanBertamu)
     {
-        return $permintaanBertamu->save() ? $permintaanBertamu : null;
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        $sukses = $permintaanBertamu->save();
+        $rs->sukses = $sukses;
+        if ($sukses) {
+            $rs->pesan[] = 'Sukses tambah Permintaan Bertamu';
+            $rs->hasil->jumlah = 1;
+            $rs->hasil->data = $permintaanBertamu;
+        } else {
+            $rs->pesan[] = 'Gagal tambah Permintaan Bertamu';
+        }
+
+        return $rs;
     }
 
     public function getAll()
     {
-        return PermintaanBertamu::all();
+        $permintaan = PermintaanBertamu::all();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Array';
+        $jumlah = count($permintaan);
+        $rs->hasil->jumlah = $jumlah;
+        if ($jumlah == 0) {
+            $rs->pesan[] = 'Tidak ada data Permintaan Bertamu';
+        } else {
+            $rs->sukses = true;
+            foreach ($permintaan as $p) {
+                $p->admin;
+                $p->pegawai;
+                $p->tamu;
+            }
+            $rs->pesan[] = 'Data Permintaan Bertamu ditemukan';
+        }
+        $rs->hasil->data = $permintaan;
+
+        return $rs;
     }
 
-    public function getById($id): PermintaanBertamu|null
+    public function getById($id)
     {
-        return PermintaanBertamu::where('id', '=', $id)->first();
+        $permintaan = PermintaanBertamu::where('id', '=', $id)->first();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (is_null($permintaan)) {
+            $rs->pesan[] = 'Permintaan Bertamu dengan id ' . $id . ' tidak terdaftar';
+        } else {
+            $rs->sukses = true;
+            $rs->hasil->jumlah = 1;
+            $rs->pesan[] = 'Permintaan Bertamu ditemukan';
+            $rs->hasil->data = $permintaan;
+        }
+        return $rs;
     }
 
     public function update($id, $attributes = [])
     {
-        $permintaan = $this->getById($id);
-
+        $permintaan = PermintaanBertamu::where('id', '=', $id)->first();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
         if (!is_null($permintaan)) {
-            $permintaan->update($attributes);
+            $update = $permintaan->update($attributes);
+            $rs->sukses = true;
+            $rs->pesan[] = 'Sukses update Permintaan Bertamu';
+            $rs->hasil->jumlah = 1;
+            $rs->hasil->data = $permintaan;
+        } else {
+            $rs->pesan[] = 'Gagal update Permintaan Bertamu, id tidak ditemukan';
         }
 
-        return $permintaan;
+        return $rs;
     }
 
     public function delete($id)
     {
-        return PermintaanBertamu::where('id', '=', $id)->delete();
+        $permintaan = PermintaanBertamu::where('id', '=', $id)->first();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (is_null($permintaan)) {
+            $rs->pesan[] = 'Gagal delete Permintaan Bertamu, id tidak ditemukan';
+        } else {
+            $delete = $permintaan->delete();
+            if ($delete) {
+                $rs->sukses = true;
+                $rs->pesan[] = 'Sukses delete Permintaan Bertamu';
+                $rs->hasil->jumlah = 1;
+            } else {
+                $rs->pesan[] = 'Gagal delete Permintaan Bertamu';
+            }
+        }
+        $rs->hasil->data = $permintaan;
+        return $rs;
     }
 }
