@@ -10,14 +10,19 @@ class BukuTamuService
     {
         $rs = new ResultSet();
         $rs->hasil->tipe = 'Object';
-        $sukses = $bukuTamu->save();
-        $rs->sukses = $sukses;
-        if ($sukses) {
-            $rs->pesan[] = 'Sukses tambah Buku Tamu';
-            $rs->hasil->jumlah = 1;
-            $rs->hasil->data = $bukuTamu;
+        $cekBukuTamu = BukuTamu::where('id_permintaan', '=', $bukuTamu->id_permintaan)->first();
+        if (is_null($cekBukuTamu)) {
+            $sukses = $bukuTamu->save();
+            $rs->sukses = $sukses;
+            if ($sukses) {
+                $rs->pesan[] = 'Sukses tambah Buku Tamu';
+                $rs->hasil->jumlah = 1;
+                $rs->hasil->data = $bukuTamu;
+            } else {
+                $rs->pesan[] = 'Gagal tambah Buku Tamu';
+            }
         } else {
-            $rs->pesan[] = 'Gagal tambah Buku Tamu';
+            $rs->pesan[] = 'Gagal tambah Buku Tamu, id_permintaan telah melakukan check-in ';
         }
 
         return $rs;

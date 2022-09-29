@@ -20,4 +20,10 @@ class TamuController extends Controller
         $rs = $this->permintaanBertamuService->save($permintaan);
         return response()->json($rs);
     }
+
+    public function updatePermintaanBertamu(Request $request)
+    {
+        $rs = $this->permintaanBertamuService->update($request->input('id'), $request->input());
+        return response()->json($rs);
+    }
 }

@@ -139,6 +139,27 @@ class PegawaiService
         return $rs;
     }
 
+    public function getByNama($nama)
+    {
+        $pegawai = Pegawai::where('nama', 'LIKE', '%' . $nama . '%')->get();
+        $rs = new ResultSet();
+        $jumlah = count($pegawai);
+        $rs->hasil->jumlah = $jumlah;
+        $rs->hasil->tipe = 'Array';
+        if ($jumlah == 0) {
+            $rs->pesan[] = 'Tidak ada data Pegawai dengan nama '.$nama;
+        } else {
+            $rs->sukses = true;
+            foreach ($pegawai as $p) {
+                $p->akun;
+            }
+            $rs->pesan[] = 'Data Pegawai ditemukan';
+            $rs->hasil->data = $pegawai;
+        }
+
+        return $rs;
+    }
+
     public function update($id, $attributes = [])
     {
         $pegawai = Pegawai::where('id', '=', $id)->first();

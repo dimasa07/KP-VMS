@@ -57,12 +57,6 @@ class AdminController extends Controller
         return response()->json($rs);
     }
 
-    public function allTamu()
-    {
-        $rs = $this->tamuService->getAll();
-        return response()->json($rs);
-    }
-
     public function allPegawai()
     {
         $rs = $this->pegawaiService->getAll();
@@ -87,6 +81,12 @@ class AdminController extends Controller
         return response()->json($rs);
     }
 
+    public function allBukuTamu()
+    {
+        $rs = $this->bukuTamuService->getAll();
+        return response()->json($rs);
+    }
+
     public function getTamuByNIK(string $nik)
     {
         $rs = $this->tamuService->getByNIK($nik);
@@ -99,9 +99,9 @@ class AdminController extends Controller
         return response()->json($rs);
     }
 
-    public function updatePermintaan(Request $request)
+    public function updatePegawai(Request $request)
     {
-        $rs = $this->permintaanBertamuService->update($request->input('id'), $request->input());
+        $rs = $this->pegawaiService->update($request->input('id'), $request->input());
         return response()->json($rs);
     }
 

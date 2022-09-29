@@ -15,7 +15,7 @@ class ResultSet
 }
 
 class Hasil{
-    public int $jumlah = 0;
     public string $tipe = '';
+    public int $jumlah = 0;
     public $data = null;
 }

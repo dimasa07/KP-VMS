@@ -33,6 +33,12 @@ Route::prefix('/user')->controller(UserController::class)->group(function () {
     Route::post('/login', 'login')->name('user.login');
     Route::get('/logout', 'logout')->name('user.logout');
     Route::get('/get/username/{username}', 'getByUsername')->name('user.get.username');
+    Route::get('/get/tamu/id/{id}', 'getTamuById')->name('user.get.tamu.id');
+    Route::get('/get/tamu/nik/{nik}', 'getTamuByNIK')->name('user.get.tamu.nik');
+    Route::get('/get/tamu/nama/{nama}', 'getTamuByNama')->name('user.get.tamu.nama');
+    Route::get('/get/pegawai/id/{id}', 'getPegawaiById')->name('user.get.pegawai.id');
+    Route::get('/get/pegawai/nip/{nip}', 'getPegawaiByNIP')->name('user.get.pegawai.nip');
+    Route::get('/get/pegawai/nama/{nama}', 'getPegawaiByNama')->name('user.get.pegawai.nama');
     Route::get('/get/role/{role}', 'getByRole')->name('user.get.role');
     Route::post('/admin/update', 'updateAdmin')->name('user.admin.update');
     Route::get('/admin/delete/{id}', 'deleteAdmin')->name('user.admin.delete');
@@ -49,22 +55,29 @@ Route::prefix('/user')->controller(UserController::class)->group(function () {
 // ADMIN ROUTES
 Route::prefix('/admin')->controller(AdminController::class)->group(function () {
     Route::get('/permintaan/all', 'allPermintaanBertamu')->name('admin.permintaan.all');
-    Route::get('/permintaan/setujui/{idPermintaan}', 'setujuiPermintaan')->name('admin.permintaan.setujui');
+    Route::get('/permintaan/setujui/{idPermintaan}', 'setujuiPermintaan')->name('admin.permintaan.setujui'); 
     Route::get('/all', 'allAdmin')->name('admin.all');
     Route::get('/pegawai/all', 'allPegawai')->name('admin.pegawai.all');
     Route::get('/fo/all', 'allFrontOffice')->name('admin.fo.all');
     Route::get('/tamu/all', 'allTamu')->name('admin.tamu.all'); 
+    Route::get('/buku-tamu/all', 'allBukuTamu')->name('admin.buku-tamu.all'); 
     Route::get('/tamu/get/nik/{nik}', 'getTamuByNIK')->name('admin.tamu.get.nik');
     Route::post('/pegawai/tambah', 'tambahPegawai')->name('admin.pegawai.tambah');
+    Route::post('/pegawai/update', 'updatePegawai')->name('admin.pegawai.update');
+    Route::post('/tambah', 'tambahAdmin')->name('admin.tambah');
 });
 
 // TAMU ROUTES 
 Route::prefix('/tamu')->controller(TamuController::class)->group(function () {
     Route::post('/permintaan/tambah', 'tambahPermintaan')->name('tamu.permintaan.tambah');
+    Route::post('/permintaan/update', 'updatePermintaanBertamu')->name('tamu.permintaan.update');
 });
 
 // FRONT OFFICE ROUTES
 Route::prefix('/fo')->controller(FrontOfficeController::class)->group(function () {
+    Route::get('/tamu/all', 'allTamu')->name('fo.tamu.all');
+    Route::get('/permintaan/all', 'allPermintaanBertamu')->name('fo.permintaan.all');
     Route::post('/buku-tamu/check-in', 'checkIn')->name('fo.bukutamu.checkIn');
+    Route::post('/buku-tamu/check-out', 'checkOut')->name('fo.bukutamu.checkOut');
     Route::get('/buku-tamu/all', 'allBukuTamu')->name('fo.bukutamu.all');
 });

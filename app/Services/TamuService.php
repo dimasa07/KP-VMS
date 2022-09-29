@@ -87,6 +87,27 @@ class TamuService
         return $rs;
     }
 
+    public function getByNama($name)
+    {
+        $tamu = Tamu::where('nama', 'LIKE', '%' . $name . '%')->get();
+        $rs = new ResultSet();
+        $rs->sukses = true;
+        $jumlah = count($tamu);
+        $rs->hasil->jumlah = $jumlah;
+        $rs->hasil->tipe = 'Array';
+        if ($jumlah == 0) {
+            $rs->pesan[] = 'Tidak ada data Tamu dengan nama ' . $name;
+        } else {
+            foreach ($tamu as $t) {
+                $t->akun;
+            }
+            $rs->pesan[] = 'Data Tamu ditemukan';
+            $rs->hasil->data = $tamu;
+        }
+
+        return $rs;
+    }
+
     public function update($id, $attributes = [])
     {
         $tamu = Tamu::where('id', '=', $id)->first();

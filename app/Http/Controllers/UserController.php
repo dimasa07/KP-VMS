@@ -94,6 +94,36 @@ class UserController extends Controller
         return response()->json($rs);
     }
 
+    public function getTamuById($id){
+        $rs = $this->tamuService->getById($id);
+        return response()->json($rs);
+    }
+
+    public function getTamuByNIK($nik){
+        $rs = $this->tamuService->getByNIK($nik);
+        return response()->json($rs);
+    }
+
+    public function getTamuByNama($nama){
+        $rs = $this->tamuService->getByNama($nama);
+        return response()->json($rs);
+    }
+
+    public function getPegawaiById($id){
+        $rs = $this->pegawaiService->getById($id);
+        return response()->json($rs);
+    }
+
+    public function getPegawaiByNIP($nip){
+        $rs = $this->pegawaiService->getByNIP($nip);
+        return response()->json($rs);
+    }
+
+    public function getPegawaiByNama($nama){
+        $rs = $this->pegawaiService->getByNama($nama);
+        return response()->json($rs);
+    }
+
     public function updateAkun(Request $request)
     {
         $rs = $this->akunService->update($request->input('id'), $request->input());
