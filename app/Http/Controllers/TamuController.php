@@ -21,9 +21,21 @@ class TamuController extends Controller
         return response()->json($rs);
     }
 
+    public function allPermintaanBertamu($idTamu)
+    {
+        $rs = $this->permintaanBertamuService->getByIdTamu($idTamu);
+        return response()->json($rs);
+    }
+
     public function updatePermintaanBertamu(Request $request)
     {
         $rs = $this->permintaanBertamuService->update($request->input('id'), $request->input());
+        return response()->json($rs);
+    }
+
+    public function deletePermintaanBertamu($id)
+    {
+        $rs = $this->permintaanBertamuService->delete($id);
         return response()->json($rs);
     }
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tamu extends Model
 {
     use HasFactory;
-    
+
     protected $table = "tamu";
     public $timestamps = false;
 
@@ -17,7 +17,7 @@ class Tamu extends Model
      *
      * @var array<int, string>
      */
-    
+
     protected $fillable = [
         'nik',
         'nama',
@@ -31,4 +31,5 @@ class Tamu extends Model
     {
         return $this->belongsTo(Akun::class, 'id_akun');
     }
+
 }

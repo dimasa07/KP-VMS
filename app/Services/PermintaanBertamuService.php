@@ -63,6 +63,29 @@ class PermintaanBertamuService
         return $rs;
     }
 
+    public function getByIdTamu($idTamu)
+    {
+        $permintaan = PermintaanBertamu::where('id_tamu', '=', $idTamu)->get();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Array';
+        $jumlah = count($permintaan);
+        $rs->hasil->jumlah = $jumlah;
+        if ($jumlah == 0) {
+            $rs->pesan[] = 'Tidak ada data Permintaan Bertamu dengan id tamu ' . $idTamu;
+        } else {
+            $rs->sukses = true;
+            foreach ($permintaan as $p) {
+                $p->admin;
+                $p->pegawai;
+                $p->tamu;
+            }
+            $rs->pesan[] = 'Data Permintaan Bertamu ditemukan';
+        }
+        $rs->hasil->data = $permintaan;
+
+        return $rs;
+    }
+
     public function update($id, $attributes = [])
     {
         $permintaan = PermintaanBertamu::where('id', '=', $id)->first();

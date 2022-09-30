@@ -30,21 +30,24 @@ class UserController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
 
-        $akun = $this->akunService->getByUsernameAndPassword($username, $password);
-        if (!is_null($akun)) {
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        $rsAkun = $this->akunService->getByUsernameAndPassword($username, $password);
+        if ($rsAkun->sukses) {
+            $akun = $rsAkun->hasil->data;
+            $akun->pegawai;
+            $akun->tamu;
+            $rs->pesan[] = 'Sukses Login';
+            $rs->sukses = true;
+            $rs->hasil->jumlah = 1;
+            $rs->hasil->data = $akun;
             $request->session()->put('username', $akun->username);
             $request->session()->put('role', $akun->role);
-            $resp = [
-                'message' => 'Sukses login',
-                'akun' => $akun
-            ];
         } else {
-            $resp = [
-                'message' => 'Gagal login'
-            ];
+            $rs->pesan[] = 'Gagal Login, ' . $rsAkun->pesan[0];
         }
 
-        return response()->json($resp);
+        return response()->json($rs);
     }
 
     public function logout(Request $request)
@@ -94,32 +97,38 @@ class UserController extends Controller
         return response()->json($rs);
     }
 
-    public function getTamuById($id){
+    public function getTamuById($id)
+    {
         $rs = $this->tamuService->getById($id);
         return response()->json($rs);
     }
 
-    public function getTamuByNIK($nik){
+    public function getTamuByNIK($nik)
+    {
         $rs = $this->tamuService->getByNIK($nik);
         return response()->json($rs);
     }
 
-    public function getTamuByNama($nama){
+    public function getTamuByNama($nama)
+    {
         $rs = $this->tamuService->getByNama($nama);
         return response()->json($rs);
     }
 
-    public function getPegawaiById($id){
+    public function getPegawaiById($id)
+    {
         $rs = $this->pegawaiService->getById($id);
         return response()->json($rs);
     }
 
-    public function getPegawaiByNIP($nip){
+    public function getPegawaiByNIP($nip)
+    {
         $rs = $this->pegawaiService->getByNIP($nip);
         return response()->json($rs);
     }
 
-    public function getPegawaiByNama($nama){
+    public function getPegawaiByNama($nama)
+    {
         $rs = $this->pegawaiService->getByNama($nama);
         return response()->json($rs);
     }

@@ -70,7 +70,9 @@ Route::prefix('/admin')->controller(AdminController::class)->group(function () {
 // TAMU ROUTES 
 Route::prefix('/tamu')->controller(TamuController::class)->group(function () {
     Route::post('/permintaan/tambah', 'tambahPermintaan')->name('tamu.permintaan.tambah');
+    Route::get('/permintaan/all/{idTamu}', 'allPermintaanBertamu')->name('tamu.permintaan.all');
     Route::post('/permintaan/update', 'updatePermintaanBertamu')->name('tamu.permintaan.update');
+    Route::get('/permintaan/delete/{id}', 'deletePermintaanBertamu')->name('tamu.permintaan.delete');
 });
 
 // FRONT OFFICE ROUTES

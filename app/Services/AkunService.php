@@ -84,10 +84,21 @@ class AkunService
 
     public function getByUsernameAndPassword($username, $password)
     {
-        return Akun::where([
+        $akun = Akun::where([
             ['username', '=', $username],
             ['password', '=', $password]
         ])->first();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (is_null($akun)) {
+            $rs->pesan[] = 'Akun dengan Username & Password tersebut tidak terdaftar';
+        } else {
+            $rs->sukses = true;
+            $rs->hasil->jumlah = 1;
+            $rs->pesan[] = 'Akun ditemukan';
+            $rs->hasil->data = $akun;
+        }
+        return $rs;
     }
 
     public function getByRole($role)
@@ -157,4 +168,6 @@ class AkunService
         $rs->hasil->data = $akun;
         return $rs;
     }
+
+    
 }

@@ -21,8 +21,7 @@ class AdminController extends Controller
         public BukuTamuService $bukuTamuService,
         public PermintaanBertamuService $permintaanBertamuService,
         public TamuService $tamuService
-    ) {
-    }
+    ) {}
 
     public function tambahPegawai(Request $request)
     {
