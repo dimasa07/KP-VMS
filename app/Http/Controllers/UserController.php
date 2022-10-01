@@ -27,6 +27,17 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'username' => 'required',
+                'password' => 'required'
+            ],
+            [
+                'username.required' => 'Username tidak boleh kosong',
+                'password.required' => 'Password tidak boleh kosong'
+            ]
+        );
         $username = $request->input('username');
         $password = $request->input('password');
 
@@ -43,11 +54,13 @@ class UserController extends Controller
             $rs->hasil->data = $akun;
             $request->session()->put('username', $akun->username);
             $request->session()->put('role', $akun->role);
+            return redirect()->route('beranda')->with('success', 'Login sukses');
         } else {
             $rs->pesan[] = 'Gagal Login, ' . $rsAkun->pesan[0];
+            return back()->with('error', $rs->pesan[0]);
         }
 
-        return response()->json($rs);
+        //return response()->json($rs);
     }
 
     public function logout(Request $request)

@@ -10,8 +10,8 @@
 
 <body>
     <h1>
-        @if(!is_null($user))
-            Welcome, {{ $user->username }}, {{ $user->role }}
+        @if($fd = Session::get('success'))
+            {{ $fd }}
         @endif
     </h1>
 </body>

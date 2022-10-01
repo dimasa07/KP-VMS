@@ -9,7 +9,14 @@
 </head>
 
 <body>
-    <form action="{{ route('auth.login') }}" method="POST">
+    <h1>
+        @if($errors->any())
+        @foreach($errors->all() as $error)
+        <div class="alert alert-danger">{{ $error }}</div>
+        @endforeach
+        @endif
+    </h1>
+    <form action="{{ route('user.login') }}" method="POST">
         @csrf
         <input type="text" name="username" placeholder="Username">
         <br>

@@ -21,7 +21,8 @@ class AdminController extends Controller
         public BukuTamuService $bukuTamuService,
         public PermintaanBertamuService $permintaanBertamuService,
         public TamuService $tamuService
-    ) {}
+    ) {
+    }
 
     public function tambahPegawai(Request $request)
     {
@@ -74,10 +75,16 @@ class AdminController extends Controller
         return response()->json($rs);
     }
 
-    public function allPermintaanBertamu()
+    public function allPermintaanBertamu(Request $request)
     {
         $rs = $this->permintaanBertamuService->getAll();
-        return response()->json($rs);
+        $permintaan = $rs->hasil->data;
+        if ($request->ajax()) {
+            return response()->json(array('permintaan' => $permintaan));
+        }
+        return view('admin.data_permintaan', compact('permintaan'));
+
+        // return response()->json($rs);
     }
 
     public function allBukuTamu()
