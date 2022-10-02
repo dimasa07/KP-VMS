@@ -40,7 +40,7 @@
 <body>
     <h1>Data Permintaan</h1>
     <hr>
-    <table border="1" id="tpermintaan">
+    <table border="1" id="tpermintaan" cellspacing="0" cellpadding="5">
         <tr>
             <th>id</th>
             <th>keperluan</th>

@@ -91,9 +91,12 @@ Route::prefix('/fo')
     ->controller(FrontOfficeController::class)
     //->middleware(FrontOfficeMiddleware::class)
     ->group(function () {
+        Route::post('/my/profil/update', 'updateProfil')->name('fo.my.profil.update');
+        Route::post('/my/akun/update', 'updateAkun')->name('fo.my.akun.update');
         Route::get('/tamu/all', 'allTamu')->name('fo.tamu.all');
         Route::get('/permintaan/all', 'allPermintaanBertamu')->name('fo.permintaan.all');
-        Route::post('/buku-tamu/check-in', 'checkIn')->name('fo.bukutamu.checkIn');
-        Route::post('/buku-tamu/check-out', 'checkOut')->name('fo.bukutamu.checkOut');
+        Route::get('/buku-tamu/check-in/{id}', 'checkIn')->name('fo.bukutamu.checkIn');
+        Route::get('/buku-tamu/check-out/{id}', 'checkOut')->name('fo.bukutamu.checkOut');
         Route::get('/buku-tamu/all', 'allBukuTamu')->name('fo.bukutamu.all');
+        Route::get('/buku-tamu/delete/{id}', 'deleteBukuTamu')->name('fo.bukutamu.delete');
     });
