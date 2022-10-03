@@ -24,6 +24,10 @@ class AdminController extends Controller
     ) {
     }
 
+    public function index(){
+        return view('admin.index');
+    }
+
     public function tambahPegawai(Request $request)
     {
         $rs = new ResultSet();

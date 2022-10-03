@@ -60,8 +60,9 @@ Route::prefix('/user')
 // ADMIN ROUTES
 Route::prefix('/admin')
     ->controller(AdminController::class)
-    ->middleware(AdminMiddleware::class)
+    // ->middleware(AdminMiddleware::class)
     ->group(function () {
+        Route::get('/', 'index')->name('admin.index');
         Route::get('/permintaan/all', 'allPermintaanBertamu')->name('admin.permintaan.all');
         Route::get('/permintaan/setujui/{idPermintaan}', 'setujuiPermintaan')->name('admin.permintaan.setujui');
         Route::get('/all', 'allAdmin')->name('admin.all');
