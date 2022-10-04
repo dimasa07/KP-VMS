@@ -54,7 +54,15 @@ class UserController extends Controller
             $rs->hasil->data = $akun;
             $request->session()->put('username', $akun->username);
             $request->session()->put('role', $akun->role);
-            return redirect()->route('beranda')->with('success', 'Login sukses');
+            $route = "";
+            if ($akun->role == "ADMIN") {
+                $route = "admin.index";
+            } else if ($akun->role == "TAMU") {
+                $route = "tamu.index";
+            } else if ($akun->role == "FRONT OFFICE") {
+                $route = "fo.index";
+            }
+            return redirect()->route($route)->with('success', 'Login sukses');
         } else {
             $rs->pesan[] = 'Gagal Login, ' . $rsAkun->pesan[0];
             return back()->with('error', $rs->pesan[0]);
@@ -67,6 +75,8 @@ class UserController extends Controller
     {
         $request->session()->forget('username');
         $request->session()->forget('role');
+
+        return redirect()->route('beranda');
     }
 
     public function daftar(Request $request)
