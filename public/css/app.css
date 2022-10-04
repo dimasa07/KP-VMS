@@ -654,14 +654,17 @@ video {
 .hidden {
   display: none;
 }
-.h-8 {
-  height: 2rem;
+.h-9 {
+  height: 2.25rem;
 }
 .h-6 {
   height: 1.5rem;
 }
 .h-5 {
   height: 1.25rem;
+}
+.h-8 {
+  height: 2rem;
 }
 .h-16 {
   height: 4rem;
