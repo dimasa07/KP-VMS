@@ -9,7 +9,6 @@ use App\Services\PegawaiService;
 use App\Services\PermintaanBertamuService;
 use App\Services\ResultSet;
 use App\Services\TamuService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FrontOfficeController extends Controller
@@ -25,7 +24,7 @@ class FrontOfficeController extends Controller
 
     public function checkIn(int $idPermintaan)
     {
-        $datetime = Carbon::now()->toDateTimeString();
+        $datetime = '';  //Carbon::now()->toDateTimeString();
         $attributes = [
             'id_front_office' => 2,
             'id_permintaan' => $idPermintaan,
@@ -48,7 +47,7 @@ class FrontOfficeController extends Controller
         } else {
             $isCheckedOut = $cekBukuTamu->check_out;
             if (is_null($isCheckedOut)) {
-                $datetime = Carbon::now()->toDateTimeString();
+                $datetime = ''; //Carbon::now()->toDateTimeString();
                 $rsUpdate = $this->bukuTamuService->update($idBukuTamu, ['check_out' => $datetime]);
                 if ($rsUpdate->sukses) {
                     $rs->hasil->jumlah = 1;

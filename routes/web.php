@@ -23,6 +23,27 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('beranda');
 })->name('beranda');
+Route::get('/visi-misi', function () {
+    return view('visi_misi');
+})->name('visi-misi');
+Route::get('/struktur-organisasi', function () {
+    return view('struktur_organisasi');
+})->name('struktur-organisasi');
+Route::get('/bidang-aptika', function () {
+    return view('bidang_aptika');
+})->name('layanan.bidang-aptika');
+Route::get('/bidang-tik', function () {
+    return view('bidang_tik');
+})->name('layanan.bidang-tik');
+Route::get('/bidang-ikp', function () {
+    return view('bidang_ikp');
+})->name('layanan.bidang-ikp');
+Route::get('/bidang-statistik', function () {
+    return view('bidang_statistik');
+})->name('layanan.bidang-statistik');
+Route::get('/bidang-keamanan-persandian', function () {
+    return view('bidang_keamanan_persandian');
+})->name('layanan.bidang-keamanan-persandian');
 
 // USER ROUTES
 Route::prefix('/user')
