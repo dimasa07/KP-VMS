@@ -29,6 +29,7 @@ Route::prefix('/user')
     ->controller(UserController::class)
     ->group(function () {
         Route::get('/all', 'allUser')->name('user.all');
+        Route::get('/daftar', 'formDaftar')->name('user.form.daftar');
         Route::post('/daftar', 'daftar')->name('user.daftar');
         Route::get('/login', 'formLogin')->name('user.form.login');
         Route::post('/login', 'login')->name('user.login');

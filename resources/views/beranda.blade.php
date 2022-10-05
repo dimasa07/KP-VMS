@@ -8,11 +8,7 @@
     <title>Beranda</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
-    <style>
-        .bg-utama{
-            background-image: url("{{ asset('img/gb-utama.png') }}");
-        }
-    </style>
+
 </head>
 
 <body class="leading-normal tracking-normal" style="font-family: 'Source Sans Pro', sans-serif;">
@@ -22,8 +18,7 @@
             <div class="pl-4 flex items-center">
                 <a class="toggleColour text-blue-800 no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
                     <!--Icon from: http://www.potlabicons.com/ -->
-                    <img class="h-9 fill-current inline" src="{{ asset('img/gb-utama.png') }}">
-           
+                    <img class="h-9 fill-current inline" src="{{ asset('img/logo1.png') }}">
                     DISKOMINFO
                 </a>
             </div>
@@ -67,9 +62,11 @@
                 <p class="leading-normal text-2xl mb-8">
                     Silahkan mendaftar jika belum mempunyai akun.
                 </p>
-                <button class="mx-auto lg:mx-0 hover: bg-blue-800 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out hover:text-cyan-300">
-                    Daftar
-                </button>
+                <a href="{{ route('user.daftar') }}">
+                    <button class="mx-auto lg:mx-0 hover: bg-blue-800 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out hover:text-cyan-300">
+                        Daftar
+                    </button>
+                </a>
             </div>
             <!--Right Col-->
             <div class="w-full md:w-3/5 py-6 text-center">

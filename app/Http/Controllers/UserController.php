@@ -25,6 +25,11 @@ class UserController extends Controller
         return view('user.login');
     }
 
+    public function formDaftar(Request $request)
+    {
+        return view('user.daftar');
+    }
+
     public function login(Request $request)
     {
         $this->validate(
@@ -102,10 +107,12 @@ class UserController extends Controller
                 $rs->hasil->data['tamu'] = $tamu;
                 $rs->hasil->data['akun'] = $akun;
                 $rs->pesan[] = 'Sukses daftar';
+                return redirect()->route('user.login');
             }
         }
 
-        return response()->json($rs);
+        return back();
+        // return response()->json($rs);
     }
 
     public function allUser()

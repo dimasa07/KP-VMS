@@ -36,10 +36,15 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2 ml-3" for="password">Password</label>
                     <input name="password" type="password" id="password" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-cyan-600 transition duration-500 px-3 pb-3">
                 </div>
-                <button class="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200" type="submit">LOGIN</button>
+                <button class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200" type="submit">LOGIN</button>
             </form>
             <div class="max-w-lg mx-auto text-center mt-6">
-                <p>Belum punya akun? <a href="#" class="font-bold hover:underline">Daftar</a>.</p>
+                <p>Belum punya akun? <a href="{{ route('user.form.daftar') }}" class="text-blue-700 font-bold hover:underline">Daftar</a>.</p>
+            </div>
+            <div class="text-gray-700 mt-6 text-center">
+                <a class="no-underline text-blue-700 hover:underline" href="{{ route('beranda') }}">
+                    Beranda
+                </a>
             </div>
         </section>
     </main>
