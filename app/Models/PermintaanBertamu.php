@@ -18,7 +18,8 @@ class PermintaanBertamu extends Model
         'id_pegawai',
         'keperluan',
         'waktu_bertamu',
-        'disetujui',
+        'waktu_pengiriman',
+        'status',
         'pesan_ditolak'
     ];
 
@@ -42,21 +43,21 @@ class PermintaanBertamu extends Model
 
     public function tamu()
     {
-        return $this->belongsToMany(
+        return $this->belongsTo(
             Tamu::class,
-            'permintaan_bertamu',
-            'id',
             'id_tamu'
         );
     }
 
     public function pegawai()
     {
-        return $this->belongsToMany(
+        return $this->belongsTo(
             Pegawai::class,
-            'permintaan_bertamu',
-            'id',
             'id_pegawai'
         );
+    }
+
+    public function buku_tamu(){
+        return $this->hasOne(BukuTamu::class,'id');
     }
 }

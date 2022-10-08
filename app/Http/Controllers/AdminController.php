@@ -24,7 +24,8 @@ class AdminController extends Controller
     ) {
     }
 
-    public function index(){
+    public function index()
+    {
         return view('admin.index');
     }
 
@@ -64,29 +65,51 @@ class AdminController extends Controller
     public function allPegawai()
     {
         $rs = $this->pegawaiService->getAll();
-        return response()->json($rs);
+        $pegawai = $rs->hasil->data;
+        return view('admin.data_pegawai', compact('pegawai'));
+        // return response()->json($admin);
     }
 
     public function allAdmin()
     {
         $rs = $this->pegawaiService->getAllAdmin();
-        return response()->json($rs);
+        $admin = $rs->hasil->data;
+        return view('admin.data_admin', compact('admin'));
+        // return response()->json($rs);
     }
 
     public function allFrontOffice()
     {
         $rs = $this->pegawaiService->getAllFrontOffice();
-        return response()->json($rs);
+        $frontOffice = $rs->hasil->data;
+        return view('admin.data_front_office', compact('frontOffice'));
+        // return response()->json($rs);
+    }
+
+    public function allTamu()
+    {
+        $rs = $this->tamuService->getAll();
+        $tamu = $rs->hasil->data;
+        return view('admin.data_tamu', compact('tamu'));
+        //return response()->json($rs);
     }
 
     public function allPermintaanBertamu(Request $request)
     {
-        $rs = $this->permintaanBertamuService->getAll();
-        $permintaan = $rs->hasil->data;
-        if ($request->ajax()) {
-            return response()->json(array('permintaan' => $permintaan));
-        }
-        return view('admin.data_permintaan', compact('permintaan'));
+        $rs1 = $this->permintaanBertamuService->getByStatus('BELUM DIPERIKSA');
+        $rs2 = $this->permintaanBertamuService->getByStatus('DISETUJUI');
+        $rs3 = $this->permintaanBertamuService->getByStatus('DITOLAK');
+        $permintaanBelumDiperiksa = $rs1->hasil->data;
+        $permintaanDisetujui = $rs2->hasil->data;
+        $permintaanDitolak = $rs3->hasil->data;
+        // if ($request->ajax()) {
+        //     return response()->json(array('permintaan' => $permintaan));
+        // }
+        return view('admin.data_permintaan', [], [
+            'permintaanBelumDiperiksa' => $permintaanBelumDiperiksa,
+            'permintaanDisetujui' => $permintaanDisetujui,
+            'permintaanDitolak' => $permintaanDitolak
+        ]);
 
         // return response()->json($rs);
     }
@@ -94,7 +117,9 @@ class AdminController extends Controller
     public function allBukuTamu()
     {
         $rs = $this->bukuTamuService->getAll();
-        return response()->json($rs);
+        $bukuTamu = $rs->hasil->data;
+        return view('admin.data_buku_tamu', compact('bukuTamu'));
+        // return response()->json($rs);
     }
 
     public function getTamuByNIK(string $nik)

@@ -64,25 +64,34 @@
                     </li>
                     <li class="mr-6 my-2 md:my-0">
                         <a href="{{ route('admin.permintaan.all') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('admin/permintaan/all') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
-                            <i class="fas fa-home fa-fw mr-3 {{ request()->is('admin/permintaan/all') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Permintaan Bertamu</span>
+                            <i class="fas fa-tasks fa-fw mr-3 {{ request()->is('admin/permintaan/all') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Permintaan Bertamu</span>
                         </a>
                     </li>
                     <li class="mr-6 my-2 md:my-0">
-                        <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-purple-500">
-                            <i class="fa fa-wallet fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Buku Tamu</span>
+                        <a href="{{ route('admin.buku-tamu.all') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('admin/buku-tamu/all') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
+                            <i class="fas fa-book fa-fw mr-3 {{ request()->is('admin/buku-tamu/all') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Buku Tamu</span>
                         </a>
                     </li>
                     <li class="mr-6 my-2 md:my-0">
-                        <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-green-500">
-                            <i class="fas fa-user fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Data Tamu</span>
+                        <a href="{{ route('admin.tamu.all') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('admin/tamu/all') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
+                            <i class="fas fa-user fa-fw mr-3 {{ request()->is('admin/tamu/all') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Data Tamu</span>
                         </a>
                     </li>
                     <li class="mr-6 my-2 md:my-0">
-                        <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-red-500">
-                            <i class="fa fa-user fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Data Pegawai</span>
+                        <a href="{{ route('admin.all') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('admin/all') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
+                            <i class="fas fa-user fa-fw mr-3 {{ request()->is('admin/all') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Data Admin</span>
                         </a>
                     </li>
-                    
+                    <li class="mr-6 my-2 md:my-0">
+                        <a href="{{ route('admin.fo.all') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('admin/fo/all') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
+                            <i class="fas fa-user fa-fw mr-3 {{ request()->is('admin/fo/all') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Data Front Office</span>
+                        </a>
+                    </li>
+                    <li class="mr-6 my-2 md:my-0">
+                        <a href="{{ route('admin.pegawai.all') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('admin/pegawai/all') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
+                            <i class="fas fa-user fa-fw mr-3 {{ request()->is('admin/pegawai/all') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Data Pegawai</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- <div class="relative pull-right pl-4 pr-4 md:pr-0">

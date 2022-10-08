@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
             'no_telepon' => '081234510002',
             'email' => 'pegawai2@gmail.com'
         ]);
-        $pegawai = Pegawai::create([
+        $pegawai3 = Pegawai::create([
             'nip' => 1003,
             'nama' => 'Pegawai 3',
             'no_telepon' => '081234510003',

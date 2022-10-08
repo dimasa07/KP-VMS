@@ -18,4 +18,13 @@ class BukuTamu extends Model
         'check_in',
         'check_out',
     ];
+
+    public function front_office(){
+        return $this->belongsTo(Pegawai::class,'id_front_office');
+    }
+
+    public function permintaan_bertamu(){
+        return $this->belongsTo(PermintaanBertamu::class,'id_permintaan');
+    }
+    
 }

@@ -40,9 +40,11 @@ class BukuTamuService
         } else {
             $rs->sukses = true;
             foreach ($bukuTamu as $bt) {
-                $bt->admin;
-                $bt->pegawai;
-                $bt->tamu;
+                $bt->front_office;
+                $bt->permintaan_bertamu;
+                $bt->permintaan_bertamu->tamu;
+                $bt->permintaan_bertamu->admin;
+                $bt->permintaan_bertamu->pegawai;
             }
             $rs->pesan[] = 'Data Buku Tamu ditemukan';
         }

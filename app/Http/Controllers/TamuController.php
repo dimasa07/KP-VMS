@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PermintaanBertamu;
 use App\Services\PermintaanBertamuService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TamuController extends Controller
@@ -17,6 +18,8 @@ class TamuController extends Controller
     {
         $permintaan = new PermintaanBertamu();
         $permintaan->fill($request->input());
+        $waktuPengiriman = Carbon::now()->toDateTimeString();
+        $permintaan->waktu_pengiriman = $waktuPengiriman;
         $rs = $this->permintaanBertamuService->save($permintaan);
         return response()->json($rs);
     }

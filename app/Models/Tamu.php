@@ -32,4 +32,7 @@ class Tamu extends Model
         return $this->belongsTo(Akun::class, 'id_akun');
     }
 
+    public function permintaan(){
+        return $this->hasMany(PermintaanBertamu::class,'id');
+    }
 }

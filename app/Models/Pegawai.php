@@ -32,4 +32,9 @@ class Pegawai extends Model
     {
         return $this->belongsTo(Akun::class, 'id_akun');
     }
+
+    public function buku_tamu()
+    {
+        return $this->hasMany(BukuTamu::class, 'id');
+    }
 }

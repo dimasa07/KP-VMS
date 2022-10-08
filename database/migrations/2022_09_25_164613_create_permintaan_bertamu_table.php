@@ -23,7 +23,8 @@ return new class extends Migration
             $table->foreign('id_pegawai')->references('id')->on('pegawai');
             $table->string('keperluan')->nullable();
             $table->dateTime('waktu_bertamu')->nullable();
-            $table->enum('disetujui', ['YA', 'TIDAK'])->default('TIDAK');
+            $table->dateTime('waktu_pengiriman')->nullable();
+            $table->enum('status', ['BELUM DIPERIKSA','DISETUJUI', 'DITOLAK'])->default('BELUM DIPERIKSA');
             $table->string('pesan_ditolak')->nullable();
         });
     }
