@@ -74,6 +74,8 @@ class AkunService
         if (is_null($akun)) {
             $rs->pesan[] = 'Akun dengan Username ' . $username . ' tidak terdaftar';
         } else {
+            $akun->pegawai;
+            $akun->tamu;
             $rs->sukses = true;
             $rs->hasil->jumlah = 1;
             $rs->pesan[] = 'Akun ditemukan';

@@ -10,6 +10,7 @@ use App\Services\PegawaiService;
 use App\Services\PermintaanBertamuService;
 use App\Services\ResultSet;
 use App\Services\TamuService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -128,10 +129,16 @@ class AdminController extends Controller
         return response()->json($rs);
     }
 
-    public function setujuiPermintaan(string $idPermintaan)
+    public function setujuiPermintaan(Request $request, string $idPermintaan)
     {
-        $rs = $this->permintaanBertamuService->update($idPermintaan, ['disetujui' => 'YA']);
-        return response()->json($rs);
+        $admin = $this->akunService->getByUsername($request->session()->get('username'))->hasil->data;
+        $waktuPemeriksaan = Carbon::now()->toDateTimeString();
+        $rs = $this->permintaanBertamuService->update($idPermintaan, [
+            'status' => 'DISETUJUI',
+            'waktu_pemeriksaan' => $waktuPemeriksaan,
+            'id_admin'=>$admin->id
+        ]);
+        return back();
     }
 
     public function updatePegawai(Request $request)

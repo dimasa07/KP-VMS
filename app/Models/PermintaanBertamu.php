@@ -19,6 +19,7 @@ class PermintaanBertamu extends Model
         'keperluan',
         'waktu_bertamu',
         'waktu_pengiriman',
+        'waktu_pemeriksaan',
         'status',
         'pesan_ditolak'
     ];

@@ -121,6 +121,12 @@ class UserController extends Controller
         return response()->json($rs);
     }
 
+    public function getByUsername(string $username)
+    {
+        $rs = $this->akunService->getByUsername($username);
+        return response()->json($rs);
+    }
+
     public function getByRole(string $role)
     {
         $rs = $this->akunService->getByRole($role);
