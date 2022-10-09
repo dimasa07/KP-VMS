@@ -83,7 +83,7 @@ Route::prefix('/admin')
         Route::get('/', 'index')->name('admin.index');
         Route::get('/permintaan/all', 'allPermintaanBertamu')->name('admin.permintaan.all');
         Route::get('/permintaan/setujui/{idPermintaan}', 'setujuiPermintaan')->name('admin.permintaan.setujui');
-        Route::get('/permintaan/tolak/{idPermintaan}', 'tolakPermintaan')->name('admin.permintaan.tolak');
+        Route::post('/permintaan/tolak', 'tolakPermintaan')->name('admin.permintaan.tolak');
         Route::get('/all', 'allAdmin')->name('admin.all');
         Route::get('/pegawai/all', 'allPegawai')->name('admin.pegawai.all');
         Route::get('/fo/all', 'allFrontOffice')->name('admin.fo.all');
