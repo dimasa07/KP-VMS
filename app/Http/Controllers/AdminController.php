@@ -136,7 +136,20 @@ class AdminController extends Controller
         $rs = $this->permintaanBertamuService->update($idPermintaan, [
             'status' => 'DISETUJUI',
             'waktu_pemeriksaan' => $waktuPemeriksaan,
-            'id_admin'=>$admin->id
+            'id_admin' => $admin->id
+        ]);
+        return back();
+    }
+
+    public function tolakPermintaan(Request $request, $idPermintaan)
+    {
+        $admin = $this->akunService->getByUsername($request->session()->get('username'))->hasil->data;
+        $waktuPemeriksaan = Carbon::now()->toDateTimeString();
+        $rs = $this->permintaanBertamuService->update($idPermintaan, [
+            'status' => 'DITOLAK',
+            'waktu_pemeriksaan' => $waktuPemeriksaan,
+            'id_admin' => $admin->id,
+            'pesan_ditolak' => $request->input('pesan_ditolak')
         ]);
         return back();
     }

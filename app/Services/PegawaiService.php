@@ -69,9 +69,9 @@ class PegawaiService
         if ($jumlah == 0) {
             $rs->pesan[] = 'Tidak ada data Admin';
         } else {
-            foreach ($admins as $admin) {
-                $admin->akun;
-            }
+            // foreach ($admins as $admin) {
+            //     $admin->akun;
+            // }
             $rs->sukses = true;
             $rs->pesan[] = 'Data Admin ditemukan';
             $rs->hasil->data = $admins;
@@ -93,9 +93,9 @@ class PegawaiService
         if ($jumlah == 0) {
             $rs->pesan[] = 'Tidak ada data Front Office';
         } else {
-            foreach ($fo as $o) {
-                $o->akun;
-            }
+            // foreach ($fo as $o) {
+            //     $o->akun;
+            // }
             $rs->sukses = true;
             $rs->pesan[] = 'Data Front Office ditemukan';
             $rs->hasil->data = $fo;

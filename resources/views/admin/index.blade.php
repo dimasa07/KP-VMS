@@ -132,7 +132,7 @@
 
             <div class="w-full p-3">
                 <!--Table Card-->
-                <div class="bg-white border rounded shadow">
+                <!-- <div class="bg-white border rounded shadow">
                     <div class="border-b p-3">
                         <h5 class="font-bold uppercase text-gray-600">Table</h5>
                     </div>
@@ -166,7 +166,7 @@
                         </table>
                         <p class="py-2"><a href="#">See More issues...</a></p>
                     </div>
-                </div>
+                </div> -->
                 <!--/table Card-->
             </div>
         </div>
