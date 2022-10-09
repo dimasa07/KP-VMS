@@ -77,7 +77,7 @@
                                     <!-- <a x-bind:href="window.location.origin+'/admin/permintaan/tolak/'+permintaan.id+'?pesan_ditolak='+pesan_ditolak"> -->
                                     <button type="submit" @click="formData.id = permintaan.id;" x-show="showConfirmTolak" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Tolak</button>
                                     <!-- </a> -->
-                                    <button @click="showDetail= !showDetail; showConfirmTolak=false; showConfirmSetuju=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
+                                    <button type="button" @click="showDetail= !showDetail; showConfirmTolak=false; showConfirmSetuju=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
                                 </div>
                             </div>
                         </div>

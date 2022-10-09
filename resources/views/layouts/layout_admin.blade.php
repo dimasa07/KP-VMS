@@ -84,11 +84,11 @@
                             <i class="fas fa-user fa-fw mr-3 {{ request()->is('admin/all') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Data Admin</span>
                         </a>
                     </li>
-                    <li class="mr-6 my-2 md:my-0">
+                    <!-- <li class="mr-6 my-2 md:my-0">
                         <a href="{{ route('admin.fo.all') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('admin/fo/all') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
                             <i class="fas fa-user fa-fw mr-3 {{ request()->is('admin/fo/all') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Data Front Office</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="mr-6 my-2 md:my-0">
                         <a href="{{ route('admin.pegawai.all') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('admin/pegawai/all') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
                             <i class="fas fa-user fa-fw mr-3 {{ request()->is('admin/pegawai/all') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Data Pegawai</span>

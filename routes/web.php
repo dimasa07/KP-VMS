@@ -88,6 +88,7 @@ Route::prefix('/admin')
         Route::get('/pegawai/all', 'allPegawai')->name('admin.pegawai.all');
         Route::get('/fo/all', 'allFrontOffice')->name('admin.fo.all');
         Route::get('/tamu/all', 'allTamu')->name('admin.tamu.all');
+        Route::get('/tamu/delete/{id}', 'deleteTamu')->name('admin.tamu.delete');
         Route::get('/buku-tamu/all', 'allBukuTamu')->name('admin.buku-tamu.all');
         Route::get('/tamu/get/nik/{nik}', 'getTamuByNIK')->name('admin.tamu.get.nik');
         Route::post('/pegawai/tambah', 'tambahPegawai')->name('admin.pegawai.tambah');

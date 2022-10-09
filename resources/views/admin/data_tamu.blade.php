@@ -20,8 +20,59 @@
                 <!-- <div class="border-b p-3">
                     <h5 class="font-bold uppercase text-gray-600">Sudah Memiliki Akun</h5>
                 </div> -->
-                <div class="p-5">
-                    <table class="w-full p-5 text-gray-700 border-3 border-black">
+                <div class="p-5" x-data="{ tamu:null,showDetail:false,showConfirmDelete:false }">
+                    <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6">
+                        <div x-data="{formData()}">
+                            <table class="w-full p-5 text-gray-700">
+                                <tbody>
+                                    <tr>
+                                        <td class="w-40">Nama Tamu</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="tamu.nama"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">NIK</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="tamu.nik"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">No. Telepon</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="tamu.no_telepon"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">Email</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="tamu.email"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">Alamat</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="tamu.alamat"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">Username</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="tamu.akun.username"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmSetuju : false }">
+                                <!-- <button type="button" href="#" x-show="!showConfirmSetuju" @click="showConfirmSetuju= !showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
+                                <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
+                                    <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a> -->
+                                <button x-show="!showConfirmDelete" @click="showConfirmDelete= !showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Tamu</button>
+
+                                <a x-bind:href="window.location.origin+'/admin/tamu/delete/'+tamu.id">
+                                    <button type="submit" @click="formData.id = permintaan.id;" x-show="showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button>
+                                </a>
+                                <button type="button" @click="showDetail= !showDetail; showConfirmDelete=false; showConfirmSetuju=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="w-full p-5 text-gray-700 border-3 border-black" x-show="!showDetail">
                         <thead>
                             <tr>
                                 <th class="border-2 text-blue-900 p-2">No</th>
@@ -38,15 +89,20 @@
                                 <td class="border-2 p-2">{{ $tamu[$i]->nama }}</td>
                                 <td class="border-2 p-2">{{ $tamu[$i]->nik }}</td>
                                 <td class="border-2 p-2">{{ $tamu[$i]->akun->username }}</td>
-                                <td class="border-2 p-2 text-center"></td>
+                                <td class="border-2 p-2 text-center">
+                                    <div>
+                                        <button @click="tamu={{ $tamu[$i] }}; showDetail= !showDetail" class="bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded">Detail</button>
+                                    </div>
+                                </td>
                                 </tr>
                                 @endfor
                         </tbody>
                     </table>
                 </div>
             </div>
-            <!--/table Card-->
         </div>
+        <!--/table Card-->
     </div>
+</div>
 </div>
 @endsection

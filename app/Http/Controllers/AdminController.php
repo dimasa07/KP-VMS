@@ -166,4 +166,11 @@ class AdminController extends Controller
         $rs = $this->bukuTamuService->update($request->input('id'), $request->input());
         return response()->json($rs);
     }
+
+    public function deleteTamu($id)
+    {
+        $rs = $this->tamuService->delete($id);
+        return back();
+        // return response()->json($rs);
+    }
 }
