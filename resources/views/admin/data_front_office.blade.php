@@ -10,7 +10,7 @@
             <!--Table Card-->
             <div class="bg-white border rounded shadow">
                 <div class="border-b px-3 py-6">
-                    <h5 class="text-3xl font-bold uppercase text-gray-600">Data Front Office</h5>
+                    <h5 class="ml-5 text-3xl font-bold uppercase text-gray-600">Data Front Office</h5>
                 </div>
             </div>
         </div>

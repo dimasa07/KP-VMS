@@ -82,6 +82,8 @@ Route::prefix('/admin')
     ->group(function () {
         Route::get('/', 'index')->name('admin.index');
         Route::get('/profil', 'profil')->name('admin.profil');
+        Route::post('/profil/update', 'updateProfil')->name('admin.profil.update');
+        Route::post('/akun/update', 'updateAkun')->name('admin.akun.update');
         Route::get('/akun', 'akun')->name('admin.akun');
         Route::get('/permintaan/all', 'allPermintaanBertamu')->name('admin.permintaan.all');
         Route::get('/permintaan/setujui/{idPermintaan}', 'setujuiPermintaan')->name('admin.permintaan.setujui');

@@ -171,11 +171,28 @@ class AdminController extends Controller
         return response()->json($rs);
     }
 
+    public function updateProfil(Request $request)
+    {
+        $rs = $this->pegawaiService->update($request->input('id'), $request->input());
+        return response()->json($rs);
+    }
+
+    public function updateAkun(Request $request)
+    {
+        $rs = $this->akunService->update($request->input('id'), $request->input());
+        if($rs->sukses){
+            $request->session()->put('username',$request->input('username'));
+        }
+        return response()->json($rs);
+    }
+
     public function updatePegawai(Request $request)
     {
         $rs = $this->pegawaiService->update($request->input('id'), $request->input());
         return response()->json($rs);
     }
+
+    
 
     public function updateBukuTamu(Request $request)
     {
