@@ -63,6 +63,22 @@ class AdminController extends Controller
         return response()->json($rs);
     }
 
+    public function profil(Request $request)
+    {
+        $rs = $this->pegawaiService->getByNIP($request->session()->get('nip'));
+        $admin = $rs->hasil->data;
+        return view('admin.profil', compact('admin'));
+        // return response()->json($admin);
+    }
+
+    public function akun(Request $request)
+    {
+        $rs = $this->akunService->getByUsername($request->session()->get('username'));
+        $akun = $rs->hasil->data;
+        return view('admin.akun', compact('akun'));
+        // return response()->json($admin);
+    }
+
     public function allPegawai()
     {
         $rs = $this->pegawaiService->getAll();

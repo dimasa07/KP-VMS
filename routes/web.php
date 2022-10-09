@@ -81,6 +81,8 @@ Route::prefix('/admin')
     // ->middleware(AdminMiddleware::class)
     ->group(function () {
         Route::get('/', 'index')->name('admin.index');
+        Route::get('/profil', 'profil')->name('admin.profil');
+        Route::get('/akun', 'akun')->name('admin.akun');
         Route::get('/permintaan/all', 'allPermintaanBertamu')->name('admin.permintaan.all');
         Route::get('/permintaan/setujui/{idPermintaan}', 'setujuiPermintaan')->name('admin.permintaan.setujui');
         Route::post('/permintaan/tolak', 'tolakPermintaan')->name('admin.permintaan.tolak');

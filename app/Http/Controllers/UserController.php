@@ -61,10 +61,13 @@ class UserController extends Controller
             $request->session()->put('role', $akun->role);
             $route = "";
             if ($akun->role == "ADMIN") {
+                $request->session()->put('nip', $akun->pegawai->nip);
                 $route = "admin.index";
             } else if ($akun->role == "TAMU") {
+                $request->session()->put('nik', $akun->tamu->nik);
                 $route = "tamu.index";
             } else if ($akun->role == "FRONT OFFICE") {
+                $request->session()->put('role', $akun->pegawai->nip);
                 $route = "fo.index";
             }
             return redirect()->route($route)->with('success', 'Login sukses');

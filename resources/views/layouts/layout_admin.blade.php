@@ -36,8 +36,8 @@
                         </button>
                         <div id="userMenu" class="bg-white rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
                             <ul class="list-reset">
-                                <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Profil</a></li>
-                                <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Akun</a></li>
+                                <li><a href="{{ route('admin.profil') }}" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Profil</a></li>
+                                <li><a href="{{ route('admin.akun') }}" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Akun</a></li>
                                 <li>
                                     <hr class="border-t mx-2 border-gray-400">
                                 </li>
@@ -108,13 +108,13 @@
             </div>
         </div>
     </nav>
+    <div class="flex flex-col h-screen justify-between">
+        @yield('content')
 
-    @yield('content')
-
-    <footer class="bg-white border-t border-gray-400 shadow text-center py-6 font-bold">
+        <footer class="bg-white border-t border-gray-400 shadow text-center py-6 font-bold relative bottom-0">
             Admin - DISKOMINFO
-    </footer>
-
+        </footer>
+    </div>
     <script>
         /*Toggle dropdown list*/
         /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
