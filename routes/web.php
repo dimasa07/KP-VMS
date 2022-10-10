@@ -116,12 +116,17 @@ Route::prefix('/fo')
     ->controller(FrontOfficeController::class)
     //->middleware(FrontOfficeMiddleware::class)
     ->group(function () {
+        Route::get('/', 'index')->name('fo.index');
         Route::post('/my/profil/update', 'updateProfil')->name('fo.my.profil.update');
         Route::post('/my/akun/update', 'updateAkun')->name('fo.my.akun.update');
         Route::get('/tamu/all', 'allTamu')->name('fo.tamu.all');
         Route::get('/permintaan/all', 'allPermintaanBertamu')->name('fo.permintaan.all');
-        Route::get('/buku-tamu/check-in/{id}', 'checkIn')->name('fo.bukutamu.checkIn');
-        Route::get('/buku-tamu/check-out/{id}', 'checkOut')->name('fo.bukutamu.checkOut');
-        Route::get('/buku-tamu/all', 'allBukuTamu')->name('fo.bukutamu.all');
-        Route::get('/buku-tamu/delete/{id}', 'deleteBukuTamu')->name('fo.bukutamu.delete');
+        Route::post('/permintaan/tambah', 'tambahPermintaan')->name('fo.permintaan.tambah');
+        Route::get('/permintaan/buat', 'viewBuatPermintaan')->name('fo.permintaan.buat');
+        Route::get('/check-in', 'viewCheckIn')->name('fo.check-in');
+        Route::get('/check-out', 'viewCheckOut')->name('fo.check-out');
+        Route::get('/buku-tamu/check-in/{id}', 'checkIn')->name('fo.buku-tamu.check-in');
+        Route::get('/buku-tamu/check-out/{id}', 'checkOut')->name('fo.buku-tamu.check-out');
+        Route::get('/buku-tamu/all', 'allBukuTamu')->name('fo.buku-tamu.all');
+        Route::get('/buku-tamu/delete/{id}', 'deleteBukuTamu')->name('fo.buku-tamu.delete');
     });

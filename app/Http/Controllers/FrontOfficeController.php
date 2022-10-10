@@ -22,6 +22,23 @@ class FrontOfficeController extends Controller
     ) {
     }
 
+    public function index()
+    {
+        return view('front_office.index');
+    }
+
+    public function viewCheckIn(){
+        return view('front_office.check_in');
+    }
+
+    public function viewCheckOut(){
+        return view('front_office.check_out');
+    }
+
+    public function viewBuatPermintaan(){
+        return view('front_office.tambah_permintaan');
+    }
+
     public function checkIn(int $idPermintaan)
     {
         $datetime = '';  //Carbon::now()->toDateTimeString();
@@ -67,19 +84,36 @@ class FrontOfficeController extends Controller
     public function allTamu()
     {
         $rs = $this->tamuService->getAll();
-        return response()->json($rs);
+        $tamu = $rs->hasil->data;
+        return view('front_office.data_tamu', compact('tamu'));
     }
 
     public function allPermintaanBertamu()
     {
-        $rs = $this->permintaanBertamuService->getAll();
-        return response()->json($rs);
+        $rs1 = $this->permintaanBertamuService->getByStatus('BELUM DIPERIKSA');
+        $rs2 = $this->permintaanBertamuService->getByStatus('DISETUJUI');
+        $rs3 = $this->permintaanBertamuService->getByStatus('DITOLAK');
+        $permintaanBelumDiperiksa = $rs1->hasil->data;
+        $permintaanDisetujui = $rs2->hasil->data;
+        $permintaanDitolak = $rs3->hasil->data;
+        // if ($request->ajax()) {
+        //     return response()->json(array('permintaan' => $permintaan));
+        // }
+        return view('front_office.data_permintaan', [], [
+            'permintaanBelumDiperiksa' => $permintaanBelumDiperiksa,
+            'permintaanDisetujui' => $permintaanDisetujui,
+            'permintaanDitolak' => $permintaanDitolak
+        ]);
+
+        // return response()->json($rs);
     }
 
     public function allBukuTamu()
     {
         $rs = $this->bukuTamuService->getAll();
-        return response()->json($rs);
+        $bukuTamu = $rs->hasil->data;
+        return view('front_office.data_buku_tamu', compact('bukuTamu'));
+        // return response()->json($rs);
     }
 
     public function updateProfil(Request $request)
@@ -99,6 +133,4 @@ class FrontOfficeController extends Controller
         $rs = $this->bukuTamuService->delete($id);
         return response()->json($rs);
     }
-
-    
 }
