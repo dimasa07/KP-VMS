@@ -23,7 +23,7 @@
                 </a>
             </div>
             <div class="w-1/2 pr-0">
-                <div class="flex relative inline-block float-right">
+                <div class="relative inline-block float-right">
 
                     <div class="relative text-sm">
                         <button id="userButton" class="flex items-center focus:outline-none mr-3">
@@ -34,7 +34,7 @@
                                 </g>
                             </svg>
                         </button>
-                        <div id="userMenu" class="bg-white rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
+                        <div id="userMenu" class="bg-white rounded shadow-md absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
                             <ul class="list-reset">
                                 <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Profil</a></li>
                                 <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Akun</a></li>
@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-            <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-3 lg:mt-1 bg-white z-20" id="nav-content">
+            <div class="w-full flex-grow lg:items-center lg:w-auto hidden lg:block mt-3 lg:mt-1 bg-white z-20" id="nav-content">
                 <ul class="list-reset lg:flex flex-1 items-center px-4 md:px-0">
                     <li class="mr-6 my-2 md:my-0">
                         <a href="{{ route('fo.index') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('fo') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
@@ -117,7 +117,7 @@
         @yield('content')
 
         <footer class="bg-white border-t border-gray-400 shadow text-center py-6 font-bold relative bottom-0">
-            Admin - DISKOMINFO
+            Front Office - DISKOMINFO
         </footer>
     </div>
     <script>

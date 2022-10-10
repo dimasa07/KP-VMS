@@ -105,10 +105,14 @@ Route::prefix('/tamu')
     ->controller(TamuController::class)
     // ->middleware(TamuMiddleware::class)
     ->group(function () {
+        Route::get('/', 'index')->name('tamu.index');
         Route::post('/permintaan/tambah', 'tambahPermintaan')->name('tamu.permintaan.tambah');
+        Route::get('/permintaan/buat', 'viewBuatPermintaan')->name('tamu.permintaan.buat');
         Route::get('/permintaan/all/{idTamu}', 'allPermintaanBertamu')->name('tamu.permintaan.all');
         Route::post('/permintaan/update', 'updatePermintaanBertamu')->name('tamu.permintaan.update');
         Route::get('/permintaan/delete/{id}', 'deletePermintaanBertamu')->name('tamu.permintaan.delete');
+        Route::get('/riwayat/permintaan', 'riwayatPermintaan')->name('tamu.riwayat.permintaan');
+        Route::get('/riwayat/bertamu', 'riwayatBertamu')->name('tamu.riwayat.bertamu');
     });
 
 // FRONT OFFICE ROUTES

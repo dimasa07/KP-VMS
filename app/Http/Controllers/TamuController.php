@@ -14,6 +14,22 @@ class TamuController extends Controller
     ) {
     }
 
+    public function index(){
+        return view('tamu.index');
+    }
+
+    public function viewBuatPermintaan(){
+        return view('tamu.tambah_permintaan');
+    }
+
+    public function riwayatPermintaan(){
+        return view('tamu.riwayat_permintaan');
+    }
+
+    public function riwayatBertamu(){
+        return view('tamu.riwayat_bertamu');
+    }
+
     public function tambahPermintaan(Request $request)
     {
         $permintaan = new PermintaanBertamu();
