@@ -14,6 +14,7 @@
                 </div>
             </div>
         </div>
+
         <div class="w-full p-3">
             <!--Table Card-->
             <div class="bg-white border rounded shadow">
@@ -104,5 +105,5 @@
         <!--/table Card-->
     </div>
 </div>
-</div>
+
 @endsection
