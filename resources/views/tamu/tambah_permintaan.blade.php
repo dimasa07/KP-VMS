@@ -25,7 +25,7 @@
                             <div class="px-5">
                                 <div class="form-group mb-6">
                                     <label for="pegawai" class="form-label inline-block mb-2 text-gray-700">Pegawai Dituju</label>
-                                    <select name="id_pegawai" required class="bg-white form-control block w-full px-3 py-1.5 border border-blue-800" id="pegawai">
+                                    <select name="id_pegawai" required class="bg-white form-control block w-full px-3 py-1.5 border border-gray-400" id="pegawai">
                                         @foreach($pegawai as $p)
                                         <option value="{{ $p->id }}">{{ $p->nama }}</option>
                                         @endforeach
@@ -35,11 +35,11 @@
                                 </div>
                                 <div class="form-group mb-6">
                                     <label for="tanggal" class="form-label inline-block mb-2 text-gray-700">Tanggal</label>
-                                    <input required name="tanggal" type="date" class="form-control block w-full px-3 py-1.5 border border-blue-800" id="tanggal">
+                                    <input required name="tanggal" type="date" class="form-control block w-full px-3 py-1.5 border border-gray-400" id="tanggal">
                                 </div>
                                 <div class="form-group mb-6">
                                     <label for="waktu" class="form-label inline-block mb-2 text-gray-700">Waktu</label>
-                                    <input required name="waktu" type="time" class="form-control block w-full px-3 py-1.5 border border-blue-800" id="waktu">
+                                    <input required name="waktu" type="time" class="form-control block w-full px-3 py-1.5 border border-gray-400" id="waktu">
                                 </div>
 
                             </div>
@@ -47,7 +47,7 @@
                             <div class="px-5">
                                 <div class="form-group mb-6 h-full pb-14">
                                     <label for="keperluan" class="form-label inline-block mb-2 text-gray-700">Keperluan</label>
-                                    <textarea required name="keperluan" id="keperluan" cols="50" class="max-h-full min-h-full form-control block w-full px-3 py-1.5 border border-blue-800" placeholder="Keperluan..."></textarea>
+                                    <textarea required name="keperluan" id="keperluan" cols="50" class="max-h-full min-h-full form-control block w-full px-3 py-1.5 border border-gray-400" placeholder="Keperluan..."></textarea>
                                 </div>
 
                             </div>

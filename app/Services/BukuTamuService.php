@@ -85,6 +85,39 @@ class BukuTamuService
         return $rs;
     }
 
+    public function getByIdTamu($idTamu)
+    {
+        $bukuTamu = BukuTamu::all();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Array';
+        $jumlah = count($bukuTamu);
+        $bukuTamu2 = [];
+        if ($jumlah == 0) {
+            $rs->pesan[] = 'Tidak ada data Buku Tamu';
+        } else {
+            $rs->sukses = true;
+            foreach ($bukuTamu as $bt) {
+                $bt->front_office;
+                $bt->permintaan_bertamu;
+                $bt->permintaan_bertamu->tamu;
+                $bt->permintaan_bertamu->admin;
+                $bt->permintaan_bertamu->pegawai;
+                if ($bt->permintaan_bertamu->tamu->id == $idTamu) {
+                    $bukuTamu2[] = $bt;
+                }
+            }
+            if (count($bukuTamu2) == 0) {
+                $rs->pesan[] = 'Tidak ada data Buku Tamu';
+            } else {
+                $rs->pesan[] = 'Data Buku Tamu ditemukan';
+            }
+        }
+        $rs->hasil->jumlah = count($bukuTamu2);
+        $rs->hasil->data = $bukuTamu2;
+
+        return $rs;
+    }
+
     public function update($id, $attributes = [])
     {
         $bukuTamu = BukuTamu::where('id', '=', $id)->first();

@@ -72,7 +72,7 @@
                                 <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmSetuju : false }">
                                     <button type="button" href="#" x-show="!showConfirmSetuju" @click="showConfirmSetuju= !showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
                                     <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
-                                    <button type="button"  x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a>
+                                        <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a>
                                     <button x-show="!showConfirmTolak" @click="showConfirmTolak= !showConfirmTolak" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Tolak</button>
                                     <!-- <a x-bind:href="window.location.origin+'/admin/permintaan/tolak/'+permintaan.id+'?pesan_ditolak='+pesan_ditolak"> -->
                                     <button type="submit" @click="formData.id = permintaan.id;" x-show="showConfirmTolak" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Tolak</button>
@@ -89,7 +89,7 @@
                                     <th class="border-2 text-blue-900 p-2">Nama Tamu</th>
                                     <th class="border-2 text-blue-900 p-2">NIK</th>
                                     <th class="border-2 text-blue-900 p-2">Pegawai dituju</th>
-                                    <th class="border-2 text-blue-900 p-2">Waktu Permintaan</th>
+                                    <th class="border-2 text-blue-900 p-2">Waktu Pengiriman</th>
                                     <th class="border-2 text-blue-900 p-2">Aksi</th>
                                 </tr>
                             </thead>
@@ -156,9 +156,9 @@
                                     <td x-text="permintaan.waktu_pengiriman"></td>
                                 </tr>
                                 <tr>
-                                    <td class="w-40">Waktu Pemeriksaan</td>
+                                    <td class="w-40">Status</td>
                                     <td class="w-6">:</td>
-                                    <td x-text="permintaan.waktu_pemeriksaan"></td>
+                                    <td x-text="permintaan.status"></td>
                                 </tr>
                                 <tr>
                                     <td class="w-40">Admin Pemeriksa</td>
@@ -166,9 +166,9 @@
                                     <td x-text="permintaan.admin.nama"></td>
                                 </tr>
                                 <tr>
-                                    <td class="w-40">Status</td>
+                                    <td class="w-40">Waktu Pemeriksaan</td>
                                     <td class="w-6">:</td>
-                                    <td x-text="permintaan.status"></td>
+                                    <td x-text="permintaan.waktu_pemeriksaan"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -246,16 +246,7 @@
                                     <td class="w-6">:</td>
                                     <td x-text="permintaan.waktu_pengiriman"></td>
                                 </tr>
-                                <tr>
-                                    <td class="w-40">Waktu Pemeriksaan</td>
-                                    <td class="w-6">:</td>
-                                    <td x-text="permintaan.waktu_pemeriksaan"></td>
-                                </tr>
-                                <tr>
-                                    <td class="w-40">Admin Pemeriksa</td>
-                                    <td class="w-6">:</td>
-                                    <td x-text="permintaan.admin.nama"></td>
-                                </tr>
+
                                 <tr>
                                     <td class="w-40">Status</td>
                                     <td class="w-6">:</td>
@@ -265,6 +256,16 @@
                                     <td class="w-40">Pesan Ditolak</td>
                                     <td class="w-6">:</td>
                                     <td x-text="permintaan.pesan_ditolak"></td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40">Admin Pemeriksa</td>
+                                    <td class="w-6">:</td>
+                                    <td x-text="permintaan.admin.nama"></td>
+                                </tr>
+                                <tr>
+                                    <td class="w-40">Waktu Pemeriksaan</td>
+                                    <td class="w-6">:</td>
+                                    <td x-text="permintaan.waktu_pemeriksaan"></td>
                                 </tr>
                             </tbody>
                         </table>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PermintaanBertamu;
 use App\Services\AkunService;
+use App\Services\BukuTamuService;
 use App\Services\PegawaiService;
 use App\Services\PermintaanBertamuService;
 use App\Services\TamuService;
@@ -16,6 +17,7 @@ class TamuController extends Controller
         public TamuService $tamuService,
         public AkunService $akunService,
         public PermintaanBertamuService $permintaanBertamuService,
+        public BukuTamuService $bukuTamuService,
         public PegawaiService $pegawaiService
     ) {
     }
@@ -32,14 +34,19 @@ class TamuController extends Controller
         return view('tamu.tambah_permintaan', compact('pegawai'));
     }
 
-    public function riwayatPermintaan()
+    public function riwayatPermintaan(Request $request)
     {
-        return view('tamu.riwayat_permintaan');
+        $id_tamu = $this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
+        $permintaan = $this->permintaanBertamuService->getByIdTamu($id_tamu)->hasil->data;
+        return view('tamu.riwayat_permintaan', compact('permintaan'));
     }
 
-    public function riwayatBertamu()
+    public function riwayatBertamu(Request $request)
     {
-        return view('tamu.riwayat_bertamu');
+        $id_tamu = $this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
+        $bukuTamu = $this->bukuTamuService->getByIdTamu($id_tamu)->hasil->data;
+        return view('tamu.riwayat_bertamu',compact('bukuTamu'));
+        // return response()->json($bukuTamu);
     }
 
     public function tambahPermintaan(Request $request)
