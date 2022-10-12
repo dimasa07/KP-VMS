@@ -37,14 +37,14 @@ class TamuController extends Controller
 
     public function riwayatPermintaan(Request $request)
     {
-        $id_tamu = $this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
+        $id_tamu = $request->session()->get('id');//$this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
         $permintaan = $this->permintaanBertamuService->getByIdTamu($id_tamu)->hasil->data;
         return view('tamu.riwayat_permintaan', compact('permintaan'));
     }
 
     public function riwayatBertamu(Request $request)
     {
-        $id_tamu = $this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
+        $id_tamu = $request->session()->get('id'); //$this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
         $bukuTamu = $this->bukuTamuService->getByIdTamu($id_tamu)->hasil->data;
         return view('tamu.riwayat_bertamu', compact('bukuTamu'));
         // return response()->json($bukuTamu);

@@ -33,7 +33,7 @@
                 <input type="hidden" name="role" value="TAMU">
                 <input required type="text" class="block border border-gray-400 w-full p-3 rounded mb-4" name="username" placeholder="Username" />
                 <input required type="password" class="block border border-gray-400 w-full p-3 rounded mb-4" name="password" placeholder="Password" />
-                <input required type="re_password" class="block border border-gray-400 w-full p-3 rounded mb-4" name="re_password" placeholder="Re-password" />
+                <input required type="password" class="block border border-gray-400 w-full p-3 rounded mb-4" name="re_password" placeholder="Re-password" />
                 <button type="submit" class="w-full text-center py-3 rounded bg-green-600 font-bold text-white hover:bg-green-800 focus:outline-none my-1">Daftar</button>
             </form>
             <div class="text-gray-700 mt-6 text-center">

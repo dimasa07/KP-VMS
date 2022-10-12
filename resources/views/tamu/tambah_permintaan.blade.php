@@ -19,6 +19,11 @@
             <!--Table Card-->
             <div class="bg-white border rounded shadow">
                 
+                @if(session()->get('id')==0)
+                <div class="p-5 flex justify-center">
+                    <h3 class="text-1xl">Isi <a class="text-blue-800 underline" href="{{ route('tamu.profil') }}">profil</a> terlebih dahulu untuk bisa membuat permintaan.</h3>
+                </div>
+                @else
                 <div class="p-5">
                     <form method="POST" action="{{ route('tamu.permintaan.tambah') }}">
                         <div class="grid grid-cols-2 relative">
@@ -59,7 +64,7 @@
                         </div>
                     </form>
                 </div>
-
+                @endif
             </div>
         </div>
 
