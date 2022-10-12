@@ -101,6 +101,7 @@ class PermintaanBertamuService
                 $p->admin;
                 $p->pegawai;
                 $p->tamu;
+                $p->buku_tamu;
             }
             $rs->pesan[] = 'Data Permintaan Bertamu ditemukan';
         }

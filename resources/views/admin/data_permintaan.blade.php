@@ -15,6 +15,7 @@
                 </div>
             </div>
         </div>
+
         <div class="w-full p-3" x-data="{ showDetail: false, confirmTolak:false }">
             <!--Table Card-->
             <div class="bg-white border rounded shadow" x-data="{ permintaan: null }">
@@ -115,6 +116,7 @@
             </div>
             <!--/table Card-->
         </div>
+
         <div class="w-full p-3" x-data="{ showDetail: false }">
             <!--Table Card-->
             <div class="bg-white border rounded shadow" x-data="{ permintaan: null }">
@@ -206,6 +208,7 @@
             </div>
             <!--/table Card-->
         </div>
+
         <div class="w-full p-3" x-data="{ showDetail: false }">
             <!--Table Card-->
             <div class="bg-white border rounded shadow" x-data="{ permintaan: null }">
@@ -303,6 +306,7 @@
             </div>
             <!--/table Card-->
         </div>
+        
     </div>
 </div>
 

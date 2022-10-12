@@ -59,6 +59,6 @@ class PermintaanBertamu extends Model
     }
 
     public function buku_tamu(){
-        return $this->hasOne(BukuTamu::class,'id');
+        return $this->hasOne(BukuTamu::class,'id_permintaan');
     }
 }

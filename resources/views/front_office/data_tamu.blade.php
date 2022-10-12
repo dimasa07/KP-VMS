@@ -52,11 +52,11 @@
                                         <td class="w-6">:</td>
                                         <td x-text="tamu.alamat"></td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td class="w-40">Username</td>
                                         <td class="w-6">:</td>
                                         <td x-text="tamu.akun.username"></td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                             <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmSetuju : false }">
@@ -79,7 +79,7 @@
                                 <th class="border-2 text-blue-900 p-2">No</th>
                                 <th class="border-2 text-blue-900 p-2">Nama Tamu</th>
                                 <th class="border-2 text-blue-900 p-2">NIK</th>
-                                <th class="border-2 text-blue-900 p-2">Username</th>
+                                <!-- <th class="border-2 text-blue-900 p-2">Username</th> -->
                                 <th class="border-2 text-blue-900 p-2">Aksi</th>
                             </tr>
                         </thead>
@@ -89,7 +89,6 @@
                                 <td class="border-2 p-2 text-center">{{ $i+1 }}</td>
                                 <td class="border-2 p-2">{{ $tamu[$i]->nama }}</td>
                                 <td class="border-2 p-2">{{ $tamu[$i]->nik }}</td>
-                                <td class="border-2 p-2">{{ $tamu[$i]->akun->username }}</td>
                                 <td class="border-2 p-2 text-center">
                                     <div>
                                         <button @click="tamu={{ $tamu[$i] }}; showDetail= !showDetail" class="bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded">Detail</button>

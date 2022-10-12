@@ -18,6 +18,7 @@
         <div class="w-full p-3">
             <!--Table Card-->
             <div class="bg-white border rounded shadow">
+                
                 <div class="p-5">
                     <form method="POST" action="{{ route('tamu.permintaan.tambah') }}">
                         <div class="grid grid-cols-2 relative">
@@ -47,7 +48,7 @@
                             <div class="px-5">
                                 <div class="form-group mb-6 h-full pb-14">
                                     <label for="keperluan" class="form-label inline-block mb-2 text-gray-700">Keperluan</label>
-                                    <textarea required name="keperluan" id="keperluan" cols="50" class="max-h-full min-h-full form-control block w-full px-3 py-1.5 border border-gray-400" placeholder="Keperluan..."></textarea>
+                                    <textarea required name="keperluan" id="keperluan" cols="50" class="max-h-full min-h-full form-control block w-full px-3 py-1.5 border border-gray-400"></textarea>
                                 </div>
 
                             </div>
@@ -58,8 +59,10 @@
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
+
     </div>
 </div>
 <script>
