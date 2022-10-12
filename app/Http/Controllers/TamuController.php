@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PermintaanBertamu;
+use App\Models\Tamu;
 use App\Services\AkunService;
 use App\Services\BukuTamuService;
 use App\Services\PegawaiService;
@@ -45,7 +46,7 @@ class TamuController extends Controller
     {
         $id_tamu = $this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
         $bukuTamu = $this->bukuTamuService->getByIdTamu($id_tamu)->hasil->data;
-        return view('tamu.riwayat_bertamu',compact('bukuTamu'));
+        return view('tamu.riwayat_bertamu', compact('bukuTamu'));
         // return response()->json($bukuTamu);
     }
 
@@ -71,6 +72,50 @@ class TamuController extends Controller
         $rs = $this->permintaanBertamuService->save($permintaan);
         return back();
         // return response()->json($data);
+    }
+
+    public function profil(Request $request)
+    {
+        $tamu = new Tamu();
+        $rs = $this->tamuService->getById($request->session()->get('id'));
+        if ($rs->sukses) {
+            $tamu = $rs->hasil->data;
+        }
+        return view('tamu.profil', compact('tamu'));
+        // return response()->json($admin);
+    }
+
+    public function akun(Request $request)
+    {
+        $rs = $this->akunService->getByUsername($request->session()->get('username'));
+        $akun = $rs->hasil->data;
+        return view('tamu.akun', compact('akun'));
+        // return response()->json($admin);
+    }
+
+    public function updateProfil(Request $request)
+    {
+        if ($request->session()->get('id') == 0) {
+            $tamu = new Tamu();
+            $tamu->fill($request->input());
+            $tamu->id_akun = $this->akunService->getByUsername($request->session()->get('username'))->hasil->data->id;
+            $rs = $this->tamuService->save($tamu);
+            if ($rs->sukses) {
+                $request->session()->put('id', $rs->hasil->data->id);
+            }
+        } else {
+            $rs = $this->tamuService->update($request->input('id'), $request->input());
+        }
+        return response()->json($rs);
+    }
+
+    public function updateAkun(Request $request)
+    {
+        $rs = $this->akunService->update($request->input('id'), $request->input());
+        if($rs->sukses){
+            $request->session()->put('username',$request->input('username'));
+        }
+        return response()->json($rs);
     }
 
     public function allPermintaanBertamu($idTamu)

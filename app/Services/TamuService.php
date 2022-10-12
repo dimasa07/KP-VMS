@@ -19,7 +19,7 @@ class TamuService
             if ($sukses) {
                 $rs->pesan[] = 'Sukses tambah Tamu';
                 $rs->hasil->jumlah = 1;
-                $rs->hasil->data = $tamu;
+                $rs->hasil->data = $this->getByNIK($tamu->nik)->hasil->data;
             } else {
                 $rs->pesan[] = 'Gagal tambah Tamu';
             }

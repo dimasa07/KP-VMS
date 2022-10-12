@@ -1,6 +1,6 @@
-@extends('layouts.layout_admin')
+@extends('layouts.layout_tamu')
 
-@section('title','Admin - Profil')
+@section('title','Tamu - Profil')
 
 @section('content')
 <!--Container-->
@@ -17,78 +17,67 @@
         <div class="w-full p-3">
             <!--Table Card-->
             <div class="bg-white border rounded shadow">
-                <div class="p-5" x-data="{ showFormEdit : false, admin:{{$admin}} }">
+                <div class="p-5" x-data="{ showFormEdit : false, tamu:{{$tamu}} }">
                     <form method="POST" @submit.prevent="submit()">
                         <div class="relative pb-11 px-6">
                             <table class="w-full p-5 text-gray-700" x-show="!showFormEdit">
                                 <tbody>
                                     <tr>
-                                        <td class="w-40">Nama Admin</td>
+                                        <td class="w-40">Nama Tamu</td>
                                         <td class="w-6">:</td>
-                                        <td>{{ $admin->nama }}</td>
+                                        <td>{{ $tamu->nama }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="w-40">NIP</td>
+                                        <td class="w-40">NIK</td>
                                         <td class="w-6">:</td>
-                                        <td>{{ $admin->nip }}</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td class="w-40">Jabatan</td>
-                                        <td class="w-6">:</td>
-                                        <td>{{ $admin->jabatan }}</td>
+                                        <td>{{ $tamu->nik }}</td>
 
                                     </tr>
                                     <tr>
                                         <td class="w-40">No. Telepon</td>
                                         <td class="w-6">:</td>
-                                        <td>{{ $admin->no_telepon }}</td>
+                                        <td>{{ $tamu->no_telepon }}</td>
+
                                     </tr>
                                     <tr>
                                         <td class="w-40">Email</td>
                                         <td class="w-6">:</td>
-                                        <td>{{ $admin->email }}</td>
+                                        <td>{{ $tamu->email }}</td>
                                     </tr>
                                     <tr>
                                         <td class="w-40">Alamat</td>
                                         <td class="w-6">:</td>
-                                        <td>{{ $admin->alamat }}</td>
+                                        <td>{{ $tamu->alamat }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                             <table style="display: none;" class="w-full p-5 text-gray-700" x-show="showFormEdit">
                                 <tbody>
                                     <tr>
-                                        <td class="w-40">Nama Admin</td>
+                                        <td class="w-40">Nama Tamu</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.nama" class="px-1 border border-gray-600" type="text" name="nama" :value="admin.nama"></td>
+                                        <td><input required x-model="formData.nama" class="px-1 border border-gray-600" type="text" name="nama" :value="tamu.nama"></td>
                                     </tr>
                                     <tr>
-                                        <td class="w-40">NIP</td>
+                                        <td class="w-40">NIK</td>
                                         <td class="w-6">:</td>
-                                        <td><input disabled x-model="formData.nip" class="px-1 border border-gray-600" type="text" name="nip" :value="admin.nip"></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td class="w-40">Jabatan</td>
-                                        <td class="w-6">:</td>
-                                        <td><input disabled x-model="formData.jabatan" class="px-1 border border-gray-600" type="text" name="jabatan" :value="admin.jabatan"></td>
+                                        <td><input required x-model="formData.nik" class="px-1 border border-gray-600" type="text" :value="tamu.nik"></td>
 
                                     </tr>
                                     <tr>
                                         <td class="w-40">No. Telepon</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.no_telepon" class="px-1 border border-gray-600" type="text" name="no_telepon" :value="admin.no_telepon"></td>
+                                        <td><input x-model="formData.no_telepon" class="px-1 border border-gray-600" type="text" name="no_telepon" :value="tamu.no_telepon"></td>
                                     </tr>
                                     <tr>
                                         <td class="w-40">Email</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.email" class="px-1 border border-gray-600" type="text" name="email" :value="admin.email"></td>
+                                        <td><input x-model="formData.email" class="px-1 border border-gray-600" type="text" name="email" :value="tamu.email"></td>
                                     </tr>
                                     <tr>
                                         <td class="w-40">Alamat</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.alamat" class="px-1 border border-gray-600" type="text" name="alamat" :value="admin.alamat"></td>
+                                        <td><input x-model="formData.alamat" class="px-1 border border-gray-600" type="text" name="alamat" :value="tamu.alamat"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -96,10 +85,10 @@
                                 <!-- <button type="button" href="#" x-show="!showConfirmSetuju" @click="showConfirmSetuju= !showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
                                 <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
                                     <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a> -->
-                                <button type="button" x-show="!showFormEdit" @click="showFormEdit= !showFormEdit; admin={{$admin}}" class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit Profil</button>
+                                <button type="button" x-show="!showFormEdit" @click="showFormEdit= !showFormEdit; tamu={{$tamu}}" class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit Profil</button>
 
                                 <!-- <a x-bind:href="window.location.origin+'/admin/profil/update'"> -->
-                                    <button style="display: none;" type="submit" @click="formData.id=admin.id; formData.nip=admin.nip" x-show="showFormEdit" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Simpan Perubahan</button>
+                                    <button style="display: none;" type="submit" @click="formData.id=tamu.id; if(formData.nik==null)formData.nik=tamu.nik" x-show="showFormEdit" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Simpan Perubahan</button>
                                 <!-- </a> -->
                                 <button style="display: none;" x-show="showFormEdit" type="button" @click="showFormEdit= !showFormEdit" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
                             </div>
@@ -115,18 +104,17 @@
     function submit() {
         $.ajax({
             type: 'POST',
-            url: window.location.origin + "/admin/profil/update",
+            url: window.location.origin + "/tamu/profil/update",
             data: {
                 'id': formData.id,
                 'nama': formData.nama,
-                'nip': formData.nip,
-                'jabatan': formData.jabatan,
+                'nik': formData.nik,
                 'no_telepon': formData.no_telepon,
                 'email': formData.email,
                 'alamat': formData.alamat
             },
             success: function(success) {
-                // console.log("sukses");
+                console.log(success);
                 location.reload();
             },
             error: function(error) {
@@ -142,8 +130,7 @@
             formData: {
                 id: 0,
                 nama: '',
-                nip: '',
-                jabatan: '',
+                nik: '',
                 no_telepon: '',
                 email: '',
                 alamat: ''

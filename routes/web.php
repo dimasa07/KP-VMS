@@ -78,13 +78,13 @@ Route::prefix('/user')
 // ADMIN ROUTES
 Route::prefix('/admin')
     ->controller(AdminController::class)
-    // ->middleware(AdminMiddleware::class)
+    ->middleware(AdminMiddleware::class)
     ->group(function () {
         Route::get('/', 'index')->name('admin.index');
         Route::get('/profil', 'profil')->name('admin.profil');
         Route::post('/profil/update', 'updateProfil')->name('admin.profil.update');
-        Route::post('/akun/update', 'updateAkun')->name('admin.akun.update');
         Route::get('/akun', 'akun')->name('admin.akun');
+        Route::post('/akun/update', 'updateAkun')->name('admin.akun.update');
         Route::get('/permintaan/all', 'allPermintaanBertamu')->name('admin.permintaan.all');
         Route::get('/permintaan/setujui/{idPermintaan}', 'setujuiPermintaan')->name('admin.permintaan.setujui');
         Route::post('/permintaan/tolak', 'tolakPermintaan')->name('admin.permintaan.tolak');
@@ -103,9 +103,13 @@ Route::prefix('/admin')
 // TAMU ROUTES 
 Route::prefix('/tamu')
     ->controller(TamuController::class)
-    // ->middleware(TamuMiddleware::class)
+    ->middleware(TamuMiddleware::class)
     ->group(function () {
         Route::get('/', 'index')->name('tamu.index');
+        Route::get('/profil', 'profil')->name('tamu.profil');
+        Route::post('/profil/update', 'updateProfil')->name('tamu.profil.update');
+        Route::get('/akun', 'akun')->name('tamu.akun');
+        Route::post('/akun/update', 'updateAkun')->name('tamu.akun.update');
         Route::post('/permintaan/tambah', 'tambahPermintaan')->name('tamu.permintaan.tambah');
         Route::get('/permintaan/buat', 'viewBuatPermintaan')->name('tamu.permintaan.buat');
         Route::get('/permintaan/all/{idTamu}', 'allPermintaanBertamu')->name('tamu.permintaan.all');
@@ -118,11 +122,13 @@ Route::prefix('/tamu')
 // FRONT OFFICE ROUTES
 Route::prefix('/fo')
     ->controller(FrontOfficeController::class)
-    //->middleware(FrontOfficeMiddleware::class)
+    ->middleware(FrontOfficeMiddleware::class)
     ->group(function () {
         Route::get('/', 'index')->name('fo.index');
-        Route::post('/my/profil/update', 'updateProfil')->name('fo.my.profil.update');
-        Route::post('/my/akun/update', 'updateAkun')->name('fo.my.akun.update');
+        Route::get('/profil', 'profil')->name('fo.profil');
+        Route::post('/profil/update', 'updateProfil')->name('fo.profil.update');
+        Route::get('/akun', 'akun')->name('fo.akun');
+        Route::post('/akun/update', 'updateAkun')->name('fo.akun.update');
         Route::get('/tamu/all', 'allTamu')->name('fo.tamu.all');
         Route::get('/permintaan/all', 'allPermintaanBertamu')->name('fo.permintaan.all');
         Route::post('/permintaan/tambah', 'tambahPermintaan')->name('fo.permintaan.tambah');

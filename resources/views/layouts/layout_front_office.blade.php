@@ -38,8 +38,8 @@
                         </button>
                         <div id="userMenu" class="bg-white rounded shadow-md absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
                             <ul class="list-reset">
-                                <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Profil</a></li>
-                                <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Akun</a></li>
+                                <li><a href="{{ route('fo.profil') }}" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Profil</a></li>
+                                <li><a href="{{ route('fo.akun') }}" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Akun</a></li>
                                 <li>
                                     <hr class="border-t mx-2 border-gray-400">
                                 </li>

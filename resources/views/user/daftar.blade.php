@@ -25,14 +25,15 @@
         <section>
             <h1 class="mb-8 text-3xl text-center font-bold">Pendaftaran</h1>
             <form autocomplete="off" method="POST" action="{{ route('user.daftar') }}">
-                <input type="text" class="block border border-gray-400 w-full p-3 rounded mb-4" name="nik" placeholder="NIK" />
-                <input type="text" class="block border border-gray-400 w-full p-3 rounded mb-4" name="nama" placeholder="Nama Lengkap" />
-                <input type="number" class="block border border-gray-400 w-full p-3 rounded mb-4" name="no_telepon" placeholder="No. Telepon" />
+                <!-- <input type="text" class="block border border-gray-400 w-full p-3 rounded mb-4" name="nik" placeholder="NIK" /> -->
+                <!-- <input required type="text" class="block border border-gray-400 w-full p-3 rounded mb-4" name="nama" placeholder="Nama Lengkap" /> -->
+                <!-- <input type="number" class="block border border-gray-400 w-full p-3 rounded mb-4" name="no_telepon" placeholder="No. Telepon" />
                 <input type="email" class="block border border-gray-400 w-full p-3 rounded mb-4" name="email" placeholder="Email" />
-                <input type="text" class="block border border-gray-400 w-full p-3 rounded mb-4" name="alamat" placeholder="Alamat" />
-                <input type="text" class="block border border-gray-400 w-full p-3 rounded mb-4" name="username" placeholder="Username" />
-                <input type="password" class="block border border-gray-400 w-full p-3 rounded mb-4" name="password" placeholder="Password" />
-                <input type="password" class="block border border-gray-400 w-full p-3 rounded mb-4" name="re_password" placeholder="Re-password" />
+                <input type="text" class="block border border-gray-400 w-full p-3 rounded mb-4" name="alamat" placeholder="Alamat" /> -->
+                <input type="hidden" name="role" value="TAMU">
+                <input required type="text" class="block border border-gray-400 w-full p-3 rounded mb-4" name="username" placeholder="Username" />
+                <input required type="password" class="block border border-gray-400 w-full p-3 rounded mb-4" name="password" placeholder="Password" />
+                <input required type="re_password" class="block border border-gray-400 w-full p-3 rounded mb-4" name="re_password" placeholder="Re-password" />
                 <button type="submit" class="w-full text-center py-3 rounded bg-green-600 font-bold text-white hover:bg-green-800 focus:outline-none my-1">Daftar</button>
             </form>
             <div class="text-gray-700 mt-6 text-center">

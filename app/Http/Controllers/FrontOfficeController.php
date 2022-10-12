@@ -167,6 +167,22 @@ class FrontOfficeController extends Controller
         // return response()->json($rs);
     }
 
+    public function profil(Request $request)
+    {
+        $rs = $this->pegawaiService->getByNIP($request->session()->get('nip'));
+        $frontOffice = $rs->hasil->data;
+        return view('front_office.profil', compact('frontOffice'));
+        // return response()->json($admin);
+    }
+
+    public function akun(Request $request)
+    {
+        $rs = $this->akunService->getByUsername($request->session()->get('username'));
+        $akun = $rs->hasil->data;
+        return view('front_office.akun', compact('akun'));
+        // return response()->json($admin);
+    }
+
     public function updateProfil(Request $request)
     {
         $rs = $this->pegawaiService->update($request->input('id'), $request->input());
@@ -176,6 +192,9 @@ class FrontOfficeController extends Controller
     public function updateAkun(Request $request)
     {
         $rs = $this->akunService->update($request->input('id'), $request->input());
+        if($rs->sukses){
+            $request->session()->put('username',$request->input('username'));
+        }
         return response()->json($rs);
     }
 

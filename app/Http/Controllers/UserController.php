@@ -32,17 +32,17 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $this->validate(
-            $request,
-            [
-                'username' => 'required',
-                'password' => 'required'
-            ],
-            [
-                'username.required' => 'Username tidak boleh kosong',
-                'password.required' => 'Password tidak boleh kosong'
-            ]
-        );
+        // $this->validate(
+        //     $request,
+        //     [
+        //         'username' => 'required',
+        //         'password' => 'required'
+        //     ],
+        //     [
+        //         'username.required' => 'Username tidak boleh kosong',
+        //         'password.required' => 'Password tidak boleh kosong'
+        //     ]
+        // );
         $username = $request->input('username');
         $password = $request->input('password');
 
@@ -59,20 +59,28 @@ class UserController extends Controller
             $rs->hasil->data = $akun;
             $request->session()->put('username', $akun->username);
             $request->session()->put('role', $akun->role);
+            $id = 0;
             $route = "";
             if ($akun->role == "ADMIN") {
-                $request->session()->put('id', $akun->pegawai->id);
-                $request->session()->put('nip', $akun->pegawai->nip);
+                if (!is_null($akun->pegawai)) {
+                    $request->session()->put('nip', $akun->pegawai->nip);
+                    $id = $akun->pegawai->id;
+                }
                 $route = "admin.index";
             } else if ($akun->role == "TAMU") {
-                $request->session()->put('id', $akun->tamu->id);
-                $request->session()->put('nik', $akun->tamu->nik);
+                if (!is_null($akun->tamu)) {
+                    $request->session()->put('nik', $akun->tamu->nik);
+                    $id = $akun->tamu->id;;
+                }
                 $route = "tamu.index";
             } else if ($akun->role == "FRONT OFFICE") {
-                $request->session()->put('id', $akun->pegawai->id);
-                $request->session()->put('nip', $akun->pegawai->nip);
+                if (!is_null($akun->pegawai)) {
+                    $request->session()->put('nip', $akun->pegawai->nip);
+                    $id = $akun->pegawai->id;
+                }
                 $route = "fo.index";
             }
+            $request->session()->put('id', $id);
             return redirect()->route($route)->with('success', 'Login sukses');
         } else {
             $rs->pesan[] = 'Gagal Login, ' . $rsAkun->pesan[0];
@@ -92,31 +100,52 @@ class UserController extends Controller
 
     public function daftar(Request $request)
     {
+        // $rs = new ResultSet();
+        // $rs->hasil->tipe = 'Object';
+        // $tamu = new Tamu();
+        // $tamu->fill($request->input());
+        // $cekTamu = $this->tamuService->getByNIK($tamu->nik);
+        // if ($cekTamu->sukses) {
+        //     $rs->pesan[] = 'Gagal daftar, NIK sudah terdaftar';
+        // } else {
+        //     $akun = new Akun();
+        //     $akun->fill($request->input());
+        //     $saveAkun = $this->akunService->save($akun);
+        //     if (!$saveAkun->sukses) {
+        //         $rs->pesan = $saveAkun->pesan;
+        //     } else {
+        //         $tamu->id_akun = $akun->id;
+        //         $saveTamu = $this->tamuService->save($tamu);
+        //         $rs->sukses = $saveTamu->sukses;
+        //         $rs->hasil->jumlah = 1;
+        //         $rs->hasil->data['tamu'] = $tamu;
+        //         $rs->hasil->data['akun'] = $akun;
+        //         $rs->pesan[] = 'Sukses daftar';
+        //         return redirect()->route('user.login');
+        //     }
+        // }
+
+
+        $password = $request->input('password');
+        $rePassword = $request->input('re_password');
         $rs = new ResultSet();
         $rs->hasil->tipe = 'Object';
-        $tamu = new Tamu();
-        $tamu->fill($request->input());
-        $cekTamu = $this->tamuService->getByNIK($tamu->nik);
-        if ($cekTamu->sukses) {
-            $rs->pesan[] = 'Gagal daftar, NIK sudah terdaftar';
+        if ($password != $rePassword) {
+            $rs->pesan[]='Password dan Re-password tidak sesuai.';
         } else {
             $akun = new Akun();
             $akun->fill($request->input());
-            $saveAkun = $this->akunService->save($akun);
-            if (!$saveAkun->sukses) {
-                $rs->pesan = $saveAkun->pesan;
-            } else {
-                $tamu->id_akun = $akun->id;
-                $saveTamu = $this->tamuService->save($tamu);
-                $rs->sukses = $saveTamu->sukses;
+            $rsSave = $this->akunService->save($akun);
+            if ($rsSave->sukses) {
+                $rs->pesan[] = 'Sukse daftar.';
+                $rs->sukses = true;
                 $rs->hasil->jumlah = 1;
-                $rs->hasil->data['tamu'] = $tamu;
-                $rs->hasil->data['akun'] = $akun;
-                $rs->pesan[] = 'Sukses daftar';
+                $rs->hasil->data = $akun;
                 return redirect()->route('user.login');
+            } else {
+                $rs->pesan = $rsSave->pesan;
             }
         }
-
         return back();
         // return response()->json($rs);
     }

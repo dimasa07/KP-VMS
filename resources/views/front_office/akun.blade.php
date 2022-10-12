@@ -1,6 +1,6 @@
-@extends('layouts.layout_admin')
+@extends('layouts.layout_front_office')
 
-@section('title','Admin - Akun')
+@section('title','Front Office - Akun')
 
 @section('content')
 <!--Container-->
@@ -82,7 +82,7 @@
         var formData = this.formData;
         $.ajax({
             type: 'POST',
-            url: window.location.origin + "/admin/akun/update",
+            url: window.location.origin + "/fo/akun/update",
             data: {
                 'id': formData.id,
                 'role': formData.role,
