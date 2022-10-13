@@ -113,9 +113,11 @@ class AdminController extends Controller
 
     public function allPermintaanBertamu(Request $request)
     {
+        $rs = $this->permintaanBertamuService->getAll();
         $rs1 = $this->permintaanBertamuService->getByStatus('BELUM DIPERIKSA');
         $rs2 = $this->permintaanBertamuService->getByStatus('DISETUJUI');
         $rs3 = $this->permintaanBertamuService->getByStatus('DITOLAK');
+        $semuaPermintaan = $rs->hasil->data;
         $permintaanBelumDiperiksa = $rs1->hasil->data;
         $permintaanDisetujui = $rs2->hasil->data;
         $permintaanDitolak = $rs3->hasil->data;
@@ -123,6 +125,7 @@ class AdminController extends Controller
         //     return response()->json(array('permintaan' => $permintaan));
         // }
         return view('admin.data_permintaan', [], [
+            'semuaPermintaan' => $semuaPermintaan,
             'permintaanBelumDiperiksa' => $permintaanBelumDiperiksa,
             'permintaanDisetujui' => $permintaanDisetujui,
             'permintaanDitolak' => $permintaanDitolak
@@ -180,8 +183,8 @@ class AdminController extends Controller
     public function updateAkun(Request $request)
     {
         $rs = $this->akunService->update($request->input('id'), $request->input());
-        if($rs->sukses){
-            $request->session()->put('username',$request->input('username'));
+        if ($rs->sukses) {
+            $request->session()->put('username', $request->input('username'));
         }
         return response()->json($rs);
     }
@@ -192,7 +195,7 @@ class AdminController extends Controller
         return response()->json($rs);
     }
 
-    
+
 
     public function updateBukuTamu(Request $request)
     {

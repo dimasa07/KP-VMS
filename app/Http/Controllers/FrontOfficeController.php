@@ -141,9 +141,11 @@ class FrontOfficeController extends Controller
 
     public function allPermintaanBertamu()
     {
+        $rs = $this->permintaanBertamuService->getAll();
         $rs1 = $this->permintaanBertamuService->getByStatus('BELUM DIPERIKSA');
         $rs2 = $this->permintaanBertamuService->getByStatus('DISETUJUI');
         $rs3 = $this->permintaanBertamuService->getByStatus('DITOLAK');
+        $semuaPermintaan = $rs->hasil->data;
         $permintaanBelumDiperiksa = $rs1->hasil->data;
         $permintaanDisetujui = $rs2->hasil->data;
         $permintaanDitolak = $rs3->hasil->data;
@@ -151,6 +153,7 @@ class FrontOfficeController extends Controller
         //     return response()->json(array('permintaan' => $permintaan));
         // }
         return view('front_office.data_permintaan', [], [
+            'semuaPermintaan'=>$semuaPermintaan,
             'permintaanBelumDiperiksa' => $permintaanBelumDiperiksa,
             'permintaanDisetujui' => $permintaanDisetujui,
             'permintaanDitolak' => $permintaanDitolak

@@ -18,9 +18,17 @@
 
         <div class="w-full p-3" x-data="{ showDetail: false, confirmTolak:false }">
             <!--Table Card-->
-            <div class="bg-white border rounded shadow" x-data="{ permintaan: null }">
-                <div class="border-b p-3">
-                    <h5 class="font-bold uppercase text-gray-600">Belum Diperiksa</h5>
+            <div class="bg-white border rounded shadow" x-data="{ permintaan: null, filter:'SEMUA', no:0 }">
+                <div class="border-b p-3 w-full">
+                    <!-- <h5 class="font-bold uppercase text-gray-600" x-text="filter"></h5> -->
+
+                    <select x-model="filter" class="mx-4 py-1 px-4 bg-white border border-gray-600 rounded">
+                        <option value="SEMUA">Semua</option>
+                        <option value="BELUM DIPERIKSA">Belum Diperiksa</option>
+                        <option value="DISETUJUI">Disetujui</option>
+                        <option value="DITOLAK">Ditolak</option>
+                    </select>
+                    <!-- </div> -->
                 </div>
                 <div class="p-5">
                     <form method="POST" @submit.prevent="submit()">
@@ -68,13 +76,28 @@
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.status"></td>
                                         </tr>
+                                        <tr x-show="permintaan.status == 'DITOLAK'">
+                                            <td class="w-40">Pesan Ditolak</td>
+                                            <td class="w-6">:</td>
+                                            <td x-text="permintaan.pesan_ditolak"></td>
+                                        </tr>
+                                        <tr x-show="permintaan.status != 'BELUM DIPERIKSA'">
+                                            <td class="w-40">Admin Pemeriksa</td>
+                                            <td class="w-6">:</td>
+                                            <td x-text="permintaan.admin.nama"></td>
+                                        </tr>
+                                        <tr x-show="permintaan.status != 'BELUM DIPERIKSA'">
+                                            <td class="w-40">Waktu Pemeriksaan</td>
+                                            <td class="w-6">:</td>
+                                            <td x-text="permintaan.waktu_pemeriksaan"></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmSetuju : false }">
-                                    <button type="button" href="#" x-show="!showConfirmSetuju" @click="showConfirmSetuju= !showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
+                                    <button type="button" href="#" x-show="!showConfirmSetuju && permintaan.status=='BELUM DIPERIKSA'" @click="showConfirmSetuju= !showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
                                     <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
                                         <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a>
-                                    <button x-show="!showConfirmTolak" @click="showConfirmTolak= !showConfirmTolak" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Tolak</button>
+                                    <button x-show="!showConfirmTolak && permintaan.status=='BELUM DIPERIKSA'" @click="showConfirmTolak= !showConfirmTolak" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Tolak</button>
                                     <!-- <a x-bind:href="window.location.origin+'/admin/permintaan/tolak/'+permintaan.id+'?pesan_ditolak='+pesan_ditolak"> -->
                                     <button type="submit" @click="formData.id = permintaan.id;" x-show="showConfirmTolak" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Tolak</button>
                                     <!-- </a> -->
@@ -90,21 +113,23 @@
                                     <th class="border-2 text-blue-900 p-2">Nama Tamu</th>
                                     <th class="border-2 text-blue-900 p-2">NIK</th>
                                     <th class="border-2 text-blue-900 p-2">Pegawai dituju</th>
-                                    <th class="border-2 text-blue-900 p-2">Waktu Pengiriman</th>
+                                    <!-- <th class="border-2 text-blue-900 p-2">Waktu Pengiriman</th> -->
+                                    <th class="border-2 text-blue-900 p-2">Status</th>
                                     <th class="border-2 text-blue-900 p-2">Aksi</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @for($i = 0 ; $i < count($permintaanBelumDiperiksa); $i++) <tr>
+                                @for($i = 0 ; $i < count($semuaPermintaan); $i++) <tr x-show="(filter=='SEMUA' || filter=='{{$semuaPermintaan[$i]->status}}') && '{{$semuaPermintaan[$i]->status}}' != 'KADALUARSA' ">
                                     <td class="border-2 p-2 text-center">{{ $i+1 }}</td>
-                                    <td class="border-2 p-2">{{ $permintaanBelumDiperiksa[$i]->tamu->nama }}</td>
-                                    <td class="border-2 p-2">{{ $permintaanBelumDiperiksa[$i]->tamu->nik }}</td>
-                                    <td class="border-2 p-2">{{ $permintaanBelumDiperiksa[$i]->pegawai->nama }}</td>
-                                    <td class="border-2 p-2 text-center">{{ $permintaanBelumDiperiksa[$i]->waktu_pengiriman }}</td>
+                                    <td class="border-2 p-2">{{ $semuaPermintaan[$i]->tamu->nama }}</td>
+                                    <td class="border-2 p-2">{{ $semuaPermintaan[$i]->tamu->nik }}</td>
+                                    <td class="border-2 p-2">{{ $semuaPermintaan[$i]->pegawai->nama }}</td>
+                                    <!-- <td class="border-2 p-2 text-center">{{ $semuaPermintaan[$i]->waktu_pengiriman }}</td> -->
+                                    <td class="border-2 p-2 text-center">{{ $semuaPermintaan[$i]->status }}</td>
                                     <td class="border-2 p-2 text-center">
                                         <div>
-                                            <button @click="permintaan={{ $permintaanBelumDiperiksa[$i] }}; showDetail= !showDetail" class="bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded">Detail</button>
+                                            <button @click="permintaan={{ $semuaPermintaan[$i] }}; showDetail= !showDetail" class="bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded">Detail</button>
                                         </div>
                                     </td>
                                     </tr>
@@ -117,8 +142,7 @@
             <!--/table Card-->
         </div>
 
-        <div class="w-full p-3" x-data="{ showDetail: false }">
-            <!--Table Card-->
+        <!-- <div class="w-full p-3" x-data="{ showDetail: false }">
             <div class="bg-white border rounded shadow" x-data="{ permintaan: null }">
                 <div class="border-b p-3">
                     <h5 class="font-bold uppercase text-gray-600">Disetujui</h5>
@@ -206,11 +230,9 @@
                     </table>
                 </div>
             </div>
-            <!--/table Card-->
-        </div>
+        </div> -->
 
-        <div class="w-full p-3" x-data="{ showDetail: false }">
-            <!--Table Card-->
+        <!-- <div class="w-full p-3" x-data="{ showDetail: false }">
             <div class="bg-white border rounded shadow" x-data="{ permintaan: null }">
                 <div class="border-b p-3">
                     <h5 class="font-bold uppercase text-gray-600">Ditolak</h5>
@@ -304,9 +326,8 @@
                     </table>
                 </div>
             </div>
-            <!--/table Card-->
-        </div>
-        
+        </div> -->
+
     </div>
 </div>
 
