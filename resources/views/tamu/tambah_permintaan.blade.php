@@ -18,16 +18,25 @@
         <div class="w-full p-3">
             <!--Table Card-->
             <div class="bg-white border rounded shadow">
-                
+
                 @if(session()->get('id')==0)
                 <div class="p-5 flex justify-center">
                     <h3 class="text-1xl">Isi <a class="text-blue-800 underline" href="{{ route('tamu.profil') }}">profil</a> terlebih dahulu untuk bisa membuat permintaan.</h3>
                 </div>
                 @else
                 <div class="p-5">
+                    @if($pesan = Session::get('gagal'))
+                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
+                    @if($pesan = Session::get('sukses'))
+                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
                     <form method="POST" action="{{ route('tamu.permintaan.tambah') }}">
                         <div class="grid grid-cols-2 relative">
-
                             <div class="px-5">
                                 <div class="form-group mb-6">
                                     <label for="pegawai" class="form-label inline-block mb-2 text-gray-700">Pegawai Dituju</label>

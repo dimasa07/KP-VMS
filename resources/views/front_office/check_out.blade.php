@@ -18,10 +18,17 @@
         <div class="w-full p-3" x-data="{ showDetail: false, confirmTolak:false }">
             <!--Table Card-->
             <div class="bg-white border rounded shadow" x-data="{ permintaan: null }">
-                <!-- <div class="border-b p-3">
-                    <h5 class="font-bold uppercase text-gray-600">Belum Diperiksa</h5>
-                </div> -->
                 <div class="p-5">
+                    @if($pesan = Session::get('gagal'))
+                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
+                    @if($pesan = Session::get('sukses'))
+                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
                     <form method="POST" @submit.prevent="submit()">
                         <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6" x-data="{ showConfirmTolak:false }">
                             <div x-data="{formData()}">
@@ -70,7 +77,7 @@
                                     </tbody>
                                 </table>
                                 <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmCheckOut : false }">
-                                <button type="button" href="#" x-show="!showConfirmCheckOut" @click="showConfirmCheckOut= !showConfirmCheckOut" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Check-Out</button>
+                                    <button type="button" href="#" x-show="!showConfirmCheckOut" @click="showConfirmCheckOut= !showConfirmCheckOut" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Check-Out</button>
                                     <a x-bind:href="window.location.origin+'/fo/buku-tamu/check-out/'+permintaan.buku_tamu.id">
                                         <button type="button" x-show="showConfirmCheckOut" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Check-Out</button></a>
                                     <button type="button" @click="showDetail= !showDetail; showConfirmTolak=false; showConfirmCheckOut=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>

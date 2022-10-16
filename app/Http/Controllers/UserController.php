@@ -64,27 +64,30 @@ class UserController extends Controller
             if ($akun->role == "ADMIN") {
                 if (!is_null($akun->pegawai)) {
                     $request->session()->put('nip', $akun->pegawai->nip);
+                    $request->session()->put('nama', $akun->pegawai->nama);
                     $id = $akun->pegawai->id;
                 }
                 $route = "admin.index";
             } else if ($akun->role == "TAMU") {
                 if (!is_null($akun->tamu)) {
                     $request->session()->put('nik', $akun->tamu->nik);
+                    $request->session()->put('nama', $akun->tamu->nama);
                     $id = $akun->tamu->id;;
                 }
                 $route = "tamu.index";
             } else if ($akun->role == "FRONT OFFICE") {
                 if (!is_null($akun->pegawai)) {
                     $request->session()->put('nip', $akun->pegawai->nip);
+                    $request->session()->put('nama', $akun->pegawai->nama);
                     $id = $akun->pegawai->id;
                 }
                 $route = "fo.index";
             }
             $request->session()->put('id', $id);
-            return redirect()->route($route)->with('success', 'Login sukses');
+            return redirect()->route($route)->with('info', 'Selamat datang ' . $request->session()->get('nama', $akun->username));
         } else {
             $rs->pesan[] = 'Gagal Login, ' . $rsAkun->pesan[0];
-            return back()->with('error', $rs->pesan[0]);
+            return back()->with('gagal', $rs->pesan[0]);
         }
 
         //return response()->json($rs);
@@ -92,8 +95,12 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
+        $request->session()->forget('id');
+        $request->session()->forget('nik');
+        $request->session()->forget('nip');
         $request->session()->forget('username');
         $request->session()->forget('role');
+        $request->session()->forget('nama');
 
         return redirect()->route('beranda');
     }
@@ -131,7 +138,7 @@ class UserController extends Controller
         $rs = new ResultSet();
         $rs->hasil->tipe = 'Object';
         if ($password != $rePassword) {
-            $rs->pesan[]='Password dan Re-password tidak sesuai.';
+            $rs->pesan[] = 'Password dan Re-password tidak sesuai.';
         } else {
             $akun = new Akun();
             $akun->fill($request->input());
@@ -141,12 +148,12 @@ class UserController extends Controller
                 $rs->sukses = true;
                 $rs->hasil->jumlah = 1;
                 $rs->hasil->data = $akun;
-                return redirect()->route('user.login');
+                return redirect()->route('user.login')->with('sukses', $rs->pesan[0]);
             } else {
                 $rs->pesan = $rsSave->pesan;
             }
         }
-        return back();
+        return back()->with('eror', $rs->pesan[0]);
         // return response()->json($rs);
     }
 

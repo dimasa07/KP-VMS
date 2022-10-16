@@ -13,6 +13,7 @@ use App\Services\ResultSet;
 use App\Services\TamuService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class FrontOfficeController extends Controller
 {
@@ -54,7 +55,7 @@ class FrontOfficeController extends Controller
     {
         $rs = $this->pegawaiService->getAll();
         $pegawai = $rs->hasil->data;
-        return view('front_office.tambah_permintaan',compact('pegawai'));
+        return view('front_office.tambah_permintaan', compact('pegawai'));
     }
 
     public function checkIn(Request $request, int $id_permintaan)
@@ -72,7 +73,8 @@ class FrontOfficeController extends Controller
         if ($rs->sukses) {
             $this->permintaanBertamuService->update($id_permintaan, ['status' => 'KADALUARSA']);
         }
-        return back();
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        return back()->with($tipe, $rs->pesan[0]);
         // return response()->json($id_front_office);
     }
 
@@ -91,24 +93,26 @@ class FrontOfficeController extends Controller
                 $rsUpdate = $this->bukuTamuService->update($idBukuTamu, ['check_out' => $datetime]);
                 if ($rsUpdate->sukses) {
                     $rs->hasil->jumlah = 1;
-                    $rs->pesan[] = 'Sukses check-out';
+                    $rs->sukses = true;
+                    $rs->pesan[] = 'Sukses Check-out';
                     $rs->hasil->data = $rsUpdate->hasil->data;
                 } else {
-                    $rs->pesan[] = 'Gagal check-out, ' . $rsUpdate->pesan[0];
+                    $rs->pesan[] = 'Gagal Check-out, ' . $rsUpdate->pesan[0];
                 }
             } else {
-                $rs->pesan[] = 'Gagal check-out, Tamu tersebut telah melakukan check-out';
+                $rs->pesan[] = 'Gagal Check-out, Tamu tersebut telah melakukan Check-out';
             }
         }
 
-        return back();
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        return back()->with($tipe, $rs->pesan[0]);
         // return response()->json($rs);
     }
 
     public function tambahPermintaan(Request $request)
     {
         $rsTamu = $this->tamuService->getByNIK($request->input('nik'));
-        if(!$rsTamu->sukses){
+        if (!$rsTamu->sukses) {
             $tamu = new Tamu();
             $tamu->fill($request->input());
             $rsTamu = $this->tamuService->save($tamu);
@@ -128,7 +132,8 @@ class FrontOfficeController extends Controller
         $permintaan = new PermintaanBertamu();
         $permintaan->fill($data);
         $rs = $this->permintaanBertamuService->save($permintaan);
-        return back();
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        return back()->with($tipe, $rs->pesan[0]);
         // return response()->json($rs);
     }
 
@@ -153,7 +158,7 @@ class FrontOfficeController extends Controller
         //     return response()->json(array('permintaan' => $permintaan));
         // }
         return view('front_office.data_permintaan', [], [
-            'semuaPermintaan'=>$semuaPermintaan,
+            'semuaPermintaan' => $semuaPermintaan,
             'permintaanBelumDiperiksa' => $permintaanBelumDiperiksa,
             'permintaanDisetujui' => $permintaanDisetujui,
             'permintaanDitolak' => $permintaanDitolak
@@ -189,15 +194,22 @@ class FrontOfficeController extends Controller
     public function updateProfil(Request $request)
     {
         $rs = $this->pegawaiService->update($request->input('id'), $request->input());
+        if ($rs->sukses) {
+            $request->session()->put('nama', $rs->hasil->data->nama);
+        }
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        Session::flash($tipe, $rs->pesan[0]);
         return response()->json($rs);
     }
 
     public function updateAkun(Request $request)
     {
         $rs = $this->akunService->update($request->input('id'), $request->input());
-        if($rs->sukses){
-            $request->session()->put('username',$request->input('username'));
+        if ($rs->sukses) {
+            $request->session()->put('username', $request->input('username'));
         }
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        Session::flash($tipe, $rs->pesan[0]);
         return response()->json($rs);
     }
 

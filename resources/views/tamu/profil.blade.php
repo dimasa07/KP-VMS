@@ -18,6 +18,16 @@
             <!--Table Card-->
             <div class="bg-white border rounded shadow">
                 <div class="p-5" x-data="{ showFormEdit : false, tamu:{{$tamu}} }">
+                    @if($pesan = Session::get('gagal'))
+                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
+                    @if($pesan = Session::get('sukses'))
+                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
                     <form method="POST" @submit.prevent="submit()">
                         <div class="relative pb-11 px-6">
                             <table class="w-full p-5 text-gray-700" x-show="!showFormEdit">
@@ -88,7 +98,7 @@
                                 <button type="button" x-show="!showFormEdit" @click="showFormEdit= !showFormEdit; tamu={{$tamu}}" class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit Profil</button>
 
                                 <!-- <a x-bind:href="window.location.origin+'/admin/profil/update'"> -->
-                                    <button style="display: none;" type="submit" @click="formData.id=tamu.id; if(formData.nik==null)formData.nik=tamu.nik" x-show="showFormEdit" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Simpan Perubahan</button>
+                                <button style="display: none;" type="submit" @click="formData.id=tamu.id; if(formData.nik==null)formData.nik=tamu.nik" x-show="showFormEdit" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Simpan Perubahan</button>
                                 <!-- </a> -->
                                 <button style="display: none;" x-show="showFormEdit" type="button" @click="showFormEdit= !showFormEdit" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
                             </div>

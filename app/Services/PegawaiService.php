@@ -192,14 +192,14 @@ class PegawaiService
             if (!$cekPegawai->sukses || $pegawai->nip == $newNIP) {
                 $update = $pegawai->update($attributes);
                 $rs->sukses = true;
-                $rs->pesan[] = 'Sukses update Pegawai';
+                $rs->pesan[] = 'Sukses update Profil';
                 $rs->hasil->jumlah = 1;
                 $rs->hasil->data = $pegawai;
             } else {
-                $rs->pesan[] = 'Gagal update Pegawai, NIP telah tersedia';
+                $rs->pesan[] = 'Gagal update Profil, NIP telah tersedia';
             }
         } else {
-            $rs->pesan[] = 'Gagal update Pegawai, id tidak ditemukan';
+            $rs->pesan[] = 'Gagal update Profil, id tidak ditemukan';
         }
 
         return $rs;

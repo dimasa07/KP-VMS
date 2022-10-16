@@ -11,6 +11,7 @@ use App\Services\PermintaanBertamuService;
 use App\Services\TamuService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class TamuController extends Controller
 {
@@ -37,7 +38,7 @@ class TamuController extends Controller
 
     public function riwayatPermintaan(Request $request)
     {
-        $id_tamu = $request->session()->get('id');//$this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
+        $id_tamu = $request->session()->get('id'); //$this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
         $permintaan = $this->permintaanBertamuService->getByIdTamu($id_tamu)->hasil->data;
         return view('tamu.riwayat_permintaan', compact('permintaan'));
     }
@@ -70,7 +71,8 @@ class TamuController extends Controller
         $permintaan = new PermintaanBertamu();
         $permintaan->fill($data);
         $rs = $this->permintaanBertamuService->save($permintaan);
-        return back();
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        return back()->with($tipe, $rs->pesan[0]);
         // return response()->json($data);
     }
 
@@ -106,15 +108,22 @@ class TamuController extends Controller
         } else {
             $rs = $this->tamuService->update($request->input('id'), $request->input());
         }
+        if ($rs->sukses) {
+            $request->session()->put('nama', $rs->hasil->data->nama);
+        }
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        Session::flash($tipe, $rs->pesan[0]);
         return response()->json($rs);
     }
 
     public function updateAkun(Request $request)
     {
         $rs = $this->akunService->update($request->input('id'), $request->input());
-        if($rs->sukses){
-            $request->session()->put('username',$request->input('username'));
+        if ($rs->sukses) {
+            $request->session()->put('username', $request->input('username'));
         }
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        Session::flash($tipe, $rs->pesan[0]);
         return response()->json($rs);
     }
 

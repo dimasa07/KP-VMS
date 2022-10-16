@@ -23,8 +23,17 @@
                         <h5 class="font-bold uppercase text-gray-600">Form Data Tamu</h5>
                     </div>
                     <div class="p-5">
+                        @if($pesan = Session::get('gagal'))
+                        <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                            {{ $pesan }}
+                        </div>
+                        @endif
+                        @if($pesan = Session::get('sukses'))
+                        <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                            {{ $pesan }}
+                        </div>
+                        @endif
                         <div class="grid grid-cols-2 relative">
-
                             <div class="px-5">
                                 <div class="form-group mb-6">
                                     <label for="nama" class="form-label inline-block mb-2 text-gray-700">Nama Tamu</label>

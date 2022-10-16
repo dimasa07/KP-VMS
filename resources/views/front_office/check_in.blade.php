@@ -22,6 +22,16 @@
                     <h5 class="font-bold uppercase text-gray-600">Belum Diperiksa</h5>
                 </div> -->
                 <div class="p-5">
+                    @if($pesan = Session::get('gagal'))
+                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
+                    @if($pesan = Session::get('sukses'))
+                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
                     <form method="POST" @submit.prevent="submit()">
                         <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6">
                             <div x-data="{formData()}">

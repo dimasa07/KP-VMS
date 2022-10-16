@@ -119,14 +119,14 @@ class TamuService
             if (!$cekTamu->sukses || $tamu->nik == $newNIK) {
                 $update = $tamu->update($attributes);
                 $rs->sukses = true;
-                $rs->pesan[] = 'Sukses update Tamu';
+                $rs->pesan[] = 'Sukses update Profil';
                 $rs->hasil->jumlah = 1;
                 $rs->hasil->data = $tamu;
             } else {
-                $rs->pesan[] = 'Gagal update Tamu, NIK telah tersedia';
+                $rs->pesan[] = 'Gagal update Profil, NIK telah tersedia';
             }
         } else {
-            $rs->pesan[] = 'Gagal update Tamu, id tidak ditemukan';
+            $rs->pesan[] = 'Gagal update Profil, id tidak ditemukan';
         }
 
         return $rs;

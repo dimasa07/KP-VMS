@@ -24,6 +24,11 @@
     <main class=" max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
         <section>
             <h1 class="mb-8 text-3xl text-center font-bold">Pendaftaran</h1>
+            @if($pesan = Session::get('eror'))
+            <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                {{ $pesan }}
+            </div>
+            @endif
             <form autocomplete="off" method="POST" action="{{ route('user.daftar') }}">
                 <!-- <input type="text" class="block border border-gray-400 w-full p-3 rounded mb-4" name="nik" placeholder="NIK" /> -->
                 <!-- <input required type="text" class="block border border-gray-400 w-full p-3 rounded mb-4" name="nama" placeholder="Nama Lengkap" /> -->

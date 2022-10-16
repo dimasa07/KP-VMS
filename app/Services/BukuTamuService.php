@@ -15,14 +15,14 @@ class BukuTamuService
             $sukses = $bukuTamu->save();
             $rs->sukses = $sukses;
             if ($sukses) {
-                $rs->pesan[] = 'Sukses tambah Buku Tamu';
+                $rs->pesan[] = 'Sukses Check-in';
                 $rs->hasil->jumlah = 1;
                 $rs->hasil->data = $bukuTamu;
             } else {
-                $rs->pesan[] = 'Gagal tambah Buku Tamu';
+                $rs->pesan[] = 'Gagal Check-in';
             }
         } else {
-            $rs->pesan[] = 'Gagal tambah Buku Tamu, id_permintaan telah melakukan check-in ';
+            $rs->pesan[] = 'Gagal Check-in, id_permintaan tersebut telah melakukan check-in ';
         }
 
         return $rs;

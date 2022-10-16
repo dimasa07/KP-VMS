@@ -14,11 +14,11 @@ class PermintaanBertamuService
         $sukses = $permintaanBertamu->save();
         $rs->sukses = $sukses;
         if ($sukses) {
-            $rs->pesan[] = 'Sukses tambah Permintaan Bertamu';
+            $rs->pesan[] = 'Sukses kirim Permintaan Bertamu';
             $rs->hasil->jumlah = 1;
             $rs->hasil->data = $permintaanBertamu;
         } else {
-            $rs->pesan[] = 'Gagal tambah Permintaan Bertamu';
+            $rs->pesan[] = 'Gagal kirim Permintaan Bertamu';
         }
 
         return $rs;
@@ -26,7 +26,7 @@ class PermintaanBertamuService
 
     public function getAll()
     {
-        $permintaan = PermintaanBertamu::where('status','<>','KADALUARSA')->get();
+        $permintaan = PermintaanBertamu::where('status', '<>', 'KADALUARSA')->get();
         $rs = new ResultSet();
         $rs->hasil->tipe = 'Array';
         $jumlah = count($permintaan);

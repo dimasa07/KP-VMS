@@ -12,6 +12,7 @@ use App\Services\ResultSet;
 use App\Services\TamuService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -157,7 +158,14 @@ class AdminController extends Controller
             'waktu_pemeriksaan' => $waktuPemeriksaan,
             'id_admin' => $admin->id
         ]);
-        return back();
+        if ($rs->sukses) {
+            $tipe = "sukses";
+            $pesan = "Sukses menyetujui Permintaan.";
+        } else {
+            $tipe = "gagal";
+            $pesan = "Gagal menyetujui Permintaan.";
+        }
+        return back()->with($tipe, $pesan);
     }
 
     public function tolakPermintaan(Request $request)
@@ -170,13 +178,25 @@ class AdminController extends Controller
             'id_admin' => $admin->id,
             'pesan_ditolak' => $request->input('pesan_ditolak')
         ]);
-        // var_dump($request->input());
+        if ($rs->sukses) {
+            $tipe = "sukses";
+            $pesan = "Sukses menolak Permintaan.";
+        } else {
+            $tipe = "gagal";
+            $pesan = "Gagal menolak Permintaan.";
+        }
+        Session::flash($tipe, $pesan);
         return response()->json($rs);
     }
 
     public function updateProfil(Request $request)
     {
         $rs = $this->pegawaiService->update($request->input('id'), $request->input());
+        if ($rs->sukses) {
+            $request->session()->put('nama', $rs->hasil->data->nama);
+        }
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        Session::flash($tipe, $rs->pesan[0]);
         return response()->json($rs);
     }
 
@@ -184,8 +204,10 @@ class AdminController extends Controller
     {
         $rs = $this->akunService->update($request->input('id'), $request->input());
         if ($rs->sukses) {
-            $request->session()->put('username', $request->input('username'));
+            $request->session()->put('username', $rs->hasil->data->username);
         }
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        Session::flash($tipe, $rs->pesan[0]);
         return response()->json($rs);
     }
 
@@ -206,7 +228,13 @@ class AdminController extends Controller
     public function deleteTamu($id)
     {
         $rs = $this->tamuService->delete($id);
-        return back();
-        // return response()->json($rs);
+        if ($rs->sukses) {
+            $tipe = "sukses";
+            $pesan = "Sukses hapus Tamu.";
+        } else {
+            $tipe = "gagal";
+            $pesan = "Gagal hapus Tamu.";
+        }
+        return back()->with($tipe, $pesan);
     }
 }
