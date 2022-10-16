@@ -16,13 +16,16 @@
 
         <div class="w-full p-3">
             <div class="bg-white border rounded shadow" x-data="{ filter:'SEMUA' }">
-                <div class="border-b p-3 w-full">
+                <div class="inline-flex border-b p-3 w-full">
                     <select x-model="filter" class="mx-4 py-1 px-4 bg-white border border-gray-600 rounded">
                         <option value="SEMUA">Semua</option>
                         <option value="HARI INI">Hari Ini</option>
                         <option value="MINGGU INI">Minggu Ini</option>
                         <option value="BULAN INI">Bulan Ini</option>
                     </select>
+                    <a x-bind:href="window.location.origin+'/admin/buku-tamu/cetak/'+filter">
+                        <button class="bg-orange-700 rounded py-1 px-4 text-white hover:bg-orange-900">Cetak</button>
+                    </a>
                 </div>
                 <div class="p-5" x-data="{ bukuTamu:null,showDetail:false }">
                     <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6">
@@ -80,7 +83,8 @@
                         </div>
                     </div>
                     <table class="w-full p-5 text-gray-700 border-3 border-black" x-show="!showDetail">
-                        <thead>
+
+                        <head>
                             <tr>
                                 <th class="border-2 text-blue-900 p-2">No</th>
                                 <th class="border-2 text-blue-900 p-2">Nama Tamu</th>
@@ -89,9 +93,9 @@
                                 <th class="border-2 text-blue-900 p-2">Check-Out</th>
                                 <th class="border-2 text-blue-900 p-2">Aksi</th>
                             </tr>
-                        </thead>
+                        </head>
 
-                        <tbody>
+                        <body>
                             @for($i = 0 ; $i < count($semua); $i++) <tr x-show="filter=='SEMUA' || filter=='{{$semua[$i]->filter}}' || (filter=='MINGGU INI' && '{{$semua[$i]->filter}}'=='HARI INI') || (filter=='BULAN INI' && ('{{$semua[$i]->filter}}'=='HARI INI' || '{{$semua[$i]->filter}}'=='MINGGU INI'))">
                                 <td class="border-2 p-2 text-center">{{ $i+1 }}</td>
                                 <td class="border-2 p-2">{{ $semua[$i]->permintaan_bertamu->tamu->nama }}</td>
@@ -105,11 +109,12 @@
                                 </td>
                                 </tr>
                                 @endfor
-                        </tbody>
+                        </body>
                     </table>
                 </div>
             </div>
         </div>
+        
     </div>
 </div>
 @endsection

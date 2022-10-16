@@ -10,9 +10,12 @@ use App\Services\PegawaiService;
 use App\Services\PermintaanBertamuService;
 use App\Services\ResultSet;
 use App\Services\TamuService;
+use App\Utilities\WaktuConverter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+
+use PDF;
 
 class AdminController extends Controller
 {
@@ -146,15 +149,15 @@ class AdminController extends Controller
         foreach ($bukuTamu as $bk) {
             $cekWaktu = Carbon::createFromFormat('Y-m-d H:i:s', $bk->check_in);
             $bk['filter'] = 'SEMUA';
-            if ($cekWaktu->month == $currentTime->month) {
+            if (($cekWaktu->month == $currentTime->month) && ($cekWaktu->year == $currentTime->year)) {
                 // $bulanIni[] = $bk;
                 $bk['filter'] = 'BULAN INI';
             }
-            if ($cekWaktu->weekOfMonth == $currentTime->weekOfMonth) {
+            if (($cekWaktu->weekOfMonth == $currentTime->weekOfMonth) && ($cekWaktu->month == $currentTime->month) && ($cekWaktu->year == $currentTime->year)) {
                 // $mingguIni[] = $bk;
                 $bk['filter'] = 'MINGGU INI';
             }
-            if ($cekWaktu->day == $currentTime->day) {
+            if (($cekWaktu->day == $currentTime->day) && ($cekWaktu->month == $currentTime->month) && ($cekWaktu->year == $currentTime->year)) {
                 // $hariIni[] = $bk;
                 $bk['filter'] = 'HARI INI';
             }
@@ -167,6 +170,70 @@ class AdminController extends Controller
         ];
         // return response()->json($data);
         return view('admin.data_buku_tamu', $data);
+    }
+
+    public function cetakBukuTamu($filter)
+    {
+        $rs = $this->bukuTamuService->getAll();
+        $bukuTamu = $rs->hasil->data;
+        $currentTime = Carbon::now();
+        $hariIni = [];
+        $mingguIni = [];
+        $bulanIni = [];
+        foreach ($bukuTamu as $bk) {
+            $cekWaktu = Carbon::createFromFormat('Y-m-d H:i:s', $bk->check_in);
+            $bk['filter'] = 'SEMUA';
+            if (($cekWaktu->month == $currentTime->month) && ($cekWaktu->year == $currentTime->year)) {
+                $bulanIni[] = $bk;
+                $bk['filter'] = 'BULAN INI';
+            }
+            if (($cekWaktu->weekOfMonth == $currentTime->weekOfMonth) && ($cekWaktu->month == $currentTime->month) && ($cekWaktu->year == $currentTime->year)) {
+                $mingguIni[] = $bk;
+                $bk['filter'] = 'MINGGU INI';
+            }
+            if (($cekWaktu->day == $currentTime->day) && ($cekWaktu->month == $currentTime->month) && ($cekWaktu->year == $currentTime->year)) {
+                $hariIni[] = $bk;
+                $bk['filter'] = 'HARI INI';
+            }
+        }
+        $wc = new WaktuConverter($currentTime->toDateTimeString());
+        $waktu = '';
+        $tipe = '';
+        switch ($filter) {
+            case 'SEMUA':
+                $tipe = 'Keseluruhan';
+                break;
+            case 'HARI INI':
+                $tipe = 'Harian';
+                $waktu = $wc->getDate();
+                $bukuTamu = $hariIni;
+                break;
+            case 'MINGGU INI':
+                $tipe = 'Mingguan';
+                $tmp = Carbon::now();
+                $tmp->addDays(- ($currentTime->dayOfWeek));
+                $wc1 = new WaktuConverter($tmp->toDateTimeString());
+                $low = $wc1->getDate();
+                $tmp->addDays(6);
+                $wc1 = new WaktuConverter($tmp->toDateTimeString());
+                $high = $wc1->getDate();
+                $waktu = $low . ' - ' . $high;
+                $bukuTamu = $mingguIni;
+                break;
+            case 'BULAN INI':
+                $tipe = 'Bulanan';
+                $waktu = $wc->bulan . ' ' . $wc->tahun;
+                $bukuTamu = $bulanIni;
+                break;
+        }
+        $data = [
+            'tipe' => $tipe,
+            'waktu' => $waktu,
+            'semua' => $bukuTamu,
+        ];
+        // return response()->json($data);
+        $pdf = PDF::loadView('laporan', $data);
+        return $pdf->download();
     }
 
     public function getTamuByNIK(string $nik)
