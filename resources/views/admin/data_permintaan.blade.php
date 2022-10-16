@@ -124,7 +124,8 @@
                             </thead>
 
                             <tbody>
-                                @for($i = 0 ; $i < count($semuaPermintaan); $i++) <tr x-show="(filter=='SEMUA' || filter=='{{$semuaPermintaan[$i]->status}}') && '{{$semuaPermintaan[$i]->status}}' != 'KADALUARSA' ">
+                                @for($i = 0 ; $i < count($semuaPermintaan); $i++) 
+                                <tr x-show="(filter=='SEMUA' || filter=='{{$semuaPermintaan[$i]->status}}') && '{{$semuaPermintaan[$i]->status}}' != 'KADALUARSA' ">
                                     <td class="border-2 p-2 text-center">{{ $i+1 }}</td>
                                     <td class="border-2 p-2">{{ $semuaPermintaan[$i]->tamu->nama }}</td>
                                     <td class="border-2 p-2">{{ $semuaPermintaan[$i]->tamu->nik }}</td>

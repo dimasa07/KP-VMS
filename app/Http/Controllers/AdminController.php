@@ -139,8 +139,34 @@ class AdminController extends Controller
     {
         $rs = $this->bukuTamuService->getAll();
         $bukuTamu = $rs->hasil->data;
-        return view('admin.data_buku_tamu', compact('bukuTamu'));
-        // return response()->json($rs);
+        $currentTime = Carbon::now();
+        $hariIni = [];
+        $mingguIni = [];
+        $bulanIni = [];
+        foreach ($bukuTamu as $bk) {
+            $cekWaktu = Carbon::createFromFormat('Y-m-d H:i:s', $bk->check_in);
+            $bk['filter'] = 'SEMUA';
+            if ($cekWaktu->month == $currentTime->month) {
+                // $bulanIni[] = $bk;
+                $bk['filter'] = 'BULAN INI';
+            }
+            if ($cekWaktu->weekOfMonth == $currentTime->weekOfMonth) {
+                // $mingguIni[] = $bk;
+                $bk['filter'] = 'MINGGU INI';
+            }
+            if ($cekWaktu->day == $currentTime->day) {
+                // $hariIni[] = $bk;
+                $bk['filter'] = 'HARI INI';
+            }
+        }
+        $data = [
+            'semua' => $bukuTamu,
+            // 'hariIni' => $hariIni,
+            // 'mingguIni' => $mingguIni,
+            // 'bulanIni' => $bulanIni
+        ];
+        // return response()->json($data);
+        return view('admin.data_buku_tamu', $data);
     }
 
     public function getTamuByNIK(string $nik)

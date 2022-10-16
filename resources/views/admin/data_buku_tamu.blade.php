@@ -7,7 +7,6 @@
 <div class="container w-full mx-auto pt-20">
     <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
         <div class="w-full p-3">
-            <!--Table Card-->
             <div class="bg-white border rounded shadow">
                 <div class="border-b px-3 py-6">
                     <h5 class="ml-5 text-3xl font-bold uppercase text-gray-600">Laporan</h5>
@@ -16,10 +15,14 @@
         </div>
 
         <div class="w-full p-3">
-            <!--Table Card-->
-            <div class="bg-white border rounded shadow">
-                <div class="border-b p-3">
-                    <h5 class="font-bold uppercase text-gray-600">Hari Ini</h5>
+            <div class="bg-white border rounded shadow" x-data="{ filter:'SEMUA' }">
+                <div class="border-b p-3 w-full">
+                    <select x-model="filter" class="mx-4 py-1 px-4 bg-white border border-gray-600 rounded">
+                        <option value="SEMUA">Semua</option>
+                        <option value="HARI INI">Hari Ini</option>
+                        <option value="MINGGU INI">Minggu Ini</option>
+                        <option value="BULAN INI">Bulan Ini</option>
+                    </select>
                 </div>
                 <div class="p-5" x-data="{ bukuTamu:null,showDetail:false }">
                     <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6">
@@ -89,15 +92,15 @@
                         </thead>
 
                         <tbody>
-                            @for($i = 0 ; $i < count($bukuTamu); $i++) <tr>
+                            @for($i = 0 ; $i < count($semua); $i++) <tr x-show="filter=='SEMUA' || filter=='{{$semua[$i]->filter}}' || (filter=='MINGGU INI' && '{{$semua[$i]->filter}}'=='HARI INI') || (filter=='BULAN INI' && ('{{$semua[$i]->filter}}'=='HARI INI' || '{{$semua[$i]->filter}}'=='MINGGU INI'))">
                                 <td class="border-2 p-2 text-center">{{ $i+1 }}</td>
-                                <td class="border-2 p-2">{{ $bukuTamu[$i]->permintaan_bertamu->tamu->nama }}</td>
-                                <td class="border-2 p-2">{{ $bukuTamu[$i]->permintaan_bertamu->tamu->nik }}</td>
-                                <td class="border-2 p-2 text-center">{{ $bukuTamu[$i]->check_in }}</td>
-                                <td class="border-2 p-2 text-center">{{ $bukuTamu[$i]->check_out }}</td>
+                                <td class="border-2 p-2">{{ $semua[$i]->permintaan_bertamu->tamu->nama }}</td>
+                                <td class="border-2 p-2">{{ $semua[$i]->permintaan_bertamu->tamu->nik }}</td>
+                                <td class="border-2 p-2 text-center">{{ $semua[$i]->check_in }}</td>
+                                <td class="border-2 p-2 text-center">{{ $semua[$i]->check_out }}</td>
                                 <td class="border-2 p-2 text-center">
-                                <div>
-                                        <button @click="bukuTamu={{ $bukuTamu[$i] }}; showDetail= !showDetail" class="bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded">Detail</button>
+                                    <div>
+                                        <button @click="bukuTamu={{ $semua[$i] }}; showDetail= !showDetail" class="bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded">Detail</button>
                                     </div>
                                 </td>
                                 </tr>
@@ -106,35 +109,7 @@
                     </table>
                 </div>
             </div>
-            <!--/table Card-->
         </div>
-        
-        <div class="w-full p-3">
-            <!--Table Card-->
-            <div class="bg-white border rounded shadow">
-                <div class="border-b p-3">
-                    <h5 class="font-bold uppercase text-gray-600">Minggu Ini</h5>
-                </div>
-                <div class="p-5">
-                   
-                </div>
-            </div>
-            <!--/table Card-->
-        </div>
-
-        <div class="w-full p-3">
-            <!--Table Card-->
-            <div class="bg-white border rounded shadow">
-                <div class="border-b p-3">
-                    <h5 class="font-bold uppercase text-gray-600">Bulan Ini</h5>
-                </div>
-                <div class="p-5">
-                   
-                </div>
-            </div>
-            <!--/table Card-->
-        </div>
-
     </div>
 </div>
 @endsection
