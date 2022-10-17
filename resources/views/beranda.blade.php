@@ -14,7 +14,7 @@
                 Silahkan mendaftar jika belum mempunyai akun.
             </p>
             <a href="{{ route('user.daftar') }}">
-                <button class="mx-auto lg:mx-0 hover: bg-teal-700 hover:bg-teal-900 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out hover:text-teal-400">
+                <button class="mx-auto lg:mx-0 hover: bg-teal-200 hover:bg-teal-400 text-teal-900 font-bold rounded-full my-6 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out hover:text-teal-900">
                     Daftar
                 </button>
             </a>

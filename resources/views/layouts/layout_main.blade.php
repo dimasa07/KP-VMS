@@ -13,7 +13,8 @@
         .body-green {
             background: #036163;
         }
-        button{
+
+        button {
             color: white;
         }
     </style>
@@ -85,7 +86,7 @@
                     </li>
                 </ul>
                 <a href="{{ route('user.login') }}">
-                    <button id="navAction" class="mx-auto lg:mx-0 hover: bg-teal-700 hover:bg-teal-900 text-white font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out hover:text-teal-400">
+                    <button id="navAction" class="mx-auto lg:mx-0 hover: bg-teal-200 hover:bg-teal-400 text-teal-900 font-bold rounded-full mt-4 lg:mt-0 py-2 px-8  focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out hover:text-teal-900">
                         Login
                     </button>
                 </a>

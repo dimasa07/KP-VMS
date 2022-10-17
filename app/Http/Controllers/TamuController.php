@@ -9,6 +9,7 @@ use App\Services\BukuTamuService;
 use App\Services\PegawaiService;
 use App\Services\PermintaanBertamuService;
 use App\Services\TamuService;
+use App\Utilities\WaktuConverter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -40,6 +41,11 @@ class TamuController extends Controller
     {
         $id_tamu = $request->session()->get('id'); //$this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
         $permintaan = $this->permintaanBertamuService->getByIdTamu($id_tamu)->hasil->data;
+        foreach($permintaan as $p){
+            $p->waktu_pengiriman = WaktuConverter::convertToDateTime($p->waktu_pengiriman);
+            $p->waktu_bertamu = WaktuConverter::convertToDateTime($p->waktu_bertamu);
+            $p->waktu_pemeriksaan = WaktuConverter::convertToDateTime($p->waktu_pemeriksaan);
+        }
         return view('tamu.riwayat_permintaan', compact('permintaan'));
     }
 
@@ -47,6 +53,10 @@ class TamuController extends Controller
     {
         $id_tamu = $request->session()->get('id'); //$this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
         $bukuTamu = $this->bukuTamuService->getByIdTamu($id_tamu)->hasil->data;
+        foreach($bukuTamu as $bk){
+            $bk->check_in = WaktuConverter::convertToDateTime($bk->check_in);
+            $bk->check_out = WaktuConverter::convertToDateTime($bk->check_out);
+        }
         return view('tamu.riwayat_bertamu', compact('bukuTamu'));
         // return response()->json($bukuTamu);
     }

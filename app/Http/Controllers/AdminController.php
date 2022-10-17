@@ -117,21 +117,14 @@ class AdminController extends Controller
     public function allPermintaanBertamu(Request $request)
     {
         $rs = $this->permintaanBertamuService->getAll();
-        $rs1 = $this->permintaanBertamuService->getByStatus('BELUM DIPERIKSA');
-        $rs2 = $this->permintaanBertamuService->getByStatus('DISETUJUI');
-        $rs3 = $this->permintaanBertamuService->getByStatus('DITOLAK');
         $semuaPermintaan = $rs->hasil->data;
-        $permintaanBelumDiperiksa = $rs1->hasil->data;
-        $permintaanDisetujui = $rs2->hasil->data;
-        $permintaanDitolak = $rs3->hasil->data;
-        // if ($request->ajax()) {
-        //     return response()->json(array('permintaan' => $permintaan));
-        // }
+        foreach($rs->hasil->data as $permintaan){
+            $permintaan->waktu_bertamu = WaktuConverter::convertToDateTime($permintaan->waktu_bertamu);
+            $permintaan->waktu_pengiriman = WaktuConverter::convertToDateTime($permintaan->waktu_pengiriman);
+            $permintaan->waktu_pemeriksaan = WaktuConverter::convertToDateTime($permintaan->waktu_pemeriksaan);
+        }
         return view('admin.data_permintaan', [], [
-            'semuaPermintaan' => $semuaPermintaan,
-            'permintaanBelumDiperiksa' => $permintaanBelumDiperiksa,
-            'permintaanDisetujui' => $permintaanDisetujui,
-            'permintaanDitolak' => $permintaanDitolak
+            'semuaPermintaan' => $semuaPermintaan
         ]);
 
         // return response()->json($rs);
@@ -142,30 +135,23 @@ class AdminController extends Controller
         $rs = $this->bukuTamuService->getAll();
         $bukuTamu = $rs->hasil->data;
         $currentTime = Carbon::now();
-        $hariIni = [];
-        $mingguIni = [];
-        $bulanIni = [];
         foreach ($bukuTamu as $bk) {
             $cekWaktu = Carbon::createFromFormat('Y-m-d H:i:s', $bk->check_in);
             $bk['filter'] = 'SEMUA';
             if (($cekWaktu->month == $currentTime->month) && ($cekWaktu->year == $currentTime->year)) {
-                // $bulanIni[] = $bk;
                 $bk['filter'] = 'BULAN INI';
             }
             if (($cekWaktu->weekOfMonth == $currentTime->weekOfMonth) && ($cekWaktu->month == $currentTime->month) && ($cekWaktu->year == $currentTime->year)) {
-                // $mingguIni[] = $bk;
                 $bk['filter'] = 'MINGGU INI';
             }
             if (($cekWaktu->day == $currentTime->day) && ($cekWaktu->month == $currentTime->month) && ($cekWaktu->year == $currentTime->year)) {
-                // $hariIni[] = $bk;
                 $bk['filter'] = 'HARI INI';
             }
+            $bk->check_in = WaktuConverter::convertToDateTime($bk->check_in);
+            $bk->check_out = WaktuConverter::convertToDateTime($bk->check_out);
         }
         $data = [
-            'semua' => $bukuTamu,
-            // 'hariIni' => $hariIni,
-            // 'mingguIni' => $mingguIni,
-            // 'bulanIni' => $bulanIni
+            'semua' => $bukuTamu
         ];
         // return response()->json($data);
         return view('admin.data_buku_tamu', $data);
@@ -181,6 +167,8 @@ class AdminController extends Controller
         $bulanIni = [];
         foreach ($bukuTamu as $bk) {
             $cekWaktu = Carbon::createFromFormat('Y-m-d H:i:s', $bk->check_in);
+            $bk->check_in = WaktuConverter::convertToDateTime($bk->check_in);
+            $bk->check_out = WaktuConverter::convertToDateTime($bk->check_out);
             $bk['filter'] = 'SEMUA';
             if (($cekWaktu->month == $currentTime->month) && ($cekWaktu->year == $currentTime->year)) {
                 $bulanIni[] = $bk;
@@ -194,6 +182,7 @@ class AdminController extends Controller
                 $hariIni[] = $bk;
                 $bk['filter'] = 'HARI INI';
             }
+
         }
         $wc = new WaktuConverter($currentTime->toDateTimeString());
         $waktu = '';

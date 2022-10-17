@@ -65,7 +65,7 @@ class PermintaanBertamuService
 
     public function getByIdTamu($idTamu)
     {
-        $permintaan = PermintaanBertamu::where('id_tamu', '=', $idTamu)->get();
+        $permintaan = PermintaanBertamu::where([['id_tamu', '=', $idTamu], ['status', '<>', 'KADALUARSA']])->get();
         $rs = new ResultSet();
         $rs->hasil->tipe = 'Array';
         $jumlah = count($permintaan);

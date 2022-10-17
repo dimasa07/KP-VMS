@@ -64,11 +64,11 @@
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.waktu_bertamu"></td>
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             <td class="w-40">Waktu Pengiriman</td>
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.waktu_pengiriman"></td>
-                                        </tr>
+                                        </tr> -->
                                         <tr>
                                             <td class="w-40">Check-In</td>
                                             <td class="w-6">:</td>

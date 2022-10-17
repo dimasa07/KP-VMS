@@ -62,16 +62,16 @@
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.waktu_bertamu"></td>
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             <td class="w-40">Waktu Pengiriman</td>
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.waktu_pengiriman"></td>
-                                        </tr>
-                                        <tr>
+                                        </tr> -->
+                                        <!-- <tr>
                                             <td class="w-40">Status</td>
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.status"></td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                                 <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmCheckIn : false }">
