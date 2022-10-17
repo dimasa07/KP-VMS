@@ -37,7 +37,7 @@
                     </svg>
                 </button>
             </div>
-            <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-blue-800 lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
+            <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-teal-900 lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
                 <ul class="list-reset lg:flex justify-end flex-1 items-center">
                     <li>
                         <div class="relative">
@@ -85,7 +85,7 @@
                     </li>
                 </ul>
                 <a href="{{ route('user.login') }}">
-                    <button id="navAction" class="mx-auto lg:mx-0 hover: bg-teal-900 text-white font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out hover:text-teal-400">
+                    <button id="navAction" class="mx-auto lg:mx-0 hover: bg-teal-700 hover:bg-teal-900 text-white font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out hover:text-teal-400">
                         Login
                     </button>
                 </a>
@@ -99,7 +99,7 @@
 
 
     <!--Footer-->
-    <footer class="bg-blue-800">
+    <footer class="bg-teal-900">
 
     </footer>
 

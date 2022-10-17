@@ -27,7 +27,7 @@
 
     <main class="bg-gray-100 max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
         <section>
-            <h1 class="mb-8 text-3xl text-center font-bold">Pendaftaran</h1>
+            <h1 class="text-teal-900 mb-8 text-3xl text-center font-bold">Pendaftaran</h1>
             @if($pesan = Session::get('eror'))
             <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
                 {{ $pesan }}

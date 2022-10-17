@@ -79,12 +79,12 @@
                     <table class="w-full p-5 text-gray-700 border-3 border-black" x-show="!showDetail">
                         <thead>
                             <tr>
-                                <th class="border-2 text-blue-900 p-2">No</th>
-                                <th class="border-2 text-blue-900 p-2">Nama Tamu</th>
-                                <th class="border-2 text-blue-900 p-2">NIK</th>
-                                <th class="border-2 text-blue-900 p-2">Check-In</th>
-                                <th class="border-2 text-blue-900 p-2">Check-Out</th>
-                                <th class="border-2 text-blue-900 p-2">Aksi</th>
+                                <th class="border-2 text-teal-900 p-2">No</th>
+                                <th class="border-2 text-teal-900 p-2">Nama Tamu</th>
+                                <th class="border-2 text-teal-900 p-2">NIK</th>
+                                <th class="border-2 text-teal-900 p-2">Check-In</th>
+                                <th class="border-2 text-teal-900 p-2">Check-Out</th>
+                                <th class="border-2 text-teal-900 p-2">Aksi</th>
                             </tr>
                         </thead>
 
@@ -97,7 +97,7 @@
                                 <td class="border-2 p-2 text-center">{{ $bukuTamu[$i]->check_out }}</td>
                                 <td class="border-2 p-2 text-center">
                                 <div>
-                                        <button @click="bukuTamu={{ $bukuTamu[$i] }}; showDetail= !showDetail" class="bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded">Detail</button>
+                                        <button @click="bukuTamu={{ $bukuTamu[$i] }}; showDetail= !showDetail" class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
                                     </div>
                                 </td>
                                 </tr>

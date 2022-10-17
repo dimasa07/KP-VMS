@@ -59,7 +59,7 @@
                 <div class="bg-white border rounded shadow p-2">
                     <div class="flex flex-row items-center">
                         <div class="flex-shrink pr-4">
-                            <div class="rounded p-3 bg-blue-600"><i class="fas fa-server fa-2x fa-fw fa-inverse"></i></div>
+                            <div class="rounded p-3 bg-teal-700"><i class="fas fa-server fa-2x fa-fw fa-inverse"></i></div>
                         </div>
                         <div class="flex-1 text-right md:text-center">
                             <h5 class="font-bold uppercase text-gray-500">Permintaan belum diperiksa</h5>
@@ -140,9 +140,9 @@
                         <table class="w-full p-5 text-gray-700">
                             <thead>
                                 <tr>
-                                    <th class="text-left text-blue-900">Name</th>
-                                    <th class="text-left text-blue-900">Side</th>
-                                    <th class="text-left text-blue-900">Role</th>
+                                    <th class="text-left text-teal-900">Name</th>
+                                    <th class="text-left text-teal-900">Side</th>
+                                    <th class="text-left text-teal-900">Role</th>
                                 </tr>
                             </thead>
 

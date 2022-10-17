@@ -24,9 +24,9 @@
                         <option value="MINGGU INI">Minggu Ini</option>
                         <option value="BULAN INI">Bulan Ini</option>
                     </select>
-                    <a x-bind:href="window.location.origin+'/fo/buku-tamu/cetak/'+filter">
+                    <!-- <a x-bind:href="window.location.origin+'/fo/buku-tamu/cetak/'+filter">
                         <button class="bg-orange-700 rounded py-1 px-4 text-white hover:bg-orange-900">Cetak</button>
-                    </a>
+                    </a> -->
                 </div>
                 <div class="p-5" x-data="{ bukuTamu:null,showDetail:false }">
                     <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6">
@@ -87,12 +87,12 @@
 
                         <head>
                             <tr>
-                                <th class="border-2 text-blue-900 p-2">No</th>
-                                <th class="border-2 text-blue-900 p-2">Nama Tamu</th>
-                                <th class="border-2 text-blue-900 p-2">NIK</th>
-                                <th class="border-2 text-blue-900 p-2">Check-In</th>
-                                <th class="border-2 text-blue-900 p-2">Check-Out</th>
-                                <th class="border-2 text-blue-900 p-2">Aksi</th>
+                                <th class="border-2 text-teal-900 p-2">No</th>
+                                <th class="border-2 text-teal-900 p-2">Nama Tamu</th>
+                                <th class="border-2 text-teal-900 p-2">NIK</th>
+                                <th class="border-2 text-teal-900 p-2">Check-In</th>
+                                <th class="border-2 text-teal-900 p-2">Check-Out</th>
+                                <th class="border-2 text-teal-900 p-2">Aksi</th>
                             </tr>
                         </head>
 
@@ -105,7 +105,7 @@
                                 <td class="border-2 p-2 text-center">{{ $semua[$i]->check_out }}</td>
                                 <td class="border-2 p-2 text-center">
                                     <div>
-                                        <button @click="bukuTamu={{ $semua[$i] }}; showDetail= !showDetail" class="bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded">Detail</button>
+                                        <button @click="bukuTamu={{ $semua[$i] }}; showDetail= !showDetail" class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
                                     </div>
                                 </td>
                                 </tr>

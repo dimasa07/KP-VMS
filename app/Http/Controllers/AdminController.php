@@ -232,7 +232,8 @@ class AdminController extends Controller
         ];
         // return response()->json($data);
         $pdf = Pdf::loadView('laporan', $data);
-        return $pdf->download();
+        $namaFile = $tipe == 'Keseluruhan' ? 'Laporan Tamu ' . $tipe : 'Laporan Tamu ' . $tipe . '_' . $waktu ;
+        return $pdf->download($namaFile);
     }
 
     public function getTamuByNIK(string $nik)

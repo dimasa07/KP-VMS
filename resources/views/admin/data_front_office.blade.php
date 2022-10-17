@@ -24,12 +24,12 @@
                 <table class="w-full p-5 text-gray-700 border-3 border-black">
                         <thead>
                             <tr>
-                                <th class="border-2 text-blue-900 p-2">No</th>
-                                <th class="border-2 text-blue-900 p-2">Nama Front Office</th>
-                                <th class="border-2 text-blue-900 p-2">NIP</th>
-                                <th class="border-2 text-blue-900 p-2">Jabatan</th>
-                                <th class="border-2 text-blue-900 p-2">Username</th>
-                                <th class="border-2 text-blue-900 p-2">Aksi</th>
+                                <th class="border-2 text-teal-900 p-2">No</th>
+                                <th class="border-2 text-teal-900 p-2">Nama Front Office</th>
+                                <th class="border-2 text-teal-900 p-2">NIP</th>
+                                <th class="border-2 text-teal-900 p-2">Jabatan</th>
+                                <th class="border-2 text-teal-900 p-2">Username</th>
+                                <th class="border-2 text-teal-900 p-2">Aksi</th>
                             </tr>
                         </thead>
 

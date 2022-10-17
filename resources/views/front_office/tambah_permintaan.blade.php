@@ -103,7 +103,7 @@
 
                         </div>
                         <div class="my-2 mx-5">
-                            <button class="w-full py-2 bg-blue-600 hover:bg-blue-800 text-white px-2 rounded" type="submit" value="Kirim">Kirim</button>
+                            <button class="w-full py-2 bg-teal-700 hover:bg-teal-900 text-white px-2 rounded" type="submit" value="Kirim">Kirim</button>
                         </div>
                     </div>
                 </form>
