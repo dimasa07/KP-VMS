@@ -9,14 +9,22 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <style>
+        .body-green {
+            background: #036163;
+        }
+        button{
+            color: white;
+        }
+    </style>
 </head>
 
-<body class="leading-normal tracking-normal" style="font-family: 'Source Sans Pro', sans-serif;">
+<body class="body-green text-white leading-normal tracking-normal" style="font-family: 'Source Sans Pro', sans-serif;">
     <!--Nav-->
     <nav id="header" class="fixed w-full z-30 top-0 text-blue-800">
         <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
             <div class="pl-4 flex items-center">
-                <a class="toggleColour text-blue-800 no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
+                <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
                     <img class="h-9 fill-current inline" src="{{ asset('img/logo1.png') }}">
                     DISKOMINFO
                 </a>
@@ -77,7 +85,7 @@
                     </li>
                 </ul>
                 <a href="{{ route('user.login') }}">
-                    <button id="navAction" class="mx-auto lg:mx-0 hover: bg-blue-800 text-white font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out hover:text-cyan-300">
+                    <button id="navAction" class="mx-auto lg:mx-0 hover: bg-teal-900 text-white font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out hover:text-teal-400">
                         Login
                     </button>
                 </a>

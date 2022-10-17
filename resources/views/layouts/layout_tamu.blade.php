@@ -13,14 +13,22 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
     <link href="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet" />
+    <style>
+        .body-green {
+            background: #036163;
+        }
 
+        button {
+            color: white;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    <nav id="header" class="bg-white fixed w-full z-10 top-0 shadow">
+    <nav id="header" class="body-green fixed w-full z-10 top-0 shadow">
         <div class="w-full container mx-auto flex flex-wrap items-center mt-0 pt-3 pb-3 md:pb-0">
             <div class="w-1/2 pl-2 md:pl-0">
-                <a class="toggleColour text-blue-800 no-underline hover:no-underline font-bold text-2xl lg:text-2xl" href="#">
+                <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-2xl" href="#">
                     <img class="h-7 fill-current inline" src="{{ asset('img/logo1.png') }}">
                     DISKOMINFO
                 </a>
@@ -50,7 +58,7 @@
                     </div>
 
                     <div class="block lg:hidden pr-4">
-                        <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-teal-500 appearance-none focus:outline-none">
+                        <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-white border-gray-600 hover:text-gray-900 hover:border-teal-500 appearance-none focus:outline-none">
                             <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <title>Menu</title>
                                 <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
@@ -60,26 +68,26 @@
                 </div>
             </div>
 
-            <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-3 lg:mt-1 bg-white z-20" id="nav-content">
+            <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-3 lg:mt-1 body-green z-20" id="nav-content">
                 <ul class="list-reset lg:flex flex-1 items-center px-4 md:px-0">
                     <li class="mr-6 my-2 md:my-0">
-                        <a href="{{ route('tamu.index') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('tamu') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
-                            <i class="fas fa-home fa-fw mr-3 {{ request()->is('tamu') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Dasbor</span>
+                        <a href="{{ route('tamu.index') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('tamu') ? 'text-teal-400 border-teal-400 hover:border-teal-400 hover:text-teal-400 ' : 'text-white border-white hover:border-teal-400 hover:text-teal-400' }} no-underline border-b-2 ">
+                            <i class="fas fa-home fa-fw mr-3 {{ request()->is('tamu') ? 'text-teal-400':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Dasbor</span>
                         </a>
                     </li>
                     <li class="mr-6 my-2 md:my-0">
-                        <a href="{{ route('tamu.permintaan.buat') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('tamu/permintaan/buat') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
-                            <i class="fas fa-plus fa-fw mr-3 {{ request()->is('tamu/permintaan/buat') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Buat Permintaan</span>
+                        <a href="{{ route('tamu.permintaan.buat') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('tamu/permintaan/buat') ? 'text-teal-400 border-teal-400 hover:border-teal-400 hover:text-teal-400 ' : 'text-white border-white hover:border-teal-400 hover:text-teal-400' }} no-underline border-b-2 ">
+                            <i class="fas fa-plus fa-fw mr-3 {{ request()->is('tamu/permintaan/buat') ? 'text-teal-400':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Buat Permintaan</span>
                         </a>
                     </li>
                     <li class="mr-6 my-2 md:my-0">
-                        <a href="{{ route('tamu.riwayat.permintaan') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('tamu/riwayat/permintaan') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
-                            <i class="fas fa-tasks fa-fw mr-3 {{ request()->is('tamu/riwayat/permintaan') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Riwayat Permintaan</span>
+                        <a href="{{ route('tamu.riwayat.permintaan') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('tamu/riwayat/permintaan') ? 'text-teal-400 border-teal-400 hover:border-teal-400 hover:text-teal-400 ' : 'text-white border-white hover:border-teal-400 hover:text-teal-400' }} no-underline border-b-2 ">
+                            <i class="fas fa-tasks fa-fw mr-3 {{ request()->is('tamu/riwayat/permintaan') ? 'text-teal-400':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Riwayat Permintaan</span>
                         </a>
                     </li>
                     <li class="mr-6 my-2 md:my-0">
-                        <a href="{{ route('tamu.riwayat.bertamu') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('tamu/riwayat/bertamu') ? 'text-blue-600 border-blue-600 hover:border-blue-600 hover:text-blue-600 ' : 'text-gray-500 border-white hover:border-blue-600 hover:text-blue-600' }} no-underline border-b-2 ">
-                            <i class="fas fa-book fa-fw mr-3 {{ request()->is('tamu/riwayat/bertamu') ? 'text-blue-600':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Riwayat Bertamu</span>
+                        <a href="{{ route('tamu.riwayat.bertamu') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('tamu/riwayat/bertamu') ? 'text-teal-400 border-teal-400 hover:border-teal-400 hover:text-teal-400 ' : 'text-white border-white hover:border-teal-400 hover:text-teal-400' }} no-underline border-b-2 ">
+                            <i class="fas fa-book fa-fw mr-3 {{ request()->is('tamu/riwayat/bertamu') ? 'text-teal-400':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Riwayat Bertamu</span>
                         </a>
                     </li>
                 </ul>

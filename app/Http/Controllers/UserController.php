@@ -144,7 +144,7 @@ class UserController extends Controller
             $akun->fill($request->input());
             $rsSave = $this->akunService->save($akun);
             if ($rsSave->sukses) {
-                $rs->pesan[] = 'Sukse daftar.';
+                $rs->pesan[] = 'Sukses daftar.';
                 $rs->sukses = true;
                 $rs->hasil->jumlah = 1;
                 $rs->hasil->data = $akun;

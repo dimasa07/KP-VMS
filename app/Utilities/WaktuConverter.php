@@ -96,11 +96,11 @@ class WaktuConverter
 
     public function getDateTime()
     {
-        return $this->hari . ', ' . $this->tanggal  . ' ' . $this->bulan  . ' ' . $this->tahun . ', Pukul ' . $this->jam . ':' . $this->menit;
+        return $this->tanggal  . ' ' . $this->bulan  . ' ' . $this->tahun . ', Pukul ' . $this->jam . ':' . $this->menit;
     }
 
     public function getDate()
     {
-        return $this->hari . ', ' . $this->tanggal  . ' ' . $this->bulan  . ' ' . $this->tahun;
+        return $this->tanggal  . ' ' . $this->bulan  . ' ' . $this->tahun;
     }
 }

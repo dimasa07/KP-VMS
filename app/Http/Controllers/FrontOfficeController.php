@@ -12,10 +12,10 @@ use App\Services\PermintaanBertamuService;
 use App\Services\ResultSet;
 use App\Services\TamuService;
 use App\Utilities\WaktuConverter;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use PDF;
 
 class FrontOfficeController extends Controller
 {
@@ -263,7 +263,7 @@ class FrontOfficeController extends Controller
             'semua' => $bukuTamu,
         ];
         // return response()->json($data);
-        $pdf = PDF::loadView('laporan', $data);
+        $pdf = Pdf::loadView('laporan', $data);
         return $pdf->download();
     }
 
