@@ -120,6 +120,7 @@ class TamuController extends Controller
         }
         if ($rs->sukses) {
             $request->session()->put('nama', $rs->hasil->data->nama);
+            $rs->pesan[0] = 'Sukses update Profil';
         }
         $tipe = $rs->sukses ? 'sukses' : 'gagal';
         Session::flash($tipe, $rs->pesan[0]);

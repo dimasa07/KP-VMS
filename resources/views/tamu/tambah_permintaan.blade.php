@@ -20,7 +20,7 @@
             <div class="bg-white border rounded shadow">
 
                 @if(session()->get('id')==0)
-                <div class="p-5 flex justify-center">
+                <div class="p-5">
                     <h3 class="text-1xl">Isi <a class="text-blue-800 underline" href="{{ route('tamu.profil') }}">profil</a> terlebih dahulu untuk bisa membuat permintaan.</h3>
                 </div>
                 @else

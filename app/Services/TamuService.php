@@ -17,14 +17,14 @@ class TamuService
             $sukses = $tamu->save();
             $rs->sukses = $sukses;
             if ($sukses) {
-                $rs->pesan[] = 'Sukses tambah Tamu';
+                $rs->pesan[] = 'Sukses tambah data Tamu';
                 $rs->hasil->jumlah = 1;
                 $rs->hasil->data = $this->getByNIK($tamu->nik)->hasil->data;
             } else {
-                $rs->pesan[] = 'Gagal tambah Tamu';
+                $rs->pesan[] = 'Gagal tambah data Tamu';
             }
         } else {
-            $rs->pesan[] = 'Gagal tambah Tamu, NIK telah tersedia';
+            $rs->pesan[] = 'Gagal tambah data Tamu, NIK telah tersedia';
         }
 
         return $rs;

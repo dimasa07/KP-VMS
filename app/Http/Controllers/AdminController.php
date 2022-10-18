@@ -30,7 +30,62 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.index');
+        $totalPermintaan = 0;
+        $permintaanBelumDiperiksa = 0;
+        $permintaanDisetujui = 0;
+        $permintaanDitolak = 0;
+        $laporanHariIni = 0;
+        $totalLaporan = 0;
+        $saatIni = Carbon::now();
+
+        $dataPermintaan = $this->permintaanBertamuService->getAll()->hasil->data;
+        $dataPermintaanHariIni = [];
+        $dataLaporanHariIni = [];
+        foreach ($dataPermintaan as $permintaan) {
+            if ($permintaan->status != 'KADALUARSA') {
+                $totalPermintaan++;
+            }
+            $cekWaktu = Carbon::createFromFormat('Y-m-d H:i:s', $permintaan->waktu_pengiriman);
+            if ($cekWaktu->day == $saatIni->day && $cekWaktu->month == $saatIni->month && $cekWaktu->year == $saatIni->year) {
+                $permintaan->waktu_pengiriman = WaktuConverter::convertToDateTime($permintaan->waktu_pengiriman);
+                $dataPermintaanHariIni[] = $permintaan;
+            }
+            switch ($permintaan->status) {
+                case 'BELUM DIPERIKSA':
+                    $permintaanBelumDiperiksa++;
+                    break;
+                case 'DISETUJUI':
+                    $permintaanDisetujui++;
+                    break;
+                case 'DITOLAK':
+                    $permintaanDitolak++;
+                    break;
+            }
+        }
+
+
+        $dataBukuTamu = $this->bukuTamuService->getAll()->hasil->data;
+        foreach ($dataBukuTamu as $bukuTamu) {
+            $cekWaktu = Carbon::createFromFormat('Y-m-d H:i:s', $bukuTamu->check_in);
+            if ($cekWaktu->day == $saatIni->day && $cekWaktu->month == $saatIni->month && $cekWaktu->year == $saatIni->year) {
+                $laporanHariIni++;
+                $bukuTamu->check_in = WaktuConverter::convertToDateTime($bukuTamu->check_in);
+                $dataLaporanHariIni[] = $bukuTamu;
+            }
+        }
+
+        $totalLaporan = count($dataBukuTamu);
+
+        return view('admin.index', [
+            'totalPermintaan' => $totalPermintaan,
+            'permintaanBelumDiperiksa' => $permintaanBelumDiperiksa,
+            'permintaanDisetujui' => $permintaanDisetujui,
+            'permintaanDitolak' => $permintaanDitolak,
+            'laporanHariIni' => $laporanHariIni,
+            'totalLaporan' => $totalLaporan,
+            'dataPermintaanHariIni' => $dataPermintaanHariIni,
+            'dataLaporanHariIni' => $dataLaporanHariIni
+        ]);
     }
 
     public function tambahPegawai(Request $request)
@@ -118,7 +173,7 @@ class AdminController extends Controller
     {
         $rs = $this->permintaanBertamuService->getAll();
         $semuaPermintaan = $rs->hasil->data;
-        foreach($rs->hasil->data as $permintaan){
+        foreach ($rs->hasil->data as $permintaan) {
             $permintaan->waktu_bertamu = WaktuConverter::convertToDateTime($permintaan->waktu_bertamu);
             $permintaan->waktu_pengiriman = WaktuConverter::convertToDateTime($permintaan->waktu_pengiriman);
             $permintaan->waktu_pemeriksaan = WaktuConverter::convertToDateTime($permintaan->waktu_pemeriksaan);
@@ -182,7 +237,6 @@ class AdminController extends Controller
                 $hariIni[] = $bk;
                 $bk['filter'] = 'HARI INI';
             }
-
         }
         $wc = new WaktuConverter($currentTime->toDateTimeString());
         $waktu = '';
@@ -221,7 +275,7 @@ class AdminController extends Controller
         ];
         // return response()->json($data);
         $pdf = Pdf::loadView('laporan', $data);
-        $namaFile = $tipe == 'Keseluruhan' ? 'Laporan Tamu ' . $tipe : 'Laporan Tamu ' . $tipe . '_' . $waktu ;
+        $namaFile = $tipe == 'Keseluruhan' ? 'Laporan Tamu ' . $tipe : 'Laporan Tamu ' . $tipe . '_' . $waktu;
         return $pdf->download($namaFile);
     }
 

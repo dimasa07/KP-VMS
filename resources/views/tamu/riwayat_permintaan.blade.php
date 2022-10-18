@@ -17,7 +17,16 @@
 
         <div class="w-full p-3">
             <!--Table Card-->
-            <div class="bg-white border rounded shadow">
+            <div class="bg-white border rounded shadow" x-data="{ filter:'SEMUA' }">
+                <div class="border-b p-3 w-full">
+                    <select x-model="filter" class="mx-4 py-1 px-4 bg-white border border-gray-600 rounded">
+                        <option value="SEMUA">Semua</option>
+                        <option value="BELUM DIPERIKSA">Belum Diperiksa</option>
+                        <option value="DISETUJUI">Disetujui</option>
+                        <option value="DITOLAK">Ditolak</option>
+                    </select>
+                    <!-- </div> -->
+                </div>
                 <div class="p-5" x-data="{ permintaan:null,showDetail:false }">
                     <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6">
                         <table class="w-full p-5 text-gray-700">
@@ -104,7 +113,7 @@
                         </thead>
 
                         <tbody>
-                            @for($i = 0 ; $i < count($permintaan); $i++) <tr>
+                            @for($i = 0 ; $i < count($permintaan); $i++) <tr x-show="(filter=='SEMUA' || filter=='{{$permintaan[$i]->status}}') && '{{$permintaan[$i]->status}}' != 'KADALUARSA' ">
                                 <td class="border-2 p-2 text-center">{{ $i+1 }}</td>
                                 <td class="border-2 p-2">{{ $permintaan[$i]->tamu->nama }}</td>
                                 <td class="border-2 p-2">{{ $permintaan[$i]->tamu->nik }}</td>

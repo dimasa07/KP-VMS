@@ -30,7 +30,61 @@ class FrontOfficeController extends Controller
 
     public function index()
     {
-        return view('front_office.index');
+        $totalPermintaan = 0;
+        $permintaanBelumDiperiksa = 0;
+        $permintaanDisetujui = 0;
+        $permintaanDitolak = 0;
+        $laporanHariIni = 0;
+        $totalLaporan = 0;
+        $saatIni = Carbon::now();
+
+        $dataPermintaan = $this->permintaanBertamuService->getAll()->hasil->data;
+        $dataCheckInHariIni = [];
+        $dataCheckOutHariIni = [];
+        foreach ($dataPermintaan as $permintaan) {
+            if ($permintaan->status != 'KADALUARSA') {
+                $totalPermintaan++;
+            }
+            $cekWaktu = Carbon::createFromFormat('Y-m-d H:i:s', $permintaan->waktu_pengiriman);
+            switch ($permintaan->status) {
+                case 'BELUM DIPERIKSA':
+                    $permintaanBelumDiperiksa++;
+                    break;
+                case 'DISETUJUI':
+                    $permintaanDisetujui++;
+                    break;
+                case 'DITOLAK':
+                    $permintaanDitolak++;
+                    break;
+            }
+        }
+
+
+        $dataBukuTamu = $this->bukuTamuService->getAll()->hasil->data;
+        foreach ($dataBukuTamu as $bukuTamu) {
+            $cekWaktu = Carbon::createFromFormat('Y-m-d H:i:s', $bukuTamu->check_in);
+            if ($cekWaktu->day == $saatIni->day && $cekWaktu->month == $saatIni->month && $cekWaktu->year == $saatIni->year) {
+                $laporanHariIni++;
+                $bukuTamu->check_in = WaktuConverter::convertToDateTime($bukuTamu->check_in);
+                $dataCheckInHariIni[] = $bukuTamu;
+                if ($bukuTamu->check_out != null && $bukuTamu->check_out != '') {
+                    $dataCheckOutHariIni[] = $bukuTamu;
+                }
+            }
+        }
+
+        $totalLaporan = count($dataBukuTamu);
+
+        return view('front_office.index', [
+            'totalPermintaan' => $totalPermintaan,
+            'permintaanBelumDiperiksa' => $permintaanBelumDiperiksa,
+            'permintaanDisetujui' => $permintaanDisetujui,
+            'permintaanDitolak' => $permintaanDitolak,
+            'laporanHariIni' => $laporanHariIni,
+            'totalLaporan' => $totalLaporan,
+            'dataCheckInHariIni' => $dataCheckInHariIni,
+            'dataCheckOutHariIni' => $dataCheckOutHariIni
+        ]);
     }
 
     public function viewCheckIn()
