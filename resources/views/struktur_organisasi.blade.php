@@ -13,7 +13,7 @@
 
             <!--Right Col-->
             <div class="w-full py-6 text-center px-20">
-                <img class="w-full z-50" src="{{ asset('img/struktur.png') }}" />
+                <img class="w-full z-50" src="{{ asset('img/struktur.JPG') }}" />
             </div>
         </div>
     </div>
