@@ -16,15 +16,15 @@
         </div>
         <div class="w-full p-3">
             <!--Table Card-->
-            <div class="bg-white border rounded shadow">
+            <div class="bg-white border rounded shadow" x-data="{showAlert:true}">
                 <div class="p-5" x-data="{ showFormEdit : false, admin:{{$admin}} }">
                     @if($pesan = Session::get('gagal'))
-                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                    <div x-show="showAlert" class="bg-red-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
                     @if($pesan = Session::get('sukses'))
-                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                    <div x-show="showAlert" class="bg-green-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
@@ -82,7 +82,7 @@
                                     <tr>
                                         <td class="w-40">Jabatan</td>
                                         <td class="w-6">:</td>
-                                        <td><input disabled x-model="formData.jabatan" class="px-1 border border-gray-600" type="text" name="jabatan" :value="admin.jabatan"></td>
+                                        <td><input required x-model="formData.jabatan" class="px-1 border border-gray-600" type="text" name="jabatan" :value="admin.jabatan"></td>
 
                                     </tr>
                                     <tr>
@@ -106,7 +106,7 @@
                                 <!-- <button type="button" href="#" x-show="!showConfirmSetuju" @click="showConfirmSetuju= !showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
                                 <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
                                     <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a> -->
-                                <button type="button" x-show="!showFormEdit" @click="showFormEdit= !showFormEdit; admin={{$admin}}" class=" bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded mx-2">Edit Profil</button>
+                                <button type="button" x-show="!showFormEdit" @click="showFormEdit= !showFormEdit; admin={{$admin}}; showAlert=false" class=" bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded mx-2">Edit Profil</button>
 
                                 <!-- <a x-bind:href="window.location.origin+'/admin/profil/update'"> -->
                                 <button style="display: none;" type="submit" @click="formData.id=admin.id; formData.nip=admin.nip" x-show="showFormEdit" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Simpan Perubahan</button>

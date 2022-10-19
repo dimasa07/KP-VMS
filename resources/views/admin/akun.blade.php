@@ -16,15 +16,15 @@
         </div>
         <div class="w-full p-3">
             <!--Table Card-->
-            <div class="bg-white border rounded shadow">
+            <div class="bg-white border rounded shadow" x-data="{showAlert:true}">
                 <div class="p-5" x-data="{ showFormEdit : false, akun:{{$akun}} }">
                     @if($pesan = Session::get('gagal'))
-                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                    <div x-show="showAlert" class="bg-red-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
                     @if($pesan = Session::get('sukses'))
-                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                    <div x-show="showAlert" class="bg-green-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
@@ -74,7 +74,7 @@
                                 <!-- <button type="button" href="#" x-show="!showConfirmSetuju" @click="showConfirmSetuju= !showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
                                 <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
                                     <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a> -->
-                                <button type="button" x-show="!showFormEdit" @click="showFormEdit= !showFormEdit; akun={{$akun}}" class=" bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded mx-2">Edit Akun</button>
+                                <button type="button" x-show="!showFormEdit" @click="showFormEdit= !showFormEdit; akun={{$akun}}; showAlert=false" class=" bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded mx-2">Edit Akun</button>
                                 <button style="display: none;" type="submit" @click="formData.id=akun.id;" x-show="showFormEdit" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Simpan Perubahan</button>
                                 <button style="display: none;" x-show="showFormEdit" type="button" @click="showFormEdit= !showFormEdit" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
                             </div>

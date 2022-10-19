@@ -15,14 +15,14 @@
         </div>
         <div class="w-full p-3">
             <div class="bg-white border rounded shadow">
-                <div class="p-5" x-data="{ tamu:null,showDetail:false,showConfirmDelete:false }">
+                <div class="p-5" x-data="{ tamu:null,showDetail:false,showConfirmDelete:false,showAlert:true }">
                     @if($pesan = Session::get('gagal'))
-                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                    <div x-show="showAlert" class="bg-red-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
                     @if($pesan = Session::get('sukses'))
-                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                    <div x-show="showAlert" class="bg-green-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
@@ -63,6 +63,7 @@
                                 <a x-bind:href="window.location.origin+'/admin/tamu/delete/'+tamu.id">
                                     <button type="submit" @click="formData.id = permintaan.id;" x-show="showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button>
                                 </a>
+                                <button x-show="showConfirmDelete" type="button" @click="showConfirmDelete=false;" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
                                 <button type="button" @click="showDetail= !showDetail; showConfirmDelete=false; showConfirmSetuju=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
                             </div>
                         </div>
@@ -85,7 +86,7 @@
                                 <td class="border-2 p-2">{{ $tamu[$i]->nik }}</td>
                                 <td class="border-2 p-2 text-center">
                                     <div>
-                                        <button @click="tamu={{ $tamu[$i] }}; showDetail= !showDetail" class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
+                                        <button @click="tamu={{ $tamu[$i] }}; showDetail= !showDetail; showAlert=false" class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
                                     </div>
                                 </td>
                                 </tr>

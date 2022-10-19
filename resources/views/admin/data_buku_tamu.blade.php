@@ -15,7 +15,7 @@
         </div>
 
         <div class="w-full p-3">
-            <div class="bg-white border rounded shadow" x-data="{ filter:'SEMUA' }">
+            <div class="bg-white border rounded shadow" x-data="{ filter:'SEMUA',showAlert:true }">
                 <div class="inline-flex border-b p-3 w-full">
                     <select x-model="filter" class="mx-4 py-1 px-4 bg-white border border-gray-600 rounded">
                         <option value="SEMUA">Semua</option>
@@ -26,18 +26,18 @@
                     <a x-bind:href="window.location.origin+'/admin/buku-tamu/cetak/'+filter">
                         <button class="bg-orange-700 rounded py-1 px-4 text-white hover:bg-orange-900">Cetak</button>
                     </a>
-                </div>
-                <div class="p-5" x-data="{ bukuTamu:null,showDetail:false,showConfirmDelete:false }">
                     @if($pesan = Session::get('gagal'))
-                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                    <div x-show="showAlert" class="bg-red-500 text-white w-full text-center rounded mx-4 pt-1">
                         {{ $pesan }}
                     </div>
                     @endif
                     @if($pesan = Session::get('sukses'))
-                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                    <div x-show="showAlert" class="bg-green-500 text-white w-full text-center rounded mx-4 pt-1">
                         {{ $pesan }}
                     </div>
                     @endif
+                </div>
+                <div class="p-5" x-data="{ bukuTamu:null,showDetail:false,showConfirmDelete:false }">
                     <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6">
                         <table class="w-full p-5 text-gray-700">
                             <tbody>
@@ -84,7 +84,7 @@
                             <!-- <button type="button" x-show="!showFormEdit" @click="showFormEdit= true; showDetail = false; showConfirmDelete=false;" class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit Data</button>
                             <button style="display: none;" type="submit" @click="formData.id=pegawai.id; formData.nip=pegawai.nip" x-show="showFormEdit" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Simpan Perubahan</button> -->
 
-                            <button x-show="!showConfirmDelete" @click="showConfirmDelete=!showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Pegawai</button>
+                            <button x-show="!showConfirmDelete" @click="showConfirmDelete=!showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Data</button>
                             <a x-bind:href="window.location.origin+'/admin/buku-tamu/delete/'+bukuTamu.id">
                                 <button type="submit" x-show="showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button>
                             </a>
@@ -114,7 +114,7 @@
                                 <td class="border-2 p-2 text-center">{{ $semua[$i]->check_out }}</td>
                                 <td class="border-2 p-2 text-center">
                                     <div>
-                                        <button @click="bukuTamu={{ $semua[$i] }}; showDetail= !showDetail" class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
+                                        <button @click="bukuTamu={{ $semua[$i] }}; showDetail= !showDetail; showAlert=false" class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
                                     </div>
                                 </td>
                                 </tr>

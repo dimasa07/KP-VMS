@@ -201,7 +201,7 @@
                                 <td class="border-2 p-2">{{ $pegawai[$i]->jabatan }}</td>
                                 <td class="border-2 p-2 text-center">
                                     <div>
-                                        <button @click="pegawai={{ $pegawai[$i] }}; showDetail= !showDetail; showAlert=false;" class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
+                                        <button @click="pegawai={{ $pegawai[$i] }}; showDetail= !showDetail; showAlert=false" class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
                                     </div>
                                 </td>
                                 </tr>

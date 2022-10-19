@@ -20,12 +20,12 @@
             <div class="bg-white border rounded shadow" x-data="{ permintaan: null }">
                 <div class="p-5">
                     @if($pesan = Session::get('gagal'))
-                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
                     @if($pesan = Session::get('sukses'))
-                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
