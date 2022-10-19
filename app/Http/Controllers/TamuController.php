@@ -41,12 +41,17 @@ class TamuController extends Controller
     {
         $id_tamu = $request->session()->get('id'); //$this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
         $permintaan = $this->permintaanBertamuService->getByIdTamu($id_tamu)->hasil->data;
+        $rs = $this->pegawaiService->getAll();
+        $pegawai = $rs->hasil->data;
         foreach ($permintaan as $p) {
             $p->waktu_pengiriman = WaktuConverter::convertToDateTime($p->waktu_pengiriman);
             $p->waktu_bertamu = WaktuConverter::convertToDateTime($p->waktu_bertamu);
             $p->waktu_pemeriksaan = WaktuConverter::convertToDateTime($p->waktu_pemeriksaan);
         }
-        return view('tamu.riwayat_permintaan', compact('permintaan'));
+        return view('tamu.riwayat_permintaan', [
+            'permintaan' => $permintaan,
+            'pegawai' => $pegawai
+        ]);
     }
 
     public function riwayatBertamu(Request $request)
@@ -153,13 +158,16 @@ class TamuController extends Controller
     public function updatePermintaanBertamu(Request $request)
     {
         $rs = $this->permintaanBertamuService->update($request->input('id'), $request->input());
-        return response()->json($rs);
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        return back()->with($tipe, $rs->pesan[0]);
+        // return response()->json($request->input());
     }
 
     public function deletePermintaanBertamu($id)
     {
         $rs = $this->permintaanBertamuService->delete($id);
-        return response()->json($rs);
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        return back()->with($tipe, $rs->pesan[0]);
     }
 
     public function deleteAkun(Request $request)
