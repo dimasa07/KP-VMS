@@ -17,9 +17,11 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('id_tamu')->unsigned();
             $table->integer('id_admin')->unsigned()->nullable();
+            $table->integer('id_front_office')->unsigned()->nullable();
             $table->integer('id_pegawai')->unsigned();
             $table->foreign('id_tamu')->references('id')->on('tamu');
             $table->foreign('id_admin')->references('id')->on('pegawai');
+            $table->foreign('id_front_office')->references('id')->on('pegawai');
             $table->foreign('id_pegawai')->references('id')->on('pegawai');
             $table->string('keperluan')->nullable();
             $table->dateTime('waktu_bertamu')->nullable();

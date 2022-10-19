@@ -137,6 +137,8 @@ Route::prefix('/fo')
         Route::get('/permintaan/all', 'allPermintaanBertamu')->name('fo.permintaan.all');
         Route::post('/permintaan/tambah', 'tambahPermintaan')->name('fo.permintaan.tambah');
         Route::get('/permintaan/buat', 'viewBuatPermintaan')->name('fo.permintaan.buat');
+        Route::post('/permintaan/update', 'updatePermintaanBertamu')->name('fo.permintaan.update');
+        Route::get('/permintaan/delete/{id}', 'deletePermintaanBertamu')->name('fo.permintaan.delete');
         Route::get('/check-in', 'viewCheckIn')->name('fo.check-in');
         Route::get('/check-out', 'viewCheckOut')->name('fo.check-out');
         Route::get('/buku-tamu/check-in/{id}', 'checkIn')->name('fo.buku-tamu.check-in');

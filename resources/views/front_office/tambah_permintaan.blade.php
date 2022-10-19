@@ -20,9 +20,6 @@
             <div class="bg-white border rounded shadow">
                 <form method="POST" action="{{ route('fo.permintaan.tambah') }}">
                     <div class="border-b p-3">
-                        <h5 class="font-bold uppercase text-gray-600">Form Data Tamu</h5>
-                    </div>
-                    <div class="p-5">
                         @if($pesan = Session::get('gagal'))
                         <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-1">
                             {{ $pesan }}
@@ -33,6 +30,9 @@
                             {{ $pesan }}
                         </div>
                         @endif
+                        <h5 class="font-bold uppercase text-gray-600">Form Data Tamu</h5>
+                    </div>
+                    <div class="p-5">
                         <div class="grid grid-cols-2 relative">
                             <div class="px-5">
                                 <div class="form-group mb-6">

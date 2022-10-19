@@ -71,6 +71,16 @@
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.waktu_bertamu"></td>
                                         </tr>
+                                        <tr x-show="permintaan.front_office != null">
+                                            <td class="w-40">Dikirim oleh</td>
+                                            <td class="w-6">:</td>
+                                            <td x-text="permintaan.front_office.nama"></td>
+                                        </tr>
+                                        <tr x-show="permintaan.front_office == null">
+                                            <td class="w-40">Dikirim oleh</td>
+                                            <td class="w-6">:</td>
+                                            <td x-text="permintaan.tamu.nama"></td>
+                                        </tr>
                                         <tr>
                                             <td class="w-40">Waktu Pengiriman</td>
                                             <td class="w-6">:</td>
@@ -102,11 +112,11 @@
                                     <button type="button" href="#" x-show="!showConfirmSetuju && permintaan.status=='BELUM DIPERIKSA'" @click="showConfirmSetuju= !showConfirmSetuju; showConfirmTolak=false" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
                                     <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
                                         <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a>
-                                    <button x-show="!showConfirmTolak && permintaan.status=='BELUM DIPERIKSA'" @click="showConfirmTolak= !showConfirmTolak; showConfirmSetuju=false" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Tolak</button>
+                                    <button type="button" x-show="!showConfirmTolak && permintaan.status=='BELUM DIPERIKSA'" @click="showConfirmTolak= !showConfirmTolak; showConfirmSetuju=false" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Tolak</button>
                                     <!-- <a x-bind:href="window.location.origin+'/admin/permintaan/tolak/'+permintaan.id+'?pesan_ditolak='+pesan_ditolak"> -->
                                     <button type="submit" @click="formData.id = permintaan.id;" x-show="showConfirmTolak" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Tolak</button>
                                     <!-- </a> -->
-                                    <button type="button" x-show="showConfirmTolak || showConfirmSetuju" @click="showConfirmTolak=false; showConfirmSetuju=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
+                                    <button type="button" x-show="showConfirmTolak || showConfirmSetuju" @click="showConfirmTolak=false; showConfirmSetuju=false; formData.pesan_ditolak=''" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
                                     <button type="button" @click="showDetail= !showDetail; showConfirmTolak=false; showConfirmSetuju=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
                                 </div>
                             </div>

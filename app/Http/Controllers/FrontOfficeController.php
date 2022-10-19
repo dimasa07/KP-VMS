@@ -102,10 +102,12 @@ class FrontOfficeController extends Controller
         $rs = $this->permintaanBertamuService->getByStatus('KADALUARSA');
         $permintaan = [];
         foreach ($rs->hasil->data as $data) {
-            if ($data->buku_tamu->check_out == null) {
-                $permintaan[] = $data;
-                $data->waktu_bertamu = WaktuConverter::convertToDateTime($data->waktu_bertamu);
-                $data->buku_tamu->check_in = WaktuConverter::convertToDateTime($data->buku_tamu->check_in);
+            if ($data->buku_tamu != null) {
+                if ($data->buku_tamu->check_out == null) {
+                    $permintaan[] = $data;
+                    $data->waktu_bertamu = WaktuConverter::convertToDateTime($data->waktu_bertamu);
+                    $data->buku_tamu->check_in = WaktuConverter::convertToDateTime($data->buku_tamu->check_in);
+                }
             }
         }
         return view('front_office.check_out', compact('permintaan'));
@@ -173,7 +175,15 @@ class FrontOfficeController extends Controller
     public function tambahPermintaan(Request $request)
     {
         $rsTamu = $this->tamuService->getByNIK($request->input('nik'));
-        if (!$rsTamu->sukses) {
+        if ($rsTamu->sukses) {
+            $rsTamu = $this->tamuService->update($rsTamu->hasil->data->id, [
+                'nama' => $request->input('nama'),
+                'nik' => $request->input('nik'),
+                'no_telepon' => $request->input('no_telepon'),
+                'email' => $request->input('email'),
+                'alamat' => $request->input('alamat')
+            ]);
+        } else {
             $tamu = new Tamu();
             $tamu->fill($request->input());
             $rsTamu = $this->tamuService->save($tamu);
@@ -185,6 +195,7 @@ class FrontOfficeController extends Controller
         $waktu_pengiriman = Carbon::now()->toDateTimeString();
         $data = [
             'id_tamu' => $id_tamu,
+            'id_front_office' => $request->session()->get('id'),
             'id_pegawai' => $id_pegawai,
             'keperluan' => $keperluan,
             'waktu_bertamu' => $waktu_bertamu,
@@ -217,8 +228,11 @@ class FrontOfficeController extends Controller
             $permintaan->waktu_pengiriman = WaktuConverter::convertToDateTime($permintaan->waktu_pengiriman);
             $permintaan->waktu_pemeriksaan = WaktuConverter::convertToDateTime($permintaan->waktu_pemeriksaan);
         }
-        return view('front_office.data_permintaan', [], [
-            'semuaPermintaan' => $semuaPermintaan
+        $rs = $this->pegawaiService->getAll();
+        $pegawai = $rs->hasil->data;
+        return view('front_office.data_permintaan', [
+            'semuaPermintaan' => $semuaPermintaan,
+            'pegawai' => $pegawai
         ]);
 
         // return response()->json($rs);
@@ -351,6 +365,48 @@ class FrontOfficeController extends Controller
         $tipe = $rs->sukses ? 'sukses' : 'gagal';
         Session::flash($tipe, $rs->pesan[0]);
         return response()->json($rs);
+    }
+
+    public function updatePermintaanBertamu(Request $request)
+    {
+        $rsTamu = $this->tamuService->getByNIK($request->input('nik'));
+        if ($rsTamu->sukses) {
+            $rsTamu = $this->tamuService->update($rsTamu->hasil->data->id, [
+                'nama' => $request->input('nama'),
+                'nik' => $request->input('nik'),
+                'no_telepon' => $request->input('no_telepon'),
+                'email' => $request->input('email'),
+                'alamat' => $request->input('alamat')
+            ]);
+        } else {
+            $tamu = new Tamu();
+            $tamu->fill($request->input());
+            $rsTamu = $this->tamuService->save($tamu);
+        }
+
+        $id_tamu = $rsTamu->hasil->data->id;
+        $waktu_bertamu = $request->input('tanggal') . ' ' . $request->input('waktu') . ':00';
+        $id_pegawai = $request->input('id_pegawai');
+        $keperluan = $request->input('keperluan');
+        $waktu_pengiriman = Carbon::now()->toDateTimeString();
+        $data = [
+            'id_tamu' => $id_tamu,
+            'id_front_office' => $request->session()->get('id'),
+            'id_pegawai' => $id_pegawai,
+            'keperluan' => $keperluan,
+            'waktu_bertamu' => $waktu_bertamu,
+            'waktu_pengiriman' => $waktu_pengiriman
+        ];
+        $rs = $this->permintaanBertamuService->update($request->input('id'), $data);
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        return back()->with($tipe, $rs->pesan[0]);
+    }
+
+    public function deletePermintaanBertamu($id)
+    {
+        $rs = $this->permintaanBertamuService->delete($id);
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        return back()->with($tipe, $rs->pesan[0]);
     }
 
     public function deleteBukuTamu(int $id)

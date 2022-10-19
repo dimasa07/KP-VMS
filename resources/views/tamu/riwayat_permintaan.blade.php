@@ -13,7 +13,7 @@
                     <h5 class="ml-5 text-3xl font-bold uppercase text-gray-600">Riwayat Permintaan</h5>
                 </div>
             </div>
-        </div>
+        </div> 
 
         <div class="w-full p-3" x-data="{showDetail:false,showFormEdit:false, dataEdit:null, showAlert:true}">
             <!--Table Card-->
@@ -27,7 +27,6 @@
                     </select>
                     <button style="display: none;" x-show="showFormEdit" type="button" @click="showFormEdit = false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-6 rounded mx-2">Batal</button>
                     <button style="display: none;" x-show="showFormEdit" type="button" @click="showFormEdit = false; showDetail=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-6 rounded mx-2">Kembali Lihat Tabel</button>
-                    <!-- </div> -->
                     @if($pesan = Session::get('gagal'))
                     <div x-show="showAlert" class="bg-red-500 text-white w-full text-center rounded mx-4 pt-1">
                         {{ $pesan }}
@@ -39,6 +38,7 @@
                     </div>
                     @endif
                 </div>
+
                 <div x-show="!showFormEdit" class="p-5" x-data="{ permintaan:null, showConfirmDelete:false }">
                     <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6">
                         <table class="w-full p-5 text-gray-700">
@@ -99,9 +99,9 @@
                         </table>
                         <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmSetuju : false }">
                             <button type="button" href="#" x-show="permintaan.status=='BELUM DIPERIKSA'" @click="showFormEdit=true; dataEdit=permintaan; showConfirmDelete=false" class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit Data</button>
-                            <button x-show="!showConfirmDelete" @click="showConfirmDelete= !showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Data</button>
+                            <button x-show="permintaan.status=='BELUM DIPERIKSA'" @click="showConfirmDelete= !showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Data</button>
                             <a x-bind:href="window.location.origin+'/tamu/permintaan/delete/'+permintaan.id">
-                                <button type="submit" @click="formData.id = permintaan.id;" x-show="showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button>
+                                <button type="button" @click="formData.id = permintaan.id;" x-show="showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button>
                             </a>
                             <button x-show="showConfirmDelete" type="button" @click="showConfirmDelete=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
                             <button type="button" @click="showDetail= !showDetail; showConfirmDelete=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>

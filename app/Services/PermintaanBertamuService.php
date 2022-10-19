@@ -38,6 +38,7 @@ class PermintaanBertamuService
             foreach ($permintaan as $p) {
                 $p->admin;
                 $p->pegawai;
+                $p->front_office;
                 $p->tamu;
             }
             $rs->pesan[] = 'Data Permintaan Bertamu ditemukan';

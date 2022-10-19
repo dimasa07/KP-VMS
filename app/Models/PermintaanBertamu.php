@@ -15,6 +15,7 @@ class PermintaanBertamu extends Model
     protected $fillable = [
         'id_tamu',
         'id_admin',
+        'id_front_office',
         'id_pegawai',
         'keperluan',
         'waktu_bertamu',
@@ -39,6 +40,14 @@ class PermintaanBertamu extends Model
         return $this->belongsTo(
             Pegawai::class,
             'id_admin'
+        );
+    }
+
+    public function front_office()
+    {
+        return $this->belongsTo(
+            Pegawai::class,
+            'id_front_office'
         );
     }
 

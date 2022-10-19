@@ -15,17 +15,17 @@
             </div>
         </div>
 
-        <div class="w-full p-3" x-data="{ showDetail: false, confirmTolak:false }">
+        <div class="w-full p-3" x-data="{ showDetail: false, confirmTolak:false, showAlert:true }">
             <!--Table Card-->
             <div class="bg-white border rounded shadow" x-data="{ permintaan: null }">
                 <div class="p-5">
                     @if($pesan = Session::get('gagal'))
-                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-1">
+                    <div x-show="showAlert" class="bg-red-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
                     @if($pesan = Session::get('sukses'))
-                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-1">
+                    <div x-show="showAlert" class="bg-green-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
@@ -80,6 +80,7 @@
                                     <button type="button" href="#" x-show="!showConfirmCheckOut" @click="showConfirmCheckOut= !showConfirmCheckOut" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Check-Out</button>
                                     <a x-bind:href="window.location.origin+'/fo/buku-tamu/check-out/'+permintaan.buku_tamu.id">
                                         <button type="button" x-show="showConfirmCheckOut" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Check-Out</button></a>
+                                        <button x-show="showConfirmCheckOut" type="button" @click="showConfirmCheckOut=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
                                     <button type="button" @click="showDetail= !showDetail; showConfirmTolak=false; showConfirmCheckOut=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
                                 </div>
                             </div>
@@ -106,7 +107,7 @@
                                     <td class="border-2 p-2 text-center">{{ $permintaan[$i]->buku_tamu->check_in }}</td>
                                     <td class="border-2 p-2 text-center">
                                         <div>
-                                            <button @click="permintaan={{ $permintaan[$i] }}; showDetail= !showDetail" class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
+                                            <button @click="permintaan={{ $permintaan[$i] }}; showDetail= !showDetail; showAlert=false" class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
                                         </div>
                                     </td>
                                     </tr>
