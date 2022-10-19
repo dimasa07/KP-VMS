@@ -27,7 +27,17 @@
                         <button class="bg-orange-700 rounded py-1 px-4 text-white hover:bg-orange-900">Cetak</button>
                     </a>
                 </div>
-                <div class="p-5" x-data="{ bukuTamu:null,showDetail:false }">
+                <div class="p-5" x-data="{ bukuTamu:null,showDetail:false,showConfirmDelete:false }">
+                    @if($pesan = Session::get('gagal'))
+                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
+                    @if($pesan = Session::get('sukses'))
+                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
                     <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6">
                         <table class="w-full p-5 text-gray-700">
                             <tbody>
@@ -70,16 +80,16 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmSetuju : false }">
-                            <!-- <button type="button" href="#" x-show="!showConfirmSetuju" @click="showConfirmSetuju= !showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
-                                <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
-                                    <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a> -->
-                            <!-- <button x-show="!showConfirmDelete" @click="showConfirmDelete= !showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Tamu</button>
+                        <div class="inline-flex absolute right-0 bottom-0">
+                            <!-- <button type="button" x-show="!showFormEdit" @click="showFormEdit= true; showDetail = false; showConfirmDelete=false;" class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit Data</button>
+                            <button style="display: none;" type="submit" @click="formData.id=pegawai.id; formData.nip=pegawai.nip" x-show="showFormEdit" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Simpan Perubahan</button> -->
 
-                            <a x-bind:href="window.location.origin+'/admin/tamu/delete/'+tamu.id">
-                                <button type="submit" @click="formData.id = permintaan.id;" x-show="showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button>
-                            </a> -->
-                            <button type="button" @click="showDetail= !showDetail" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
+                            <button x-show="!showConfirmDelete" @click="showConfirmDelete=!showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Pegawai</button>
+                            <a x-bind:href="window.location.origin+'/admin/buku-tamu/delete/'+bukuTamu.id">
+                                <button type="submit" x-show="showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button>
+                            </a>
+                            <button x-show="showConfirmDelete" type="button" @click="showDetail= true; showConfirmDelete=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
+                            <button x-show="showDetail" type="button" @click="showDetail= false; showConfirmDelete=false;" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
                         </div>
                     </div>
                     <table class="w-full p-5 text-gray-700 border-3 border-black" x-show="!showDetail">
@@ -114,7 +124,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </div>
 @endsection

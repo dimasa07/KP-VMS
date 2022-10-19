@@ -17,62 +17,115 @@
         <div class="w-full p-3">
             <!--Table Card-->
             <div class="bg-white border rounded shadow">
-                <div class="p-5" x-data="{ pegawai:null,showDetail:false }">
-                    <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6">
-                        <table class="w-full p-5 text-gray-700">
-                            <tbody>
-                                <tr>
-                                    <td class="w-40">Nama Pegawai</td>
-                                    <td class="w-6">:</td>
-                                    <td x-text="pegawai.nama"></td>
-                                </tr>
-                                <tr>
-                                    <td class="w-40">NIP</td>
-                                    <td class="w-6">:</td>
-                                    <td x-text="pegawai.nip"></td>
+                <div class="p-5" x-data="{ pegawai:null,showDetail:false,showConfirmDelete:false,showFormEdit:false }">
+                    @if($pesan = Session::get('gagal'))
+                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
+                    @if($pesan = Session::get('sukses'))
+                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-4">
+                        {{ $pesan }}
+                    </div>
+                    @endif
+                    <form method="POST" @submit.prevent="submit()">
+                        <div style="display: none;" x-show="showDetail || showFormEdit" class="relative pb-11 px-6">
+                            <table class="w-full p-5 text-gray-700" x-show="!showFormEdit && showDetail">
+                                <tbody>
+                                    <tr>
+                                        <td class="w-40">Nama Pegawai</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="pegawai.nama"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">NIP</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="pegawai.nip"></td>
 
-                                </tr>
-                                <tr>
-                                    <td class="w-40">Jabatan</td>
-                                    <td class="w-6">:</td>
-                                    <td x-text="pegawai.jabatan"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">Jabatan</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="pegawai.jabatan"></td>
 
-                                </tr>
-                                <tr>
-                                    <td class="w-40">No. Telepon</td>
-                                    <td class="w-6">:</td>
-                                    <td x-text="pegawai.no_telepon"></td>
-                                </tr>
-                                <tr>
-                                    <td class="w-40">Email</td>
-                                    <td class="w-6">:</td>
-                                    <td x-text="pegawai.email"></td>
-                                </tr>
-                                <tr>
-                                    <td class="w-40">Alamat</td>
-                                    <td class="w-6">:</td>
-                                    <td x-text="pegawai.alamat"></td>
-                                </tr>
-                                <!-- <tr>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">No. Telepon</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="pegawai.no_telepon"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">Email</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="pegawai.email"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">Alamat</td>
+                                        <td class="w-6">:</td>
+                                        <td x-text="pegawai.alamat"></td>
+                                    </tr>
+                                    <!-- <tr>
                                     <td class="w-40">Username</td>
                                     <td class="w-6">:</td>
                                     <td x-text="pegawai.akun.username"></td>
                                 </tr> -->
-                            </tbody>
-                        </table>
-                        <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmSetuju : false }">
-                            <!-- <button type="button" href="#" x-show="!showConfirmSetuju" @click="showConfirmSetuju= !showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
-                                <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
-                                    <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a> -->
-                            <button x-show="!showConfirmDelete" @click="showConfirmDelete= !showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Tamu</button>
+                                </tbody>
+                            </table>
+                            <table style="display: none;" class="w-full p-5 text-gray-700" x-show="showFormEdit">
+                                <tbody>
+                                    <tr>
+                                        <td class="w-40">Nama Admin</td>
+                                        <td class="w-6">:</td>
+                                        <td><input required x-model="formData.nama" class="px-1 border border-gray-600" type="text" name="nama" :value="pegawai.nama"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">NIP</td>
+                                        <td class="w-6">:</td>
+                                        <td><input disabled x-model="formData.nip" class="px-1 border border-gray-600" type="text" name="nip" :value="pegawai.nip"></td>
 
-                            <a x-bind:href="window.location.origin+'/admin/tamu/delete/'+tamu.id">
-                                <button type="submit" @click="formData.id = permintaan.id;" x-show="showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button>
-                            </a>
-                            <button type="button" @click="showDetail= !showDetail; showConfirmDelete=false; showConfirmSetuju=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">Jabatan</td>
+                                        <td class="w-6">:</td>
+                                        <td><input required x-model="formData.jabatan" class="px-1 border border-gray-600" type="text" name="jabatan" :value="pegawai.jabatan"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">No. Telepon</td>
+                                        <td class="w-6">:</td>
+                                        <td><input required x-model="formData.no_telepon" class="px-1 border border-gray-600" type="text" name="no_telepon" :value="pegawai.no_telepon"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">Email</td>
+                                        <td class="w-6">:</td>
+                                        <td><input required x-model="formData.email" class="px-1 border border-gray-600" type="text" name="email" :value="pegawai.email"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-40">Alamat</td>
+                                        <td class="w-6">:</td>
+                                        <td><input required x-model="formData.alamat" class="px-1 border border-gray-600" type="text" name="alamat" :value="pegawai.alamat"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="inline-flex absolute right-0 bottom-0">
+                                <button type="button" x-show="!showFormEdit" @click="showFormEdit= true; showDetail = false; showConfirmDelete=false;" class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit Data</button>
+
+                                <!-- <a x-bind:href="window.location.origin+'/admin/profil/update'"> -->
+                                <button style="display: none;" type="submit" @click="formData.id=pegawai.id; formData.nip=pegawai.nip" x-show="showFormEdit" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Simpan Perubahan</button>
+                                <!-- </a> -->
+                                <button x-show="!showConfirmDelete && !showFormEdit" @click="showConfirmDelete= !showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Pegawai</button>
+
+                                <a x-bind:href="window.location.origin+'/admin/pegawai/delete/'+pegawai.id">
+                                    <button type="submit" x-show="showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button>
+                                </a>
+                                <button x-show="showFormEdit || showConfirmDelete" type="button" @click="showDetail= true; showFormEdit=false; showConfirmDelete=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
+                                <button x-show="showDetail || showFormEdit" type="button" @click="showDetail= false; showConfirmDelete=false; showFormEdit=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
+                            </div>
                         </div>
-                    </div>
-                    <table class="w-full p-5 text-gray-700 border-3 border-black" x-show="!showDetail">
+                    </form>
+                    
+                    <table class="w-full p-5 text-gray-700 border-3 border-black" x-show="!showDetail && !showFormEdit">
                         <thead>
                             <tr>
                                 <th class="border-2 text-teal-900 p-2">No</th>
@@ -104,4 +157,47 @@
         </div>
     </div>
 </div>
+<script>
+    function submit() {
+        $.ajax({
+            type: 'POST',
+            url: window.location.origin + "/admin/pegawai/update",
+            data: {
+                'id': formData.id,
+                'nama': formData.nama,
+                'nip': formData.nip,
+                'jabatan': formData.jabatan,
+                'no_telepon': formData.no_telepon,
+                'email': formData.email,
+                'alamat': formData.alamat
+            },
+            success: function(success) {
+                console.log(success.sukses);
+                location.reload();
+                // if(success.sukses){
+                //     $('#sukses').css('display','');
+                // }
+            },
+            error: function(error) {
+                console.log(error);
+                // document.body.innerHTML = success;
+                // location.reload();
+            }
+        });
+    }
+
+    function formData() {
+        return {
+            formData: {
+                id: 0,
+                nama: '',
+                nip: '',
+                jabatan: '',
+                no_telepon: '',
+                email: '',
+                alamat: ''
+            }
+        }
+    }
+</script>
 @endsection

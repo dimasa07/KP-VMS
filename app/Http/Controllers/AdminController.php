@@ -350,6 +350,11 @@ class AdminController extends Controller
     public function updatePegawai(Request $request)
     {
         $rs = $this->pegawaiService->update($request->input('id'), $request->input());
+        if($rs->sukses){
+            $rs->pesan[0] = 'Sukses update Pegawai';
+        }
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        Session::flash($tipe, $rs->pesan[0]);
         return response()->json($rs);
     }
 
@@ -366,10 +371,36 @@ class AdminController extends Controller
         $rs = $this->tamuService->delete($id);
         if ($rs->sukses) {
             $tipe = "sukses";
-            $pesan = "Sukses hapus Tamu.";
+            $pesan = "Sukses hapus data Tamu.";
         } else {
             $tipe = "gagal";
-            $pesan = "Gagal hapus Tamu.";
+            $pesan = "Gagal hapus data Tamu.";
+        }
+        return back()->with($tipe, $pesan);
+    }
+
+    public function deleteBukuTamu($id)
+    {
+        $rs = $this->bukuTamuService->delete($id);
+        if ($rs->sukses) {
+            $tipe = "sukses";
+            $pesan = "Sukses hapus data Laporan.";
+        } else {
+            $tipe = "gagal";
+            $pesan = "Gagal hapus data Laporan.";
+        }
+        return back()->with($tipe, $pesan);
+    }
+
+    public function deletePegawai($id)
+    {
+        $rs = $this->pegawaiService->delete($id);
+        if ($rs->sukses) {
+            $tipe = "sukses";
+            $pesan = "Sukses hapus data Pegawai.";
+        } else {
+            $tipe = "gagal";
+            $pesan = "Gagal hapus data Pegawai.";
         }
         return back()->with($tipe, $pesan);
     }
