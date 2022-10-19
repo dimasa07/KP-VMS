@@ -92,6 +92,12 @@ class FrontOfficeController extends Controller
         $rs = $this->permintaanBertamuService->getByStatus('DISETUJUI');
         $permintaan = $rs->hasil->data;
         foreach ($permintaan as $p) {
+            if ($p->status == 'DISETUJUI') {
+                $cekWaktuBertamu = Carbon::createFromFormat('Y-m-d H:i:s', $p->waktu_bertamu);
+                $batas_waktu = $p->batas_waktu;
+                $cekWaktuBertamu->addMinutes($batas_waktu);
+                $p['maks'] = WaktuConverter::convertToDateTime($cekWaktuBertamu->toDateTimeString());
+            }
             $p->waktu_bertamu = WaktuConverter::convertToDateTime($p->waktu_bertamu);
         }
         return view('front_office.check_in', compact('permintaan'));
@@ -104,6 +110,12 @@ class FrontOfficeController extends Controller
         foreach ($rs->hasil->data as $data) {
             if ($data->buku_tamu != null) {
                 if ($data->buku_tamu->check_out == null) {
+
+                    $cekWaktuBertamu = Carbon::createFromFormat('Y-m-d H:i:s', $data->waktu_bertamu);
+                    $batas_waktu = $data->batas_waktu;
+                    $cekWaktuBertamu->addMinutes($batas_waktu);
+                    $data['maks'] = WaktuConverter::convertToDateTime($cekWaktuBertamu->toDateTimeString());
+
                     $permintaan[] = $data;
                     $data->waktu_bertamu = WaktuConverter::convertToDateTime($data->waktu_bertamu);
                     $data->buku_tamu->check_in = WaktuConverter::convertToDateTime($data->buku_tamu->check_in);
@@ -224,6 +236,12 @@ class FrontOfficeController extends Controller
         //     return response()->json(array('permintaan' => $permintaan));
         // }
         foreach ($rs->hasil->data as $permintaan) {
+            if ($permintaan->status == 'DISETUJUI') {
+                $cekWaktuBertamu = Carbon::createFromFormat('Y-m-d H:i:s', $permintaan->waktu_bertamu);
+                $batas_waktu = $permintaan->batas_waktu;
+                $cekWaktuBertamu->addMinutes($batas_waktu);
+                $permintaan['maks'] = WaktuConverter::convertToDateTime($cekWaktuBertamu->toDateTimeString());
+            }
             $permintaan->waktu_bertamu = WaktuConverter::convertToDateTime($permintaan->waktu_bertamu);
             $permintaan->waktu_pengiriman = WaktuConverter::convertToDateTime($permintaan->waktu_pengiriman);
             $permintaan->waktu_pemeriksaan = WaktuConverter::convertToDateTime($permintaan->waktu_pemeriksaan);

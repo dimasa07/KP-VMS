@@ -44,6 +44,12 @@ class TamuController extends Controller
         $rs = $this->pegawaiService->getAll();
         $pegawai = $rs->hasil->data;
         foreach ($permintaan as $p) {
+            if ($p->status == 'DISETUJUI') {
+                $cekWaktuBertamu = Carbon::createFromFormat('Y-m-d H:i:s', $p->waktu_bertamu);
+                $batas_waktu = $p->batas_waktu;
+                $cekWaktuBertamu->addMinutes($batas_waktu);
+                $p['maks'] = WaktuConverter::convertToDateTime($cekWaktuBertamu->toDateTimeString());
+            }
             $p->waktu_pengiriman = WaktuConverter::convertToDateTime($p->waktu_pengiriman);
             $p->waktu_bertamu = WaktuConverter::convertToDateTime($p->waktu_bertamu);
             $p->waktu_pemeriksaan = WaktuConverter::convertToDateTime($p->waktu_pemeriksaan);

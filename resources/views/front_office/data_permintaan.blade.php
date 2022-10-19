@@ -96,6 +96,11 @@
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.status"></td>
                                         </tr>
+                                        <tr x-show="permintaan.status == 'DISETUJUI'">
+                                            <td class="w-40">Batas Waktu</td>
+                                            <td class="w-6">:</td>
+                                            <td x-text="permintaan.batas_waktu+' menit ( hinggal '+permintaan.maks+' )'"></td>
+                                        </tr>
                                         <tr x-show="permintaan.status == 'DITOLAK'">
                                             <td class="w-40">Pesan Ditolak</td>
                                             <td class="w-6">:</td>

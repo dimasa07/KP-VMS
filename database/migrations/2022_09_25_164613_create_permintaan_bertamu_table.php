@@ -28,6 +28,7 @@ return new class extends Migration
             $table->dateTime('waktu_pengiriman')->nullable();
             $table->dateTime('waktu_pemeriksaan')->nullable();
             $table->enum('status', ['BELUM DIPERIKSA','DISETUJUI', 'DITOLAK','KADALUARSA'])->default('BELUM DIPERIKSA');
+            $table->integer('batas_waktu')->unsigned();
             $table->string('pesan_ditolak')->nullable();
         });
     }

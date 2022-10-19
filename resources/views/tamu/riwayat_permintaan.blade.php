@@ -13,7 +13,7 @@
                     <h5 class="ml-5 text-3xl font-bold uppercase text-gray-600">Riwayat Permintaan</h5>
                 </div>
             </div>
-        </div> 
+        </div>
 
         <div class="w-full p-3" x-data="{showDetail:false,showFormEdit:false, dataEdit:null, showAlert:true}">
             <!--Table Card-->
@@ -79,6 +79,11 @@
                                     <td class="w-40">Status</td>
                                     <td class="w-6">:</td>
                                     <td x-text="permintaan.status"></td>
+                                </tr>
+                                <tr x-show="permintaan.status == 'DISETUJUI'">
+                                    <td class="w-40">Batas Waktu</td>
+                                    <td class="w-6">:</td>
+                                    <td x-text="permintaan.batas_waktu+' menit ( hinggal '+permintaan.maks+' )'"></td>
                                 </tr>
                                 <tr x-show="permintaan.status =='DITOLAK'">
                                     <td class="w-40">Pesan Ditolak</td>

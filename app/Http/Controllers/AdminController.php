@@ -176,11 +176,17 @@ class AdminController extends Controller
         $rs = $this->permintaanBertamuService->getAll();
         $semuaPermintaan = $rs->hasil->data;
         foreach ($rs->hasil->data as $permintaan) {
+            if ($permintaan->status == 'DISETUJUI') {
+                $cekWaktuBertamu = Carbon::createFromFormat('Y-m-d H:i:s', $permintaan->waktu_bertamu);
+                $batas_waktu = $permintaan->batas_waktu;
+                $cekWaktuBertamu->addMinutes($batas_waktu);
+                $permintaan['maks'] = WaktuConverter::convertToDateTime($cekWaktuBertamu->toDateTimeString());
+            }
             $permintaan->waktu_bertamu = WaktuConverter::convertToDateTime($permintaan->waktu_bertamu);
             $permintaan->waktu_pengiriman = WaktuConverter::convertToDateTime($permintaan->waktu_pengiriman);
             $permintaan->waktu_pemeriksaan = WaktuConverter::convertToDateTime($permintaan->waktu_pemeriksaan);
         }
-        return view('admin.data_permintaan', [], [
+        return view('admin.data_permintaan', [
             'semuaPermintaan' => $semuaPermintaan
         ]);
 
@@ -277,7 +283,7 @@ class AdminController extends Controller
         ];
         // return response()->json($data);
         $pdf = Pdf::loadView('laporan', $data);
-        $namaFile = $tipe == 'Keseluruhan' ? 'Laporan Tamu ' . $tipe : 'Laporan Tamu ' . $tipe . '_' . $waktu;
+        $namaFile = $tipe == 'Keseluruhan' ? 'Laporan Tamu ' . $tipe . '.pdf' : 'Laporan Tamu ' . $tipe . '_' . $waktu . '.pdf';
         return $pdf->download($namaFile);
     }
 
@@ -291,10 +297,12 @@ class AdminController extends Controller
     {
         $admin = $this->akunService->getByUsername($request->session()->get('username'))->hasil->data;
         $waktuPemeriksaan = Carbon::now()->toDateTimeString();
+        $batas_waktu = is_numeric($request->input('batas_waktu')) ? $request->input('batas_waktu') : 30;
         $rs = $this->permintaanBertamuService->update($idPermintaan, [
             'status' => 'DISETUJUI',
             'waktu_pemeriksaan' => $waktuPemeriksaan,
-            'id_admin' => $admin->id
+            'id_admin' => $admin->id,
+            'batas_waktu' => $batas_waktu
         ]);
         if ($rs->sukses) {
             $tipe = "sukses";
@@ -304,6 +312,8 @@ class AdminController extends Controller
             $pesan = "Gagal menyetujui Permintaan.";
         }
         return back()->with($tipe, $pesan);
+
+        // return response()->json($rs);
     }
 
     public function tolakPermintaan(Request $request)

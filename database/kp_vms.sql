@@ -54,7 +54,7 @@ CREATE TABLE `buku_tamu` (
   KEY `buku_tamu_id_front_office_foreign` (`id_front_office`),
   CONSTRAINT `buku_tamu_id_front_office_foreign` FOREIGN KEY (`id_front_office`) REFERENCES `pegawai` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `buku_tamu_id_permintaan_foreign` FOREIGN KEY (`id_permintaan`) REFERENCES `permintaan_bertamu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `buku_tamu` */
 
@@ -171,6 +171,7 @@ CREATE TABLE `permintaan_bertamu` (
   `waktu_pengiriman` datetime DEFAULT NULL,
   `waktu_pemeriksaan` datetime DEFAULT NULL,
   `status` enum('BELUM DIPERIKSA','DISETUJUI','DITOLAK','KADALUARSA') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'BELUM DIPERIKSA',
+  `batas_waktu` int(10) unsigned DEFAULT NULL,
   `pesan_ditolak` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `permintaan_bertamu_id_admin_foreign` (`id_admin`),
@@ -181,7 +182,7 @@ CREATE TABLE `permintaan_bertamu` (
   CONSTRAINT `permintaan_bertamu_id_admin_foreign` FOREIGN KEY (`id_admin`) REFERENCES `pegawai` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `permintaan_bertamu_id_pegawai_foreign` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawai` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `permintaan_bertamu_id_tamu_foreign` FOREIGN KEY (`id_tamu`) REFERENCES `tamu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `permintaan_bertamu` */
 

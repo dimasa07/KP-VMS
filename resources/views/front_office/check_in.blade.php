@@ -62,6 +62,11 @@
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.waktu_bertamu"></td>
                                         </tr>
+                                        <tr x-show="permintaan.status == 'DISETUJUI'">
+                                            <td class="w-40">Batas Waktu</td>
+                                            <td class="w-6">:</td>
+                                            <td x-text="permintaan.batas_waktu+' menit ( hinggal '+permintaan.maks+' )'"></td>
+                                        </tr>
                                         <!-- <tr>
                                             <td class="w-40">Waktu Pengiriman</td>
                                             <td class="w-6">:</td>
@@ -78,7 +83,7 @@
                                     <button type="button" href="#" x-show="!showConfirmCheckIn" @click="showConfirmCheckIn= !showConfirmCheckIn" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Check-In</button>
                                     <a x-bind:href="window.location.origin+'/fo/buku-tamu/check-in/'+permintaan.id">
                                         <button type="button" x-show="showConfirmCheckIn" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Check-In</button></a>
-                                        <button x-show="showConfirmCheckIn" type="button" @click="showConfirmCheckIn=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
+                                    <button x-show="showConfirmCheckIn" type="button" @click="showConfirmCheckIn=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
                                     <button type="button" @click="showDetail= !showDetail; showConfirmTolak=false; showConfirmCheckIn=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
                                 </div>
                             </div>

@@ -16,7 +16,7 @@
         </div>
 
         <div class="w-full p-3" x-data="{ showDetail: false, confirmTolak:false, showAlert:true }">
-            <div class="bg-white border rounded shadow" x-data="{ permintaan: null, filter:'SEMUA', no:0 }">
+            <div class="bg-white border rounded shadow" x-data="{ permintaan: null, filter:'SEMUA', no:0, batas_waktu:30 }">
                 <div class="inline-flex border-b p-3 w-full">
                     <select x-model="filter" class="mx-4 py-1 px-4 bg-white border border-gray-600 rounded">
                         <option value="SEMUA">Semua</option>
@@ -38,7 +38,7 @@
                 <div class="p-5">
 
                     <form method="POST" @submit.prevent="submit()">
-                        <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6" x-data="{ showConfirmTolak:false }">
+                        <div style="display: none;" x-show="showDetail" class="relative pb-11 px-6" x-data="{ showConfirmTolak:false,showConfirmSetuju : false }">
                             <div x-data="{formData()}">
                                 <table class="w-full p-5 text-gray-700">
                                     <tbody>
@@ -46,8 +46,11 @@
                                             <td class="w-40">Nama Tamu</td>
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.tamu.nama"></td>
-                                            <td rowspan="7" class="text-right w-fit">
-                                                <textarea x-model="formData.pesan_ditolak" x-show="showConfirmTolak" style="display:none" class="border-2 p-2" placeholder="Pesan ditolak..." id="pesan_ditolak" rows="6" cols="50" value="-" required></textarea>
+                                            <td rowspan="8" class="text-right w-fit" x-show="showConfirmTolak" style="display:none">
+                                                <textarea x-model="formData.pesan_ditolak" class="border-2 p-2" placeholder="Pesan ditolak..." id="pesan_ditolak" rows="6" cols="50" value="-" required></textarea>
+                                            </td>
+                                            <td rowspan="4" class="text-center w-fit" style="display:none" x-show="showConfirmSetuju">
+
                                             </td>
                                         </tr>
                                         <tr>
@@ -80,16 +83,29 @@
                                             <td class="w-40">Dikirim oleh</td>
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.tamu.nama"></td>
+                                            
                                         </tr>
                                         <tr>
                                             <td class="w-40">Waktu Pengiriman</td>
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.waktu_pengiriman"></td>
+                                            <td rowspan="4" class="text-center w-fit pr-10" style="display:none" x-show="showConfirmSetuju">
+                                                <label for="batas_waktu" class="form-label">Batas waktu bertamu : </label><br>
+                                                <input size="3" id="batas_waktu" type="text" x-model="batas_waktu" class="border-b border-black px-1 text-right" id="batas_waktu" placeholder="30" :value="batas_waktu">
+                                            
+                                                <label for="batas_waktu" class="form-label">menit</label>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="w-40">Status</td>
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.status"></td>
+
+                                        </tr>
+                                        <tr x-show="permintaan.status == 'DISETUJUI'">
+                                            <td class="w-40">Batas Waktu</td>
+                                            <td class="w-6">:</td>
+                                            <td x-text="permintaan.batas_waktu+' menit ( hinggal '+permintaan.maks+' )'"></td>
                                         </tr>
                                         <tr x-show="permintaan.status == 'DITOLAK'">
                                             <td class="w-40">Pesan Ditolak</td>
@@ -105,18 +121,19 @@
                                             <td class="w-40">Waktu Pemeriksaan</td>
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.waktu_pemeriksaan"></td>
+
                                         </tr>
                                     </tbody>
                                 </table>
-                                <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmSetuju : false }">
+                                <div class="inline-flex absolute right-0 bottom-0">
                                     <button type="button" href="#" x-show="!showConfirmSetuju && permintaan.status=='BELUM DIPERIKSA'" @click="showConfirmSetuju= !showConfirmSetuju; showConfirmTolak=false" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
-                                    <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
+                                    <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id+'?batas_waktu='+batas_waktu">
                                         <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a>
                                     <button type="button" x-show="!showConfirmTolak && permintaan.status=='BELUM DIPERIKSA'" @click="showConfirmTolak= !showConfirmTolak; showConfirmSetuju=false" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Tolak</button>
                                     <!-- <a x-bind:href="window.location.origin+'/admin/permintaan/tolak/'+permintaan.id+'?pesan_ditolak='+pesan_ditolak"> -->
                                     <button type="submit" @click="formData.id = permintaan.id;" x-show="showConfirmTolak" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Tolak</button>
                                     <!-- </a> -->
-                                    <button type="button" x-show="showConfirmTolak || showConfirmSetuju" @click="showConfirmTolak=false; showConfirmSetuju=false; formData.pesan_ditolak=''" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
+                                    <button type="button" x-show="showConfirmTolak || showConfirmSetuju" @click="showConfirmTolak=false; showConfirmSetuju=false; formData.pesan_ditolak=''; batas_waktu='30'" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
                                     <button type="button" @click="showDetail= !showDetail; showConfirmTolak=false; showConfirmSetuju=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
                                 </div>
                             </div>

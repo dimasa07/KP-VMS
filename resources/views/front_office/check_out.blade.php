@@ -64,11 +64,11 @@
                                             <td class="w-6">:</td>
                                             <td x-text="permintaan.waktu_bertamu"></td>
                                         </tr>
-                                        <!-- <tr>
-                                            <td class="w-40">Waktu Pengiriman</td>
+                                        <tr>
+                                            <td class="w-40">Batas Waktu</td>
                                             <td class="w-6">:</td>
-                                            <td x-text="permintaan.waktu_pengiriman"></td>
-                                        </tr> -->
+                                            <td x-text="permintaan.batas_waktu+' menit ( hinggal '+permintaan.maks+' )'"></td>
+                                        </tr>
                                         <tr>
                                             <td class="w-40">Check-In</td>
                                             <td class="w-6">:</td>
@@ -80,7 +80,7 @@
                                     <button type="button" href="#" x-show="!showConfirmCheckOut" @click="showConfirmCheckOut= !showConfirmCheckOut" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Check-Out</button>
                                     <a x-bind:href="window.location.origin+'/fo/buku-tamu/check-out/'+permintaan.buku_tamu.id">
                                         <button type="button" x-show="showConfirmCheckOut" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Check-Out</button></a>
-                                        <button x-show="showConfirmCheckOut" type="button" @click="showConfirmCheckOut=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
+                                    <button x-show="showConfirmCheckOut" type="button" @click="showConfirmCheckOut=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
                                     <button type="button" @click="showDetail= !showDetail; showConfirmTolak=false; showConfirmCheckOut=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
                                 </div>
                             </div>
