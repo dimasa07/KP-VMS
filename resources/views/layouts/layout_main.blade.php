@@ -22,7 +22,7 @@
 
 <body class="body-green text-white leading-normal tracking-normal" style="font-family: 'Source Sans Pro', sans-serif;">
     <!--Nav-->
-    <nav id="header" class="fixed w-full z-30 top-0 text-blue-800">
+    <nav id="header" class="body-green fixed w-full z-30 top-0 text-blue-800">
         <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
             <div class="pl-4 flex items-center">
                 <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
@@ -96,13 +96,16 @@
         <hr class="border-blue-800 opacity-25 my-0 py-0" />
     </nav>
 
-    @yield('content')
+    <div class="flex flex-col h-screen justify-between ">
+        @yield('content')
 
 
-    <!--Footer-->
-    <footer class="bg-teal-900">
+        <!--Footer-->
 
-    </footer>
+        <!-- <footer class="border-t border-gray-400 shadow text-center mt-20 py-4 font-bold relative bottom-0">
+            All rights reserved © 2022 | diskominfo
+        </footer> -->
+    </div>
 
 </body>
 
