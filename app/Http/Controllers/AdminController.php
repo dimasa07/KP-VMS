@@ -96,7 +96,7 @@ class AdminController extends Controller
         $pegawai->fill($request->input());
         $cekPegawai = $this->pegawaiService->getByNIP($pegawai->nip);
         if ($cekPegawai->sukses) {
-            $rs->pesan[] = 'Gagal daftar, NIP sudah terdaftar';
+            $rs->pesan[] = 'Gagal tambah, NIP sudah terdaftar';
         } else {
             $akun = null;
             if ($request->input('username') != '') {
@@ -118,6 +118,8 @@ class AdminController extends Controller
             $rs->hasil->data['akun'] = $akun;
         }
 
+        $tipe = $rs->sukses ? 'sukses' : 'gagal';
+        Session::flash($tipe, $rs->pesan[0]);
         return response()->json($rs);
     }
 
@@ -350,7 +352,7 @@ class AdminController extends Controller
     public function updatePegawai(Request $request)
     {
         $rs = $this->pegawaiService->update($request->input('id'), $request->input());
-        if($rs->sukses){
+        if ($rs->sukses) {
             $rs->pesan[0] = 'Sukses update Pegawai';
         }
         $tipe = $rs->sukses ? 'sukses' : 'gagal';

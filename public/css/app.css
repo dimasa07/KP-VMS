@@ -1112,6 +1112,10 @@ video {
   padding-left: 5rem;
   padding-right: 5rem;
 }
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
 .pt-24 {
   padding-top: 6rem;
 }
@@ -1168,6 +1172,9 @@ video {
 }
 .pb-20 {
   padding-bottom: 5rem;
+}
+.pt-1 {
+  padding-top: 0.25rem;
 }
 .text-left {
   text-align: left;
@@ -1382,6 +1389,12 @@ video {
 }
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+.placeholder\:border-b::-moz-placeholder {
+  border-bottom-width: 1px;
+}
+.placeholder\:border-b::placeholder {
+  border-bottom-width: 1px;
 }
 .hover\:scale-105:hover {
   --tw-scale-x: 1.05;
