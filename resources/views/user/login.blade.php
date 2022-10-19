@@ -29,12 +29,12 @@
         <section>
             <!-- <h3 class="font-bold text-2xl">Halaman Login</h3> -->
             @if($pesan = Session::get('sukses'))
-            <div class="bg-green-500 text-white w-full text-center rounded p-4">
+            <div class="bg-green-500 text-white w-full text-center rounded py-1 px-4">
                 {{ $pesan }}
             </div>
             @endif
             @if($pesan = Session::get('gagal'))
-            <div class="bg-red-500 text-white w-full text-center rounded p-4 ">
+            <div class="bg-red-500 text-white w-full text-center rounded py-1 px-4 ">
                 {{ $pesan }}
             </div>
             @endif

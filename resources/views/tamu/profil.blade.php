@@ -17,14 +17,14 @@
         <div class="w-full p-3">
             <!--Table Card-->
             <div class="bg-white border rounded shadow">
-                <div class="p-5" x-data="{ showFormEdit : false, tamu:{{$tamu}} }">
+                <div class="p-5" x-data="{ showFormEdit : false, tamu:{{$tamu}}, showAlert:true }">
                     @if($pesan = Session::get('gagal'))
-                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-1">
+                    <div x-show="showAlert" class="bg-red-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
                     @if($pesan = Session::get('sukses'))
-                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-1">
+                    <div x-show="showAlert" class="bg-green-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
@@ -95,7 +95,7 @@
                                 <!-- <button type="button" href="#" x-show="!showConfirmSetuju" @click="showConfirmSetuju= !showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
                                 <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
                                     <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a> -->
-                                <button type="button" x-show="!showFormEdit" @click="showFormEdit= !showFormEdit; tamu={{$tamu}}" class=" bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded mx-2">Edit Profil</button>
+                                <button type="button" x-show="!showFormEdit" @click="showFormEdit= !showFormEdit; tamu={{$tamu}}; showAlert=false" class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit Profil</button>
 
                                 <!-- <a x-bind:href="window.location.origin+'/admin/profil/update'"> -->
                                 <button style="display: none;" type="submit" @click="formData.id=tamu.id; if(formData.nik==null)formData.nik=tamu.nik" x-show="showFormEdit" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Simpan Perubahan</button>

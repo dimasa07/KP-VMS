@@ -171,5 +171,26 @@ class AkunService
         return $rs;
     }
 
+    public function deleteByUsername($username)
+    {
+        $akun = Akun::where('username', '=', $username)->first();
+        $rs = new ResultSet();
+        $rs->hasil->tipe = 'Object';
+        if (is_null($akun)) {
+            $rs->pesan[] = 'Gagal delete Akun, username tidak ditemukan';
+        } else {
+            $delete = $akun->delete();
+            if ($delete) {
+                $rs->sukses = true;
+                $rs->pesan[] = 'Sukses delete Akun';
+                $rs->hasil->jumlah = 1;
+            } else {
+                $rs->pesan[] = 'Gagal delete Akun';
+            }
+        }
+        $rs->hasil->data = $akun;
+        return $rs;
+    }
+
     
 }

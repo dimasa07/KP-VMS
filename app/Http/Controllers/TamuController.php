@@ -41,7 +41,7 @@ class TamuController extends Controller
     {
         $id_tamu = $request->session()->get('id'); //$this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
         $permintaan = $this->permintaanBertamuService->getByIdTamu($id_tamu)->hasil->data;
-        foreach($permintaan as $p){
+        foreach ($permintaan as $p) {
             $p->waktu_pengiriman = WaktuConverter::convertToDateTime($p->waktu_pengiriman);
             $p->waktu_bertamu = WaktuConverter::convertToDateTime($p->waktu_bertamu);
             $p->waktu_pemeriksaan = WaktuConverter::convertToDateTime($p->waktu_pemeriksaan);
@@ -53,7 +53,7 @@ class TamuController extends Controller
     {
         $id_tamu = $request->session()->get('id'); //$this->akunService->getByUsername($request->session()->get('username'))->hasil->data->tamu->id;
         $bukuTamu = $this->bukuTamuService->getByIdTamu($id_tamu)->hasil->data;
-        foreach($bukuTamu as $bk){
+        foreach ($bukuTamu as $bk) {
             $bk->check_in = WaktuConverter::convertToDateTime($bk->check_in);
             $bk->check_out = WaktuConverter::convertToDateTime($bk->check_out);
         }
@@ -110,8 +110,14 @@ class TamuController extends Controller
         if ($request->session()->get('id') == 0) {
             $tamu = new Tamu();
             $tamu->fill($request->input());
-            $tamu->id_akun = $this->akunService->getByUsername($request->session()->get('username'))->hasil->data->id;
-            $rs = $this->tamuService->save($tamu);
+            $checkNIK = $this->tamuService->getByNIK($tamu->nik);
+            $id_akun = $this->akunService->getByUsername($request->session()->get('username'))->hasil->data->id;
+            if ($checkNIK->sukses && $checkNIK->hasil->data->id_akun == null) {
+                $rs = $this->tamuService->update($checkNIK->hasil->data->id, ['id_akun' => $id_akun, 'nik' => $tamu->nik]);
+            } else {
+                $tamu->id_akun = $id_akun;
+                $rs = $this->tamuService->save($tamu);
+            }
             if ($rs->sukses) {
                 $request->session()->put('id', $rs->hasil->data->id);
             }
@@ -154,5 +160,12 @@ class TamuController extends Controller
     {
         $rs = $this->permintaanBertamuService->delete($id);
         return response()->json($rs);
+    }
+
+    public function deleteAkun(Request $request)
+    {
+        $rs = $this->akunService->deleteByUsername($request->session()->get('username'));
+        return redirect()->route('user.logout');
+        // return response()->json($rs);
     }
 }

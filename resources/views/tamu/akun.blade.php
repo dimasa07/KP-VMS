@@ -17,14 +17,14 @@
         <div class="w-full p-3">
             <!--Table Card-->
             <div class="bg-white border rounded shadow">
-                <div class="p-5" x-data="{ showFormEdit : false, akun:{{$akun}} }">
+                <div class="p-5" x-data="{ showConfirmHapus:false, showFormEdit : false, akun:{{$akun}}, showAlert:true }">
                     @if($pesan = Session::get('gagal'))
-                    <div class="bg-red-500 text-white w-full text-center rounded mb-6 p-1">
+                    <div x-show="showAlert" class="bg-red-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
                     @if($pesan = Session::get('sukses'))
-                    <div class="bg-green-500 text-white w-full text-center rounded mb-6 p-1">
+                    <div x-show="showAlert" class="bg-green-500 text-white w-full text-center rounded mb-6 p-1">
                         {{ $pesan }}
                     </div>
                     @endif
@@ -71,12 +71,13 @@
                                 </tbody>
                             </table>
                             <div class="inline-flex absolute right-0 bottom-0">
-                                <!-- <button type="button" href="#" x-show="!showConfirmSetuju" @click="showConfirmSetuju= !showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Setujui</button>
-                                <a x-bind:href="window.location.origin+'/admin/permintaan/setujui/'+permintaan.id">
-                                    <button type="button" x-show="showConfirmSetuju" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Setuju</button></a> -->
-                                <button type="button" x-show="!showFormEdit" @click="showFormEdit= !showFormEdit; akun={{$akun}}" class=" bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded mx-2">Edit Akun</button>
+                                <button type="button" x-show="!showFormEdit" @click="showFormEdit= !showFormEdit; akun={{$akun}}; showAlert=false; showConfirmHapus=false" class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit Akun</button>
+                                <button type="button" href="#" x-show="!showFormEdit && !showConfirmHapus" @click="showConfirmHapus=true" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Akun</button>
+                                <a x-bind:href="window.location.origin+'/tamu/akun/delete'">
+                                    <button style="display: none;" type="button" x-show="showConfirmHapus && !showFormEdit" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button></a>
+
                                 <button style="display: none;" type="submit" @click="formData.id=akun.id;" x-show="showFormEdit" class=" bg-green-600 hover:bg-green-800 text-white py-1 px-2 rounded mx-2">Simpan Perubahan</button>
-                                <button style="display: none;" x-show="showFormEdit" type="button" @click="showFormEdit= !showFormEdit" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
+                                <button style="display: none;" x-show="showFormEdit||showConfirmHapus" type="button" @click="showFormEdit=false; showConfirmHapus=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
                             </div>
                         </div>
                     </form>

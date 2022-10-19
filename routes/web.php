@@ -113,6 +113,7 @@ Route::prefix('/tamu')
         Route::post('/profil/update', 'updateProfil')->name('tamu.profil.update');
         Route::get('/akun', 'akun')->name('tamu.akun');
         Route::post('/akun/update', 'updateAkun')->name('tamu.akun.update');
+        Route::get('/akun/delete', 'deleteAkun')->name('tamu.akun.delete');
         Route::post('/permintaan/tambah', 'tambahPermintaan')->name('tamu.permintaan.tambah');
         Route::get('/permintaan/buat', 'viewBuatPermintaan')->name('tamu.permintaan.buat');
         Route::get('/permintaan/all/{idTamu}', 'allPermintaanBertamu')->name('tamu.permintaan.all');
