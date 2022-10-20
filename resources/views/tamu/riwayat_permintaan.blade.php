@@ -104,7 +104,7 @@
                         </table>
                         <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmSetuju : false }">
                             <button type="button" href="#" x-show="permintaan.status=='BELUM DIPERIKSA'" @click="showFormEdit=true; dataEdit=permintaan; showConfirmDelete=false" class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit Data</button>
-                            <button x-show="permintaan.status=='BELUM DIPERIKSA'" @click="showConfirmDelete= !showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Data</button>
+                            <button x-show="permintaan.status=='BELUM DIPERIKSA' && !showConfirmDelete" @click="showConfirmDelete= !showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Data</button>
                             <a x-bind:href="window.location.origin+'/tamu/permintaan/delete/'+permintaan.id">
                                 <button type="button" @click="formData.id = permintaan.id;" x-show="showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button>
                             </a>

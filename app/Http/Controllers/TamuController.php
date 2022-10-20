@@ -163,7 +163,17 @@ class TamuController extends Controller
 
     public function updatePermintaanBertamu(Request $request)
     {
-        $rs = $this->permintaanBertamuService->update($request->input('id'), $request->input());
+        $waktu_bertamu = $request->input('tanggal') . ' ' . $request->input('waktu') . ':00';
+        $id_pegawai = $request->input('id_pegawai');
+        $keperluan = $request->input('keperluan');
+        $waktu_pengiriman = Carbon::now()->toDateTimeString();
+        $data = [
+            'id_pegawai' => $id_pegawai,
+            'keperluan' => $keperluan,
+            'waktu_bertamu' => $waktu_bertamu,
+            'waktu_pengiriman' => $waktu_pengiriman
+        ];
+        $rs = $this->permintaanBertamuService->update($request->input('id'), $data);
         $tipe = $rs->sukses ? 'sukses' : 'gagal';
         return back()->with($tipe, $rs->pesan[0]);
         // return response()->json($request->input());
