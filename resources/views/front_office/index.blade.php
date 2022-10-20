@@ -47,8 +47,8 @@
                             <div class="rounded p-3 bg-pink-600"><i class="fas fa-book fa-2x fa-fw fa-inverse"></i></div>
                         </div>
                         <div class="flex-1 text-right md:text-center">
-                            <h5 class="font-bold uppercase text-gray-500">Laporan Hari Ini</h5>
-                            <h3 class="font-bold text-3xl">{{ $laporanHariIni }}</h3>
+                            <h5 class="font-bold uppercase text-gray-500">Check-In Hari Ini</h5>
+                            <h3 class="font-bold text-3xl">{{ count($dataCheckInHariIni) }}</h3>
                         </div>
                     </div>
                 </div>
@@ -92,8 +92,8 @@
                             <div class="rounded p-3 bg-yellow-600"><i class="fas fa-book fa-2x fa-fw fa-inverse"></i></div>
                         </div>
                         <div class="flex-1 text-right md:text-center">
-                            <h5 class="font-bold uppercase text-gray-500">Total Laporan</h5>
-                            <h3 class="font-bold text-3xl">{{ $totalLaporan }}</h3>
+                            <h5 class="font-bold uppercase text-gray-500">Check-Out hari ini</h5>
+                            <h3 class="font-bold text-3xl">{{ count($dataCheckOutHariIni) }}</h3>
                         </div>
                     </div>
                 </div>

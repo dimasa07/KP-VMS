@@ -26,7 +26,7 @@ class PermintaanBertamuService
 
     public function getAll()
     {
-        $permintaan = PermintaanBertamu::where('status', '<>', 'KADALUARSA')->get();
+        $permintaan = PermintaanBertamu::where('status', '!=', 'KADALUARSA')->get();
         $rs = new ResultSet();
         $rs->hasil->tipe = 'Array';
         $jumlah = count($permintaan);
