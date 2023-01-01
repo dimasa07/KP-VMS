@@ -82,23 +82,23 @@
                                     <tr>
                                         <td class="w-40">Jabatan</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.jabatan" class="px-1 border border-gray-600" type="text" name="jabatan" :value="admin.jabatan"></td>
+                                        <td><input disabled required x-model="formData.jabatan" class="px-1 border border-gray-600" type="text" name="jabatan" :value="admin.jabatan"></td>
 
                                     </tr>
                                     <tr>
                                         <td class="w-40">No. Telepon</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.no_telepon" class="px-1 border border-gray-600" type="text" name="no_telepon" :value="admin.no_telepon"></td>
+                                        <td><input x-model="formData.no_telepon" class="px-1 border border-gray-600" type="text" name="no_telepon" :value="admin.no_telepon"></td>
                                     </tr>
                                     <tr>
                                         <td class="w-40">Email</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.email" class="px-1 border border-gray-600" type="text" name="email" :value="admin.email"></td>
+                                        <td><input x-model="formData.email" class="px-1 border border-gray-600" type="text" name="email" :value="admin.email"></td>
                                     </tr>
                                     <tr>
                                         <td class="w-40">Alamat</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.alamat" class="px-1 border border-gray-600" type="text" name="alamat" :value="admin.alamat"></td>
+                                        <td><input x-model="formData.alamat" class="px-1 border border-gray-600" type="text" name="alamat" :value="admin.alamat"></td>
                                     </tr>
                                 </tbody>
                             </table>

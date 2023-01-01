@@ -81,36 +81,64 @@
                             <table style="display: none;" class="w-full p-5 text-gray-700" x-show="showFormEdit">
                                 <tbody>
                                     <tr>
-                                        <td class="w-40">Nama Admin</td>
+                                        <td class="w-40">Nama Pegawai</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.nama" class="px-1 border border-gray-600" type="text" name="nama" :value="pegawai.nama"></td>
+                                        <td><input required x-model="formData.nama" class="px-1 border border-gray-600 w-full" type="text" name="nama" :value="pegawai.nama"></td>
                                     </tr>
                                     <tr>
                                         <td class="w-40">NIP</td>
                                         <td class="w-6">:</td>
-                                        <td><input disabled x-model="formData.nip" class="px-1 border border-gray-600" type="text" name="nip" :value="pegawai.nip"></td>
+                                        <td><input disabled x-model="formData.nip" class="px-1 border border-gray-600 w-full" type="text" name="nip" :value="pegawai.nip"></td>
 
                                     </tr>
                                     <tr>
                                         <td class="w-40">Jabatan</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.jabatan" class="px-1 border border-gray-600" type="text" name="jabatan" :value="pegawai.jabatan"></td>
+                                        <td><select x-model="formData.jabatan" name="jabatan" required
+                                            class="bg-white form-control block w-full px-3 py-0.5 border border-black"
+                                            id="jabatan">
+                                            <option selected x-text="pegawai.jabatan" disabled hidden :value="pegawai.jabatan"></option>
+                                            <option>ADMIN</option>
+                                            <option>FRONT OFFICE</option>
+                                            <option>KEPALA DINAS</option>
+                                            <option>STAFF</option>
+                                            <option disabled>- SEKRETARIAT </option>
+                                            <option>KEPALA SEKRETARIAT</option>
+                                            <option>SUB BAGIAN UMUM DAN KEPEGAWAIAN</option>
+                                            <option>PERENCANA</option>
+                                            <option>SUB BAGIAN KEUANGAN</option>
+                                            <option disabled>- BIDANG INFORMASI KOMUNIKASI PUBLIK</option>
+                                            <option>KEPALA BIDANG INFORMASI KOMUNIKASI PUBLIK</option>
+                                            <option>PRANATA HUBUNGAN MASYARAKAT BIDANG INFORMASI KOMUNIKASI PUBLIK</option>
+                                            <option disabled>- BIDANG PERSANDIAN</option>
+                                            <option>KEPALA BIDANG PERSANDIAN</option>
+                                            <option>SANDIMAN BIDANG PERSANDIAN</option>
+                                            <option disabled>- BIDANG TEKNOLOGI INFOMASI DAN KOMUNIKASI</option>
+                                            <option>KEPALA BIDANG TEKNOLOGI INFOMASI DAN KOMUNIKASI</option>
+                                            <option>PRANATA KOMPUTER BIDANG TEKNOLOGI INFOMASI DAN KOMUNIKASI</option>
+                                            <option disabled>- BIDANG APLIKASI INFORMATIKA</option>
+                                            <option>KEPALA BIDANG APLIKASI INFORMATIKA</option>
+                                            <option>PRANATA KOMPUTER BIDANG APLIKASI INFORMATIKA</option>
+                                            <option disabled>- BIDANG STATISTIK</option>
+                                            <option>KEPALA BIDANG STATISTIK</option>
+                                            <option>STATISTISI BIDANG STATISTIK</option>
+                                        </select></td>
 
                                     </tr>
                                     <tr>
                                         <td class="w-40">No. Telepon</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.no_telepon" class="px-1 border border-gray-600" type="text" name="no_telepon" :value="pegawai.no_telepon"></td>
+                                        <td><input x-model="formData.no_telepon" class="px-1 border border-gray-600 w-full" type="text" name="no_telepon" :value="pegawai.no_telepon"></td>
                                     </tr>
                                     <tr>
                                         <td class="w-40">Email</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.email" class="px-1 border border-gray-600" type="text" name="email" :value="pegawai.email"></td>
+                                        <td><input x-model="formData.email" class="px-1 border border-gray-600 w-full" type="text" name="email" :value="pegawai.email"></td>
                                     </tr>
                                     <tr>
                                         <td class="w-40">Alamat</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.alamat" class="px-1 border border-gray-600" type="text" name="alamat" :value="pegawai.alamat"></td>
+                                        <td><input x-model="formData.alamat" class="px-1 border border-gray-600 w-full" type="text" name="alamat" :value="pegawai.alamat"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -136,36 +164,64 @@
                             <table class="w-full p-5 text-gray-700">
                                 <tbody>
                                     <tr>
-                                        <td class="w-40">Nama Admin</td>
+                                        <td class="w-40">Nama Pegawai</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.nama" class="px-1 border border-gray-600" type="text" name="nama"></td>
+                                        <td><input required x-model="formData.nama" class="px-1 border border-gray-600 w-full" type="text" name="nama"></td>
                                     </tr>
                                     <tr>
                                         <td class="w-40">NIP</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.nip" class="px-1 border border-gray-600" type="text" name="nip"></td>
+                                        <td><input required x-model="formData.nip" class="px-1 border border-gray-600 w-full" type="text" name="nip"></td>
 
                                     </tr>
                                     <tr>
                                         <td class="w-40">Jabatan</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.jabatan" class="px-1 border border-gray-600" type="text" name="jabatan"></td>
+                                        <td><select x-model="formData.jabatan" name="jabatan" required
+                                            class="bg-white form-control block w-full px-3 py-0.5 border border-black"
+                                            id="jabatan">
+                                            <option selected hidden disabled :value="" value="">PILIH JABATAN</option>
+                                            <option>ADMIN</option>
+                                            <option>FRONT OFFICE</option>
+                                            <option>KEPALA DINAS</option>
+                                            <option>STAFF</option>
+                                            <option disabled>- SEKRETARIAT </option>
+                                            <option>KEPALA SEKRETARIAT</option>
+                                            <option>SUB BAGIAN UMUM DAN KEPEGAWAIAN</option>
+                                            <option>PERENCANA</option>
+                                            <option>SUB BAGIAN KEUANGAN</option>
+                                            <option disabled>- BIDANG INFORMASI KOMUNIKASI PUBLIK</option>
+                                            <option>KEPALA BIDANG INFORMASI KOMUNIKASI PUBLIK</option>
+                                            <option>PRANATA HUBUNGAN MASYARAKAT BIDANG INFORMASI KOMUNIKASI PUBLIK</option>
+                                            <option disabled>- BIDANG PERSANDIAN</option>
+                                            <option>KEPALA BIDANG PERSANDIAN</option>
+                                            <option>SANDIMAN BIDANG PERSANDIAN</option>
+                                            <option disabled>- BIDANG TEKNOLOGI INFOMASI DAN KOMUNIKASI</option>
+                                            <option>KEPALA BIDANG TEKNOLOGI INFOMASI DAN KOMUNIKASI</option>
+                                            <option>PRANATA KOMPUTER BIDANG TEKNOLOGI INFOMASI DAN KOMUNIKASI</option>
+                                            <option disabled>- BIDANG APLIKASI INFORMATIKA</option>
+                                            <option>KEPALA BIDANG APLIKASI INFORMATIKA</option>
+                                            <option>PRANATA KOMPUTER BIDANG APLIKASI INFORMATIKA</option>
+                                            <option disabled>- BIDANG STATISTIK</option>
+                                            <option>KEPALA BIDANG STATISTIK</option>
+                                            <option>STATISTISI BIDANG STATISTIK</option>
+                                        </select></td>
 
                                     </tr>
                                     <tr>
                                         <td class="w-40">No. Telepon</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.no_telepon" class="px-1 border border-gray-600" type="text" name="no_telepon"></td>
+                                        <td><input x-model="formData.no_telepon" class="px-1 border border-gray-600 w-full" type="text" name="no_telepon"></td>
                                     </tr>
                                     <tr>
                                         <td class="w-40">Email</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.email" class="px-1 border border-gray-600" type="text" name="email"></td>
+                                        <td><input x-model="formData.email" class="px-1 border border-gray-600 w-full" type="text" name="email"></td>
                                     </tr>
                                     <tr>
                                         <td class="w-40">Alamat</td>
                                         <td class="w-6">:</td>
-                                        <td><input required x-model="formData.alamat" class="px-1 border border-gray-600" type="text" name="alamat"></td>
+                                        <td><input x-model="formData.alamat" class="px-1 border border-gray-600 w-full" type="text" name="alamat"></td>
                                     </tr>
                                 </tbody>
                             </table>

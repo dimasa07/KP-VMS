@@ -19,14 +19,19 @@
             <!--Table Card-->
             <div class="bg-white border rounded shadow" x-data="{ filter:'SEMUA' }">
                 <div class="inline-flex border-b p-3 w-full">
-                    <select x-show="!showFormEdit" x-model="filter" class="mx-4 py-1 px-4 bg-white border border-gray-600 rounded">
+                    <select x-show="!showFormEdit" x-model="filter"
+                        class="mx-4 py-1 px-4 bg-white border border-gray-600 rounded">
                         <option value="SEMUA">Semua</option>
                         <option value="BELUM DIPERIKSA">Belum Diperiksa</option>
                         <option value="DISETUJUI">Disetujui</option>
                         <option value="DITOLAK">Ditolak</option>
                     </select>
-                    <button style="display: none;" x-show="showFormEdit" type="button" @click="showFormEdit = false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-6 rounded mx-2">Batal</button>
-                    <button style="display: none;" x-show="showFormEdit" type="button" @click="showFormEdit = false; showDetail=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-6 rounded mx-2">Kembali Lihat Tabel</button>
+                    <button style="display: none;" x-show="showFormEdit" type="button" @click="showFormEdit = false"
+                        class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-6 rounded mx-2">Batal</button>
+                    <button style="display: none;" x-show="showFormEdit" type="button"
+                        @click="showFormEdit = false; showDetail=false"
+                        class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-6 rounded mx-2">Kembali Lihat
+                        Tabel</button>
                     @if($pesan = Session::get('gagal'))
                     <div x-show="showAlert" class="bg-red-500 text-white w-full text-center rounded mx-4 pt-1">
                         {{ $pesan }}
@@ -103,13 +108,23 @@
                             </tbody>
                         </table>
                         <div class="inline-flex absolute right-0 bottom-0" x-data="{ showConfirmSetuju : false }">
-                            <button type="button" href="#" x-show="permintaan.status=='BELUM DIPERIKSA'" @click="showFormEdit=true; dataEdit=permintaan; showConfirmDelete=false" class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit Data</button>
-                            <button x-show="permintaan.status=='BELUM DIPERIKSA' && !showConfirmDelete" @click="showConfirmDelete= !showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus Data</button>
+                            <button type="button" href="#" x-show="permintaan.status=='BELUM DIPERIKSA'"
+                                @click="showFormEdit=true; dataEdit=permintaan; showConfirmDelete=false"
+                                class=" bg-blue-600 hover:bg-blue-800 text-white py-1 px-2 rounded mx-2">Edit
+                                Data</button>
+                            <button x-show="permintaan.status=='BELUM DIPERIKSA' && !showConfirmDelete"
+                                @click="showConfirmDelete= !showConfirmDelete"
+                                class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Hapus
+                                Data</button>
                             <a x-bind:href="window.location.origin+'/tamu/permintaan/delete/'+permintaan.id">
-                                <button type="button" @click="formData.id = permintaan.id;" x-show="showConfirmDelete" class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi Hapus</button>
+                                <button type="button" @click="formData.id = permintaan.id;" x-show="showConfirmDelete"
+                                    class=" bg-red-600 hover:bg-red-800 text-white py-1 px-2 rounded mx-2">Konfirmasi
+                                    Hapus</button>
                             </a>
-                            <button x-show="showConfirmDelete" type="button" @click="showConfirmDelete=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
-                            <button type="button" @click="showDetail= !showDetail; showConfirmDelete=false" class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
+                            <button x-show="showConfirmDelete" type="button" @click="showConfirmDelete=false"
+                                class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Batal</button>
+                            <button type="button" @click="showDetail= !showDetail; showConfirmDelete=false"
+                                class=" bg-gray-600 hover:bg-gray-800 text-white py-1 px-2 rounded mx-2">Tutup</button>
                         </div>
                     </div>
 
@@ -128,7 +143,8 @@
                         </thead>
 
                         <tbody>
-                            @for($i = 0 ; $i < count($permintaan); $i++) <tr x-show="(filter=='SEMUA' || filter=='{{$permintaan[$i]->status}}') && '{{$permintaan[$i]->status}}' != 'KADALUARSA' ">
+                            @for($i = 0 ; $i < count($permintaan); $i++) <tr
+                                x-show="(filter=='SEMUA' || filter=='{{$permintaan[$i]->status}}') && '{{$permintaan[$i]->status}}' != 'KADALUARSA' ">
                                 <td class="border-2 p-2 text-center">{{ $i+1 }}</td>
                                 <td class="border-2 p-2">{{ $permintaan[$i]->tamu->nama }}</td>
                                 <td class="border-2 p-2">{{ $permintaan[$i]->tamu->nik }}</td>
@@ -137,7 +153,9 @@
                                 <td class="border-2 p-2">{{ $permintaan[$i]->status }}</td>
                                 <td class="border-2 p-2 text-center">
                                     <div>
-                                        <button @click="permintaan={{ $permintaan[$i] }}; showDetail= !showDetail; showAlert=false" class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
+                                        <button
+                                            @click="permintaan={{ $permintaan[$i] }}; showDetail= !showDetail; showAlert=false"
+                                            class="bg-teal-700 hover:bg-teal-900 text-white py-1 px-2 rounded">Detail</button>
                                     </div>
                                 </td>
                                 </tr>
@@ -147,34 +165,79 @@
                 </div>
 
                 <div style="display: none;" x-show="showFormEdit" class="p-5">
-                    <form method="POST" action="{{ route('tamu.permintaan.update') }}">
+                    <form method="POST" action="{{ route('tamu.permintaan.update') }}" x-data="{jabatan : ''}">
                         <div class="grid grid-cols-2 relative">
                             <div class="px-5">
-                                <div class="form-group mb-6">
-                                    <label for="pegawai" class="form-label inline-block mb-2 text-gray-700">Pegawai Dituju</label>
-                                    <select name="id_pegawai" required class="bg-white form-control block w-full px-3 py-1.5 border border-gray-400" id="pegawai">
-                                        @foreach($pegawai as $p)
-                                        <option value="{{ $p->id }}">{{ $p->nama }}</option>
-                                        @endforeach
+                                <div class="mb-6 form-group">
+                                    <label for="jabatan" class="inline-block mb-2 text-gray-700 form-label">Filter
+                                        Jabatan Pegawai</label>
+                                        <select x-model="jabatan" name="jabatan"
+                                        class="bg-white form-control block w-full px-3 py-1.5 border border-gray-400"
+                                        id="jabatan">
+                                        <option selected hidden disabled value="" :value="">PILIH JABATAN</option>
+                                        <option>ADMIN</option>
+                                        <option>FRONT OFFICE</option>
+                                        <option>KEPALA DINAS</option>
+                                        <option>STAFF</option>
+                                        <option disabled>- SEKRETARIAT </option>
+                                        <option>KEPALA SEKRETARIAT</option>
+                                        <option>SUB BAGIAN UMUM DAN KEPEGAWAIAN</option>
+                                        <option>PERENCANA</option>
+                                        <option>SUB BAGIAN KEUANGAN</option>
+                                        <option disabled>- BIDANG INFORMASI KOMUNIKASI PUBLIK</option>
+                                        <option>KEPALA BIDANG INFORMASI KOMUNIKASI PUBLIK</option>
+                                        <option>PRANATA HUBUNGAN MASYARAKAT BIDANG INFORMASI KOMUNIKASI PUBLIK</option>
+                                        <option disabled>- BIDANG PERSANDIAN</option>
+                                        <option>KEPALA BIDANG PERSANDIAN</option>
+                                        <option>SANDIMAN BIDANG PERSANDIAN</option>
+                                        <option disabled>- BIDANG TEKNOLOGI INFOMASI DAN KOMUNIKASI</option>
+                                        <option>KEPALA BIDANG TEKNOLOGI INFOMASI DAN KOMUNIKASI</option>
+                                        <option>PRANATA KOMPUTER BIDANG TEKNOLOGI INFOMASI DAN KOMUNIKASI</option>
+                                        <option disabled>- BIDANG APLIKASI INFORMATIKA</option>
+                                        <option>KEPALA BIDANG APLIKASI INFORMATIKA</option>
+                                        <option>PRANATA KOMPUTER BIDANG APLIKASI INFORMATIKA</option>
+                                        <option disabled>- BIDANG STATISTIK</option>
+                                        <option>KEPALA BIDANG STATISTIK</option>
+                                        <option>STATISTISI BIDANG STATISTIK</option>
                                     </select>
-                                    <!-- <small id="emailHelp" class="block mt-1 text-xs text-gray-600">We'll never share your email with anyone
-                                        else.</small> -->
                                 </div>
                                 <div class="form-group mb-6">
-                                    <label for="tanggal" class="form-label inline-block mb-2 text-gray-700">Tanggal</label>
-                                    <input required name="tanggal" type="date" class="form-control block w-full px-3 py-1.5 border border-gray-400" id="tanggal">
+                                    <label for="pegawai" class="form-label inline-block mb-2 text-gray-700">Pegawai
+                                        Dituju</label>
+                                    <select name="id_pegawai"
+                                        class="bg-white form-control block w-full px-3 py-1.5 border border-gray-400"
+                                        id="pegawai">
+                                        <option selected x-text="dataEdit.pegawai.nama" disabled hidden></option>
+                                        @foreach($pegawai as $p)
+                                        <option x-show="jabatan == '{{ $p->jabatan }}'" value="{{ $p->id }}">{{ $p->nama }}</option>
+                                        @endforeach
+                                    </select> 
                                 </div>
-                                <div class="form-group mb-6">
-                                    <label for="waktu" class="form-label inline-block mb-2 text-gray-700">Waktu</label>
-                                    <input required name="waktu" type="time" class="form-control block w-full px-3 py-1.5 border border-gray-400" id="waktu">
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="form-group mb-6">
+                                        <label for="tanggal"
+                                            class="form-label inline-block mb-2 text-gray-700">Tanggal</label>
+                                        <input required name="tanggal" type="date"
+                                            class="form-control block w-full px-3 py-1.5 border border-gray-400"
+                                            id="tanggal">
+                                    </div>
+                                    <div class="form-group mb-6">
+                                        <label for="waktu"
+                                            class="form-label inline-block mb-2 text-gray-700">Waktu</label>
+                                        <input required name="waktu" type="time"
+                                            class="form-control block w-full px-3 py-1.5 border border-gray-400"
+                                            id="waktu">
+                                    </div>
                                 </div>
-
                             </div>
 
                             <div class="px-5">
                                 <div class="form-group mb-6 h-full pb-14">
-                                    <label for="keperluan" class="form-label inline-block mb-2 text-gray-700">Keperluan</label>
-                                    <textarea :value="dataEdit.keperluan" required name="keperluan" id="keperluan" cols="50" class="max-h-full min-h-full form-control block w-full px-3 py-1.5 border border-gray-400"></textarea>
+                                    <label for="keperluan"
+                                        class="form-label inline-block mb-2 text-gray-700">Keperluan</label>
+                                    <textarea :value="dataEdit.keperluan" required name="keperluan" id="keperluan"
+                                        cols="50"
+                                        class="max-h-full min-h-full form-control block w-full px-3 py-1.5 border border-gray-400"></textarea>
                                 </div>
 
                             </div>
@@ -182,7 +245,8 @@
                         </div>
                         <div class="my-2 mx-5">
                             <input type="hidden" :value="dataEdit.id" name="id">
-                            <button class="w-full py-2 bg-green-600 hover:bg-green-800 text-white px-2 rounded" type="submit" value="Kirim">Simpan Perubahan</button>
+                            <button class="w-full py-2 bg-green-600 hover:bg-green-800 text-white px-2 rounded"
+                                type="submit" value="Kirim">Simpan Perubahan</button>
                         </div>
                     </form>
                 </div>

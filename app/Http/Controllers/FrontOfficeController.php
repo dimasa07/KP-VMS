@@ -407,6 +407,9 @@ class FrontOfficeController extends Controller
         $id_pegawai = $request->input('id_pegawai');
         $keperluan = $request->input('keperluan');
         $waktu_pengiriman = Carbon::now()->toDateTimeString();
+        if(is_null($id_pegawai)){
+            $id_pegawai = $this->permintaanBertamuService->getById($request->input('id'))->hasil->data->id_pegawai;
+        }
         $data = [
             'id_tamu' => $id_tamu,
             'id_front_office' => $request->session()->get('id'),
@@ -432,4 +435,5 @@ class FrontOfficeController extends Controller
         $rs = $this->bukuTamuService->delete($id);
         return response()->json($rs);
     }
+    
 }

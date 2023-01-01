@@ -11,10 +11,14 @@ use App\Services\PermintaanBertamuService;
 use App\Services\ResultSet;
 use App\Services\TamuService;
 use App\Utilities\WaktuConverter;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+
+use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Options;
+use Dompdf\Dompdf;
+
 
 class AdminController extends Controller
 {
@@ -282,7 +286,8 @@ class AdminController extends Controller
             'semua' => $bukuTamu,
         ];
         // return response()->json($data);
-        $pdf = Pdf::loadView('laporan', $data);
+        $pdf = Pdf::setOptions(['isRemoteEnabled' => true])->loadView('layouts.laporan', $data);
+
         $namaFile = $tipe == 'Keseluruhan' ? 'Laporan Tamu ' . $tipe . '.pdf' : 'Laporan Tamu ' . $tipe . '_' . $waktu . '.pdf';
         return $pdf->download($namaFile);
     }
