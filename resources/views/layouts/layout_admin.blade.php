@@ -74,7 +74,7 @@
                     </li>
                     <li class="mr-6 my-2 md:my-0">
                         <a href="{{ route('admin.permintaan.all') }}" class="block py-1 md:py-3 pl-1 align-middle {{ request()->is('admin/permintaan/all') ? 'text-teal-400 border-teal-400 hover:border-teal-400 hover:text-teal-400 ' : 'text-white border-white hover:border-teal-400 hover:text-teal-400' }} no-underline border-b-2 ">
-                            <i class="fas fa-tasks fa-fw mr-3 {{ request()->is('admin/permintaan/all') ? 'text-teal-400':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Permintaan Bertamu</span>
+                            <i class="fas fa-tasks fa-fw mr-3 {{ request()->is('admin/permintaan/all') ? 'text-teal-400':'' }}"></i><span class="pb-1 md:pb-0 text-sm">Data Jadwal Bertamu</span>
                         </a>
                     </li>
                     <li class="mr-6 my-2 md:my-0">

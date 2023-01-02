@@ -24,13 +24,17 @@
             width:50%;
             text-align:center
         }
+        pre{
+            font-family: Arial, Helvetica, sans-serif;
+
+        }
     </style>
 </head>
 
 <body>
     <img src="https://dl.dropboxusercontent.com/s/8s7urq1bcnkh08f/kop.png" style="width:100%">
     <h3 id="judul">Laporan Data Tamu</h3>
-    <pre>Tipe       : {{ $tipe }}<br>Tanggal    : {{ $waktu }}
+    <pre>Tipe          : {{ $tipe }}<br>Tanggal    : {{ $waktu }}
     </pre>
     <table class="table table-bordered">
         <tr>

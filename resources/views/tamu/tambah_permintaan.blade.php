@@ -10,7 +10,7 @@
             <!--Table Card-->
             <div class="bg-white border rounded shadow">
                 <div class="px-3 py-6 border-b">
-                    <h5 class="ml-5 text-3xl font-bold text-gray-600 uppercase">Buat Permintaan</h5>
+                    <h5 class="ml-5 text-3xl font-bold text-gray-600 uppercase">Buat Jadwal Bertamu</h5>
                 </div>
             </div>
         </div>
